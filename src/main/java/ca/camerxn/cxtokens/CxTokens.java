@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import ca.camerxn.cxtokens.Commands.BalanceCommand;
 import ca.camerxn.cxtokens.Commands.LotteryCommand;
+import ca.camerxn.cxtokens.Commands.SendCommand;
 import ca.camerxn.cxtokens.Commands.StoreCommand;
 import ca.camerxn.cxtokens.Events.MiscEvents;
 import ca.camerxn.cxtokens.Listeners.EntityKill;
@@ -32,6 +33,7 @@ public final class CxTokens extends JavaPlugin {
         this.getCommand("tlottery").setExecutor(new LotteryCommand(this));
         this.getCommand("tbal").setExecutor(new BalanceCommand());
         this.getCommand("tstore").setExecutor(new StoreCommand());
+        this.getCommand("tsend").setExecutor(new SendCommand());
 
         // CxToken specific events
         events = new MiscEvents(this);

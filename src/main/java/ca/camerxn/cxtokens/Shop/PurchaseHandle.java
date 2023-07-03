@@ -51,7 +51,7 @@ public class PurchaseHandle implements Listener {
         int sellPrice = Math.round(item.price * item.sellMultiplier);
         tokenPlayer.addTokens(sellPrice, false);
         int currAmount = player.getInventory().getItem(i).getAmount();
-        player.getInventory().getItem(i).setAmount(currAmount - 16);
+        player.getInventory().getItem(i).setAmount(currAmount - item.stack.getAmount());
     }
     
     @EventHandler
