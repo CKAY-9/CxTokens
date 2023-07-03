@@ -1,13 +1,11 @@
-package ca.camerxn.cxtokens.Tokens;
+package ca.camerxn.cxtokens;
 
 import java.io.IOException;
 import org.bukkit.entity.Player;
-import ca.camerxn.cxtokens.Config;
-import ca.camerxn.cxtokens.Utils;
 
 public class TokenPlayer {
     private int tokens;
-    private Player ply;
+    public Player ply;
     
     public TokenPlayer(int tokens, Player ply) {
         this.tokens = tokens;

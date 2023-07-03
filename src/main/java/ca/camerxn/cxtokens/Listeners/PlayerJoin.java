@@ -1,12 +1,13 @@
-package ca.camerxn.cxtokens.Events;
+package ca.camerxn.cxtokens.Listeners;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import ca.camerxn.cxtokens.TokenPlayer;
 import ca.camerxn.cxtokens.Utils;
-import ca.camerxn.cxtokens.Tokens.TokenPlayer;
+
 import org.bukkit.event.EventPriority;
 
 public class PlayerJoin implements Listener {

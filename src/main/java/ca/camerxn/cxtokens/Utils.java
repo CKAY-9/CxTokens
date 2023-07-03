@@ -19,6 +19,6 @@ public class Utils {
     }
 
     public static Plugin getPlugin() {
-        return Bukkit.getPluginManager().getPlugin("TheWalls");
+        return Bukkit.getPluginManager().getPlugin("CxTokens");
     }
 }

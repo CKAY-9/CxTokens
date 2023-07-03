@@ -5,7 +5,9 @@ api-version: 1.19
 authors: [ Camerxn ]
 description: '${project.description}'
 commands:
-  tshop:
+  tbal:
+    description: Get the balance of you or someone else online
+  tstore:
     description: Open up the token shop
   ttop:
     description: See who has the most tokens
@@ -13,4 +15,6 @@ commands:
     description: Send tokens to a player
   treset:
     description: Reset your token count to the starting amount
+  tlottery:
+    description: Token lottery
 
