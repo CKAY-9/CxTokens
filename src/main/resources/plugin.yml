@@ -1,0 +1,16 @@
+name: CxTokens 
+version: '${project.version}'
+main: ca.camerxn.cxtokens.CxTokens
+api-version: 1.19
+authors: [ Camerxn ]
+description: '${project.description}'
+commands:
+  tshop:
+    description: Open up the token shop
+  ttop:
+    description: See who has the most tokens
+  tsend:
+    description: Send tokens to a player
+  treset:
+    description: Reset your token count to the starting amount
+
