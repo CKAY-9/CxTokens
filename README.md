@@ -1,6 +1,7 @@
 # CxTokens
 
-*Version: 0.1 (1.0 beta)*
+*Plugin Version: 0.1 (1.0 beta)*</br>
+*Minecraft Version: 1.19+*
 
 CxTokens is a token (money) system for Spigot/Paper Minecraft servers. 
 
