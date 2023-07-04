@@ -15,7 +15,7 @@ public class StoreCommand implements CommandExecutor {
             return false;
         }
 
-        new Store(TokenPlayer.convertPlayerToTokenPlayer((Player) sender), 0);
+        Store.openStaticStorePage(TokenPlayer.convertPlayerToTokenPlayer((Player) sender), 0);
 
         return false;
     }

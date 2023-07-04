@@ -12,19 +12,15 @@ import ca.camerxn.cxtokens.TokenPlayer;
 import ca.camerxn.cxtokens.Utils;
 
 public class Store {
-    public Inventory storeInv;
-    public TokenPlayer player;
-    public int page = 0;
+    /*
+     * Static store has hardcoded values and can't be changed in-game.
+     * This is different from the Auction House which users can put items in and
+     * auction on them.
+     */
 
-    public Store(TokenPlayer player, int page) {
-        this.page = page;
-        this.player = player;
-        fillStore(page);
-    }
-
-    public void fillStore(int pageIndex) {
-        this.storeInv = Bukkit.createInventory(null, 54, "Store - Page " + (page + 1));
-        this.storeInv.clear();
+    public static void openStaticStorePage(TokenPlayer player, int pageIndex) {
+        Inventory storeInv = Bukkit.createInventory(null, 54, Utils.formatText("&a&lStore - Page " + (pageIndex + 1)));
+        storeInv.clear();
 
         Item[] items = Pages.pages[pageIndex];
         for (int i = 0; i < items.length; i++) {
@@ -43,22 +39,22 @@ public class Store {
 
         ItemStack backOrExit = new ItemStack(Material.RED_CONCRETE, 1);
         ItemMeta boeMeta = backOrExit.getItemMeta();
-        if (page == 0) {
+        if (pageIndex == 0) {
             boeMeta.setDisplayName(Utils.formatText("&cExit"));
         } else {
-            boeMeta.setDisplayName(Utils.formatText("&cBack to page " + page--));
+            boeMeta.setDisplayName(Utils.formatText("&cBack to page " + (pageIndex)));
         }
         backOrExit.setItemMeta(boeMeta);
         storeInv.setItem(45, backOrExit);
 
-        if (page < Pages.pages.length - 1) {
+        if (pageIndex < Pages.pages.length - 1) {
             ItemStack next = new ItemStack(Material.GREEN_CONCRETE, 1);
             ItemMeta nextMeta = next.getItemMeta();
-            nextMeta.setDisplayName(Utils.formatText("&aGo to page " + page++));
+            nextMeta.setDisplayName(Utils.formatText("&aGo to page " + (pageIndex + 2))); // + 2 is just so the pages go 1, 2, 3,... instead of 0, 1, 2,...
             next.setItemMeta(nextMeta);
             storeInv.setItem(53, next);
         }
         
-        this.player.ply.openInventory(this.storeInv);
+        player.ply.openInventory(storeInv);
     }
 }

@@ -11,7 +11,7 @@ import ca.camerxn.cxtokens.Utils;
 import org.bukkit.event.EventPriority;
 
 public class PlayerJoin implements Listener {
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void playerJoinEvent(PlayerJoinEvent event) {
         Player ply = event.getPlayer();
         TokenPlayer tempToken = TokenPlayer.convertPlayerToTokenPlayer(ply);

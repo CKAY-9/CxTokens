@@ -24,6 +24,9 @@ public class Lottery implements Runnable {
         this.joinedPlayers = new ArrayList<TokenPlayer>();
     }
 
+    // This used for disconnects because it will result in an error if 
+    // the selected player is disconnected, and it will give money back to
+    // the disconnected player
     public void removePlayerFromLottery(Player p) {
         for (TokenPlayer temp : this.joinedPlayers) {
             if (temp.ply == p) {
@@ -36,6 +39,11 @@ public class Lottery implements Runnable {
 
     @Override
     public void run() {
+        if (this.running) {
+            this.tokens.getLogger().warning("Tried to start a lottery while one is already running!");
+            return;
+        }
+
         this.running = true;
         this.announcementTask = this.tokens.getServer().getScheduler().scheduleSyncRepeatingTask(this.tokens, new Runnable() {
             int currentIter = 0;
@@ -63,6 +71,7 @@ public class Lottery implements Runnable {
             @Override
             public void run() {
                 Utils.getPlugin().getServer().getScheduler().cancelTask(doTask);
+                running = false;
                 if (joinedPlayers.size() <= 0) {
                     return;
                 }

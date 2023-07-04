@@ -61,6 +61,13 @@ public class Config {
                 config.set("lottery.entryCost", 150);
             }
 
+            // Auction House
+            if (!config.isSet("auction.enabled")) {
+                config.set("auction.enabled", true);
+                config.set("auction.sweepsPerItem", 60);
+                config.set("auction.bidIncreaseMultiplier", 1.25);
+            }
+
             config.save(configFile);
         } catch (IOException ex) {
             Utils.getPlugin().getLogger().warning(ex.toString());

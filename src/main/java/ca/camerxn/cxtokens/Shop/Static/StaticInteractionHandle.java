@@ -1,6 +1,5 @@
-package ca.camerxn.cxtokens.Shop;
+package ca.camerxn.cxtokens.Shop.Static;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,11 +9,13 @@ import org.bukkit.inventory.ItemStack;
 
 import ca.camerxn.cxtokens.TokenPlayer;
 import ca.camerxn.cxtokens.Utils;
-import ca.camerxn.cxtokens.Shop.Static.Item;
-import ca.camerxn.cxtokens.Shop.Static.Pages;
-import ca.camerxn.cxtokens.Shop.Static.Store;
 
-public class PurchaseHandle implements Listener {
+public class StaticInteractionHandle implements Listener {
+    /*
+     * Double chests have 54 slots (D.Bs are used for the store)
+     * 45 = bottom left slot
+     * 53 = bottom right slot
+     */
     private final int BACK_EXIT = 45;
     private final int NEXT_PAGE = 53;
 
@@ -40,7 +41,7 @@ public class PurchaseHandle implements Listener {
         for (ItemStack it : player.getInventory().getContents()) {
             if (it != null && it.getType() == item.stack.getType()) {
                 if (it.getAmount() < item.stack.getAmount()) {
-                    player.sendMessage(Utils.formatText("&cYou must have atleast " + item.stack.getAmount() + " to sell this item!"));
+                    player.sendMessage(Utils.formatText("&cYou must have at least " + item.stack.getAmount() + " to sell this item!"));
                     return;
                 }
                 break;
@@ -56,6 +57,9 @@ public class PurchaseHandle implements Listener {
     
     @EventHandler
     public void onStoreClick(InventoryClickEvent e) {
+        if (e.getClickedInventory() == null) {
+            return;
+        }
         if (e.getClickedInventory().getHolder() != null) {
             return;
         }
@@ -73,7 +77,6 @@ public class PurchaseHandle implements Listener {
 
         if (clicked == BACK_EXIT) {
             e.getView().close();
-            e.setCurrentItem(new ItemStack(Material.AIR, 0));
 
             // Exit
             if (currentPage == 0) {
@@ -81,16 +84,17 @@ public class PurchaseHandle implements Listener {
             }
 
             // Go Back
-            new Store(TokenPlayer.convertPlayerToTokenPlayer((Player) e.getWhoClicked()), currentPage--);
+            Store.openStaticStorePage(TokenPlayer.convertPlayerToTokenPlayer((Player) e.getWhoClicked()), (currentPage - 1));
             return;
         }
 
         if (clicked == NEXT_PAGE) {
-            new Store(TokenPlayer.convertPlayerToTokenPlayer((Player) e.getWhoClicked()), currentPage++);
+            e.getView().close();
+            Store.openStaticStorePage(TokenPlayer.convertPlayerToTokenPlayer((Player) e.getWhoClicked()), (currentPage + 1));
             return;
         }
 
-        if (currentPage >= Pages.pages[0].length) {
+        if (currentPage >= Pages.pages[currentPage].length) {
             return;
         }
 

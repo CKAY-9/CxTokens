@@ -5,10 +5,14 @@ api-version: 1.19
 authors: [ Camerxn ]
 description: '${project.description}'
 commands:
+  cxtokens:
+    description: Information about CxTokens
   tbal:
     description: Get the balance of you or someone else online
   tstore:
-    description: Open up the token shop
+    description: Open up the Token Shop
+  tauction:
+    description: Open up the Auction House
   ttop:
     description: See who has the most tokens
   tsend:

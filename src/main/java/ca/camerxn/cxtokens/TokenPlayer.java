@@ -20,6 +20,7 @@ public class TokenPlayer {
     public void updateTokens() {
         try {
             Config.data.set("players." + this.ply.getUniqueId() + ".tokens", this.tokens);
+            Config.data.set("players." + this.ply.getUniqueId() + ".name", this.ply.getName());
             Config.data.save(Config.dataFile);
         } catch (IOException ex) {
             Utils.getPlugin().getLogger().warning(ex.toString());
@@ -52,6 +53,7 @@ public class TokenPlayer {
             // Create new token data in file
             try {
                 Config.data.set("players." + p.getUniqueId() + ".tokens", Config.data.getInt("config.defaultTokenAmount"));
+                Config.data.set("players." + p.getUniqueId() + ".name", p.getName());
                 Config.data.save(Config.dataFile);
             } catch (IOException ex) {
                 Utils.getPlugin().getLogger().warning(ex.toString());
