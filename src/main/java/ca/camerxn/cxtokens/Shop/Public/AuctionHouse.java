@@ -43,8 +43,8 @@ public class AuctionHouse {
                             item.seller.sendMessage(Utils.formatText("&aYour item has been sold for T$" + item.currentBid + " on the Auction House!"));
                             TokenPlayer.convertPlayerToTokenPlayer(item.seller).addTokens(item.currentBid, true);
 
-                            item.seller.sendMessage(Utils.formatText("&aSuccessfully bought an item off the Auction House for T$" + item.currentBid));
-                            item.seller.getInventory().addItem(item.item);
+                            item.bidder.sendMessage(Utils.formatText("&aSuccessfully bought an item off the Auction House for T$" + item.currentBid));
+                            item.bidder.getInventory().addItem(item.item);
                         }
                         auctionItems.remove(i);
                     }
@@ -66,7 +66,7 @@ public class AuctionHouse {
         for (int i = (0 + (pageIndex * 36)); i < this.auctionItems.size(); i++) {
             Item temp = this.auctionItems.get(i);
 
-            ItemStack stack = new ItemStack(temp.item.getType(), 1);
+            ItemStack stack = temp.item.clone();
             ItemMeta meta = stack.getItemMeta();
 
             ArrayList<String> lore = new ArrayList<>();

@@ -39,6 +39,9 @@ public class Config {
             config = YamlConfiguration.loadConfiguration(configFile);
 
             // Fill config
+            if (!config.isSet("config.defaultTokenAmount")) {
+                config.set("config.defaultTokenAmount", 500);
+            }
             
             // Mob Rewards
             if (!config.isSet("mobRewards.enabled")) {

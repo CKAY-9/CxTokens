@@ -48,11 +48,19 @@ public class TokenPlayer {
         this.ply.sendMessage(Utils.formatText("&cYour token balance decreased by T$" + tokensToRemove));
     }
 
+    public void reset(boolean silent) {
+        if (!Config.data.isSet("players." + ply.getUniqueId())) return;
+        this.tokens = Config.config.getInt("config.defaultTokenAmount", 500);
+        updateTokens();
+        if (silent) return;
+        ply.sendMessage(Utils.formatText("&aSuccessfully reset your token account!"));
+    }
+
     public static TokenPlayer convertPlayerToTokenPlayer(Player p) {
         if (!Config.data.isSet("players." + p.getUniqueId())) {
             // Create new token data in file
             try {
-                Config.data.set("players." + p.getUniqueId() + ".tokens", Config.data.getInt("config.defaultTokenAmount"));
+                Config.data.set("players." + p.getUniqueId() + ".tokens", Config.config.getInt("config.defaultTokenAmount", 500));
                 Config.data.set("players." + p.getUniqueId() + ".name", p.getName());
                 Config.data.save(Config.dataFile);
             } catch (IOException ex) {

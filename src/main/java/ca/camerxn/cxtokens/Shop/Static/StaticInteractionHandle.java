@@ -75,10 +75,6 @@ public class StaticInteractionHandle implements Listener {
         int currentPage = Integer.parseInt(e.getView().getTitle().split(" ")[3]) - 1;
         int clicked = e.getSlot();
 
-        if (clicked > Pages.pages[currentPage].length) {
-            return;
-        }
-
         if (clicked == BACK_EXIT) {
             e.getView().close();
 
@@ -98,7 +94,10 @@ public class StaticInteractionHandle implements Listener {
             return;
         }
 
-        if (currentPage >= Pages.pages[currentPage].length) {
+        if (clicked > Pages.pages[currentPage].length) {
+            return;
+        }
+        if (currentPage > Pages.pages.length) {
             return;
         }
 
