@@ -18,7 +18,7 @@ public class AboutCommand implements CommandExecutor {
         sender.sendMessage(Utils.formatText("&c  - /tsend: Send tokens to a player"));
         sender.sendMessage(Utils.formatText("&c  - /tstore: Open the default Token Store"));
         sender.sendMessage(Utils.formatText("&c  - /tauction: Open the Auction House"));
-        sender.sendMessage(Utils.formatText("&cGithub Repo: https://github.com/CKAY9/CxTokens"));
+        sender.sendMessage(Utils.formatText("&cGithub Repo: https://github.com/CKAY-9/CxTokens"));
 
         return false;
     }
