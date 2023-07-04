@@ -1,5 +1,7 @@
 package ca.cxtokens.Shop.Static;
 
+import java.util.ArrayList;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,29 +32,53 @@ public class StaticInteractionHandle implements Listener {
         player.getInventory().addItem(new ItemStack(item.stack.getType(), item.stack.getAmount()));
     }
 
+    // I honestly can't come up with a better solution rn
+    // Will probably make better later
+    private boolean canRemoveItemsOnSell(Player player, Item item) {
+        ArrayList<Integer> foundIndexes = new ArrayList<>();
+        int currentStackAmount = 0;
+        int itemNum = item.stack.getAmount();
+        int i = 0;
+
+        for (ItemStack it : player.getInventory()) {
+            if (it != null && it.getType() == item.stack.getType()) {
+                foundIndexes.add(i);
+                currentStackAmount += it.getAmount();
+                if (currentStackAmount >= itemNum) break;
+            }
+            i++;
+        }
+
+        if (currentStackAmount >= item.stack.getAmount()) {
+            for (int j = 0; j < foundIndexes.size(); j++) {
+                int index = foundIndexes.get(j);
+                itemNum -= player.getInventory().getItem(index).getAmount();   
+                if (itemNum <= 0) {
+                    player.getInventory().getItem(index).setAmount(Math.abs(itemNum));
+                } else {
+                    player.getInventory().getItem(index).setAmount(0);
+                }
+            }
+            return true;
+        }
+
+        return false;
+    }
+
     private void sellItem(Item item, Player player) {
         TokenPlayer tokenPlayer = TokenPlayer.convertPlayerToTokenPlayer(player);
         if (!player.getInventory().contains(item.stack.getType())) {
             player.sendMessage(Utils.formatText("&cYou has to have this item in your inventory to sell!"));
             return;
         }
-        
-        int i = 0;
-        for (ItemStack it : player.getInventory().getContents()) {
-            if (it != null && it.getType() == item.stack.getType()) {
-                if (it.getAmount() < item.stack.getAmount()) {
-                    player.sendMessage(Utils.formatText("&cYou must have at least " + item.stack.getAmount() + " to sell this item!"));
-                    return;
-                }
-                break;
-            }
-            i++;
-        }
 
+        if (!canRemoveItemsOnSell(player, item)) {
+            player.sendMessage(Utils.formatText("&cYou don't have enough of this item to sell it!"));
+            return;
+        }
+        
         int sellPrice = Math.round(item.price * item.sellMultiplier);
         tokenPlayer.addTokens(sellPrice, false);
-        int currAmount = player.getInventory().getItem(i).getAmount();
-        player.getInventory().getItem(i).setAmount(currAmount - item.stack.getAmount());
     }
     
     @EventHandler
@@ -60,17 +86,17 @@ public class StaticInteractionHandle implements Listener {
         if (e.getClickedInventory() == null) {
             return;
         }
+        if (!e.getView().getTitle().contains("Store")) {
+            return;
+        } else {
+            e.setCancelled(true);
+        }
         if (e.getClickedInventory().getHolder() != null) {
             return;
         }
         if (e.getClickedInventory().getType() != InventoryType.CHEST) {
             return;
         }
-        if (!e.getView().getTitle().contains("Store")) {
-            return;
-        }
-
-        e.setCancelled(true);
 
         int currentPage = Integer.parseInt(e.getView().getTitle().split(" ")[3]) - 1;
         int clicked = e.getSlot();
@@ -94,7 +120,7 @@ public class StaticInteractionHandle implements Listener {
             return;
         }
 
-        if (clicked > Pages.pages[currentPage].length) {
+        if (clicked >= Pages.pages[currentPage].length) {
             return;
         }
         if (currentPage > Pages.pages.length) {
