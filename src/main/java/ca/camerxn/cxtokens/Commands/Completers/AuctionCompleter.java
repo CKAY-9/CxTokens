@@ -17,7 +17,7 @@ public class AuctionCompleter implements TabCompleter {
             return options;
         }
         if (args.length == 2 && args[0].equalsIgnoreCase("sell")) {
-            return Collections.singletonList("PRICE");
+            return Collections.singletonList("0");
         }
 
         return null;

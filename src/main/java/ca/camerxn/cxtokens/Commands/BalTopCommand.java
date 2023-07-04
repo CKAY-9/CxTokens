@@ -22,8 +22,9 @@ public class BalTopCommand implements CommandExecutor {
         HashMap<String, Integer> leadeboardEntries = new HashMap<>();
         LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
         ArrayList<Integer> list = new ArrayList<>();
-        for (String s : Config.data.getKeys(false)) {
-            leadeboardEntries.put(Config.data.getString(s + ".name"), Config.data.getInt(s + ".tokens"));
+        for (String s : Config.data.getConfigurationSection("players").getKeys(false)) {
+            Utils.getPlugin().getLogger().info(s);
+            leadeboardEntries.put(Config.data.getString("players." + s + ".name"), Config.data.getInt("players." + s + ".tokens"));
         }
         for (Map.Entry<String, Integer> entry : leadeboardEntries.entrySet()) {
             list.add(entry.getValue());

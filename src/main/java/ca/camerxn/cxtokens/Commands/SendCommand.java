@@ -34,7 +34,7 @@ public class SendCommand implements CommandExecutor {
                 return false;
             }
 
-            TokenPlayer target = TokenPlayer.convertPlayerToTokenPlayer(Bukkit.getPlayerExact(targetPlayer));
+            TokenPlayer target = TokenPlayer.convertPlayerToTokenPlayer(Bukkit.getPlayer(targetPlayer));
             target.addTokens(sendAmount, true);
             player.subtractTokens(sendAmount, true);
 
