@@ -25,15 +25,23 @@ public class StaticInteractionHandle implements Listener {
     private final int BACK_EXIT = 45;
     private final int NEXT_PAGE = 53;
 
-    private void purchaseItem(Item item, Player player) {
+    private void purchaseItem(Item item, String key, Player player) {
         TokenPlayer tokenPlayer = TokenPlayer.convertPlayerToTokenPlayer(player);
         if (tokenPlayer.getTokens() < item.price) {
             player.sendMessage(Utils.formatText("&cYou don't have enough tokens to purchase this item!"));
             return;
         }
 
+        ItemStack itemStackToGive = new ItemStack(item.stack.getType(), item.stack.getAmount());
+        if (Storage.storeItems.isSet("items." + key + ".enchants")) {
+            itemStackToGive = item.addEnchantments(key, itemStackToGive);
+        }
+        if (Storage.storeItems.isSet("items." + key + ".customName")) {
+            itemStackToGive = item.setCustomName(key, itemStackToGive);
+        }
+
         tokenPlayer.subtractTokens(item.price, false);
-        player.getInventory().addItem(new ItemStack(item.stack.getType(), item.stack.getAmount()));
+        player.getInventory().addItem(itemStackToGive);
     }
 
     // I honestly can't come up with a better solution rn
@@ -142,9 +150,9 @@ public class StaticInteractionHandle implements Listener {
             Storage.storeItems.getInt("items." + key + ".price", 0),
             Storage.storeItems.getDouble("items." + key + ".sellMultiplier", 0)
         );
-            
+
         if (e.getClick().isLeftClick()) {
-            purchaseItem(item, (Player) e.getWhoClicked());
+            purchaseItem(item, key, (Player) e.getWhoClicked());
             return;
         }
         sellItem(item, (Player) e.getWhoClicked());

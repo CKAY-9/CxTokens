@@ -101,6 +101,15 @@ public class Storage {
 
             // Default Item Values
             if (!storeItems.isSet("items")) {
+                Item exampleCustom = new Item(new ItemStack(Material.IRON_SWORD), 50000, 0);
+                storeItems.set("items.customItemWithEnchantAndName.material", exampleCustom.stack.getType().getKey().toString());
+                storeItems.set("items.customItemWithEnchantAndName.amount", exampleCustom.stack.getAmount());
+                storeItems.set("items.customItemWithEnchantAndName.price", exampleCustom.price);
+                storeItems.set("items.customItemWithEnchantAndName.sellMultiplier", exampleCustom.sellMultiplier);
+                storeItems.set("items.customItemWithEnchantAndName.enchants.sharpness.enchant", "minecraft:sharpness");
+                storeItems.set("items.customItemWithEnchantAndName.enchants.sharpness.level", 5);
+                storeItems.set("items.customItemWithEnchantAndName.customName", "THE SHARP SWORD");
+
                 Item[] items = new Item[]{
                     new Item(new ItemStack(Material.OAK_LOG, 16), 100, 0.5),
                     new Item(new ItemStack(Material.OAK_SAPLING, 4), 100, 0.25),
@@ -168,10 +177,11 @@ public class Storage {
                     storeItems.set("items." + i + ".price", temp.price);
                     storeItems.set("items." + i + ".sellMultiplier", temp.sellMultiplier);
                 }
-
-                storeItems.save(storeItemsFile);
+                
+                Utils.getPlugin().getLogger().info("\n\n\n!!! I RECOMMEND CHANGING THE DEFAULT STORE ITEMS CONFIG !!!\n\n");
             }
 
+            storeItems.save(storeItemsFile);
         } catch (IOException ex) {
             Utils.getPlugin().getLogger().warning(ex.toString());
         }

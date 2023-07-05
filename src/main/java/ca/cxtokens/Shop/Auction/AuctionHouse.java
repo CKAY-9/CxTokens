@@ -1,4 +1,4 @@
-package ca.cxtokens.Shop.Public;
+package ca.cxtokens.Shop.Auction;
 
 import java.util.ArrayList;
 

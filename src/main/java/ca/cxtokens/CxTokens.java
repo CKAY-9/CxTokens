@@ -20,8 +20,8 @@ import ca.cxtokens.Listeners.EntityKill;
 import ca.cxtokens.Listeners.PlayerDeath;
 import ca.cxtokens.Listeners.PlayerJoin;
 import ca.cxtokens.Listeners.PlayerLeave;
-import ca.cxtokens.Shop.Public.AuctionHouse;
-import ca.cxtokens.Shop.Public.AuctionInteractionHandle;
+import ca.cxtokens.Shop.Auction.AuctionHouse;
+import ca.cxtokens.Shop.Auction.AuctionInteractionHandle;
 import ca.cxtokens.Shop.Static.StaticInteractionHandle;
 
 public final class CxTokens extends JavaPlugin {

@@ -1,4 +1,4 @@
-package ca.cxtokens.Shop.Public;
+package ca.cxtokens.Shop.Auction;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

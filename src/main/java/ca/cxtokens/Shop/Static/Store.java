@@ -61,9 +61,16 @@ public class Store {
             ArrayList<String> lore = new ArrayList<>();
             lore.add(Utils.formatText("&aBUY " + temp.stack.getAmount() + " FOR T$" + temp.price));
             lore.add(Utils.formatText("&cSELL " + temp.stack.getAmount() + " FOR T$" + Math.round(temp.price * temp.sellMultiplier)));
-            meta.setLore(lore);
 
+            meta.setLore(lore);
             stack.setItemMeta(meta);
+
+            if (Storage.storeItems.isSet("items." + key + ".enchants")) {
+                stack = temp.addEnchantments(key, stack);
+            }
+            if (Storage.storeItems.isSet("items." + key + ".customName")) {
+                stack = temp.setCustomName(key, stack);
+            }
 
             storeInv.setItem(storageIndex, stack);
             storageIndex++;

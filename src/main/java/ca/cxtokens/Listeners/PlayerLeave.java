@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import ca.cxtokens.CxTokens;
 import ca.cxtokens.TokenPlayer;
-import ca.cxtokens.Shop.Public.Item;
+import ca.cxtokens.Shop.Auction.Item;
 
 public class PlayerLeave implements Listener {
     private CxTokens tokens;
