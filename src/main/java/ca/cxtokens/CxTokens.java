@@ -10,6 +10,7 @@ import ca.cxtokens.Commands.BalTopCommand;
 import ca.cxtokens.Commands.BalanceCommand;
 import ca.cxtokens.Commands.BountyCommand;
 import ca.cxtokens.Commands.LotteryCommand;
+import ca.cxtokens.Commands.ResetCommand;
 import ca.cxtokens.Commands.SendCommand;
 import ca.cxtokens.Commands.StoreCommand;
 import ca.cxtokens.Commands.Completers.AuctionCompleter;
@@ -48,6 +49,7 @@ public final class CxTokens extends JavaPlugin {
         this.getCommand("tlottery").setExecutor(new LotteryCommand(this));
         this.getCommand("tbal").setExecutor(new BalanceCommand());
         this.getCommand("tstore").setExecutor(new StoreCommand());
+        this.getCommand("treset").setExecutor(new ResetCommand());
         this.getCommand("tsend").setExecutor(new SendCommand());
         this.getCommand("ttop").setExecutor(new BalTopCommand());
         this.getCommand("tbounty").setExecutor(new BountyCommand());
