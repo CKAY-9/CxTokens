@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import ca.cxtokens.CxTokens;
 import ca.cxtokens.TokenPlayer;
+import ca.cxtokens.Utils;
 
 public class AuctionCommand implements CommandExecutor {
     CxTokens tokens;
@@ -18,6 +19,12 @@ public class AuctionCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
+            return false;
+        }
+
+        if (args.length <= 0) {
+            sender.sendMessage(Utils.formatText("&c&lCommand Usage for " + command.getName() + ":"));
+            sender.sendMessage(Utils.formatText("&c  <house/sell> <number>"));
             return false;
         }
 
@@ -33,7 +40,8 @@ public class AuctionCommand implements CommandExecutor {
                     break;
             }
         } catch (Exception ex) {
-            this.tokens.getLogger().warning(ex.toString());
+            Utils.getPlugin().getLogger().info(ex.toString());
+            sender.sendMessage(Utils.formatText("&cError executing command: " + ex.getMessage()));
         }
 
         return false;

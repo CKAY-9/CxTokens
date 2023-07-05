@@ -16,6 +16,12 @@ public class BalanceCommand implements CommandExecutor {
             return false;
         }
 
+        if (args.length >= 2) {
+            sender.sendMessage(Utils.formatText("&c&lCommand Usage for " + command.getName() + ":"));
+            sender.sendMessage(Utils.formatText("&c <player/none>"));
+            return false;
+        }
+
         if (args.length >= 1) {
             Player p = Bukkit.getPlayerExact(args[0]);
             if (p == null) {

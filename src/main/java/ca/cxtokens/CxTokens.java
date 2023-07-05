@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ca.cxtokens.Commands.AboutCommand;
+import ca.cxtokens.Commands.AdminCommand;
 import ca.cxtokens.Commands.AuctionCommand;
 import ca.cxtokens.Commands.BalTopCommand;
 import ca.cxtokens.Commands.BalanceCommand;
@@ -13,6 +14,7 @@ import ca.cxtokens.Commands.LotteryCommand;
 import ca.cxtokens.Commands.ResetCommand;
 import ca.cxtokens.Commands.SendCommand;
 import ca.cxtokens.Commands.StoreCommand;
+import ca.cxtokens.Commands.Completers.AdminCompleter;
 import ca.cxtokens.Commands.Completers.AuctionCompleter;
 import ca.cxtokens.Commands.Completers.BountyCompleter;
 import ca.cxtokens.Commands.Completers.SendCompleter;
@@ -55,8 +57,10 @@ public final class CxTokens extends JavaPlugin {
         this.getCommand("tbounty").setExecutor(new BountyCommand());
         this.getCommand("tauction").setExecutor(new AuctionCommand(this));
         this.getCommand("cxtokens").setExecutor(new AboutCommand());
+        this.getCommand("tadmin").setExecutor(new AdminCommand(this));
 
         // Completers
+        this.getCommand("tadmin").setTabCompleter(new AdminCompleter());
         this.getCommand("tauction").setTabCompleter(new AuctionCompleter());
         this.getCommand("tsend").setTabCompleter(new SendCompleter());
         this.getCommand("tbounty").setTabCompleter(new BountyCompleter());

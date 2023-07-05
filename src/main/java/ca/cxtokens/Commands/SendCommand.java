@@ -15,6 +15,12 @@ public class SendCommand implements CommandExecutor {
         if (!(sender instanceof Player)) {
             return false;
         }
+
+        if (args.length <= 0) {
+            sender.sendMessage(Utils.formatText("&c&lCommand Usage for " + command.getName() + ":"));
+            sender.sendMessage(Utils.formatText("&c  <player> <number>"));
+            return false;
+        }
         
         try {
             TokenPlayer player = TokenPlayer.convertPlayerToTokenPlayer((Player) sender);
@@ -41,7 +47,8 @@ public class SendCommand implements CommandExecutor {
             target.ply.sendMessage(Utils.formatText("&aYou have recieved T$" + sendAmount + " from " + player.ply.getName()));
             player.ply.sendMessage(Utils.formatText("&aYou sent T$" + sendAmount + " to " + target.ply.getName()));
         } catch (Exception ex) {
-            Utils.getPlugin().getLogger().warning(ex.toString());
+            Utils.getPlugin().getLogger().info(ex.toString());
+            sender.sendMessage(Utils.formatText("&cError executing command: " + ex.getMessage()));
         }
         return false;
     }

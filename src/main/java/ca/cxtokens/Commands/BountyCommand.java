@@ -2,7 +2,6 @@ package ca.cxtokens.Commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -19,6 +18,12 @@ public class BountyCommand implements CommandExecutor {
         }
         if (!Storage.config.getBoolean("bounty.enabled", true)) {
             sender.sendMessage(Utils.formatText("&cBounties are not enabled on this server!"));
+            return false;
+        }
+
+        if (args.length <= 0) {
+            sender.sendMessage(Utils.formatText("&c&lCommand Usage for " + command.getName() + ":"));
+            sender.sendMessage(Utils.formatText("&c  <player> <number>"));
             return false;
         }
         
@@ -77,8 +82,9 @@ public class BountyCommand implements CommandExecutor {
                 me.subtractTokens(bountyPayout, true);
             }
             sender.sendMessage(Utils.formatText("&aSuccessfully placed the bounty!"));
-        } catch (CommandException ex) {
-            sender.sendMessage(Utils.formatText("&c" + ex.getMessage()));
+        } catch (Exception ex) {
+            Utils.getPlugin().getLogger().info(ex.toString());
+            sender.sendMessage(Utils.formatText("&cError executing command: " + ex.getMessage()));
         } 
         
         return false;
