@@ -6,6 +6,8 @@ import org.bukkit.inventory.ItemStack;
 public class Pages {
     // Pages are limited to 36 items
 
+    // TODO: Overhaul static shop to use a store.yml file
+
     public static Item[] basicBlocks = new Item[]{
         new Item(new ItemStack(Material.OAK_LOG, 16), 100, 0.5f),
         new Item(new ItemStack(Material.OAK_SAPLING, 4), 100, 0.25f),
@@ -69,7 +71,7 @@ public class Pages {
         new Item(new ItemStack(Material.BLAZE_ROD, 4), 450, 0.25f),
         new Item(new ItemStack(Material.SLIME_BALL, 8), 400, 0.45f),
         new Item(new ItemStack(Material.ENDER_PEARL, 8), 550, 0.45f),
-        new Item(new ItemStack(Material.SHULKER_BOX, 4), 750, 0.5f),
+        new Item(new ItemStack(Material.SHULKER_SHELL, 4), 750, 0.5f),
     };
 
     public static Item[][] pages = new Item[][]{

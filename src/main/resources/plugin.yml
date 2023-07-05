@@ -7,6 +7,8 @@ description: '${project.description}'
 commands:
   cxtokens:
     description: Information about CxTokens
+  tbounty:
+    description: Place a bounty on a player
   tbal:
     description: Get the balance of you or someone else online
   tstore:

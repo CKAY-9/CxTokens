@@ -71,6 +71,14 @@ public class Config {
                 config.set("auction.bidIncreaseMultiplier", 1.25);
             }
 
+            if (!config.isSet("bounty.enabled")) {
+                config.set("bounty.enabled", true);
+                config.set("bounty.showInName", true);
+                config.set("bounty.allowSelfBounty", true);
+                config.set("bounty.minBounty", 500);
+                config.set("bounty.maxBounty", Integer.MAX_VALUE);
+            }
+
             config.save(configFile);
         } catch (IOException ex) {
             Utils.getPlugin().getLogger().warning(ex.toString());
