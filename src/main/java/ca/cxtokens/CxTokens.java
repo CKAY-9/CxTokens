@@ -32,7 +32,7 @@ public final class CxTokens extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Config.initializeData();   
+        Storage.initializeData();   
 
         // Events
         this.getServer().getPluginManager().registerEvents(new PlayerJoin(), this);

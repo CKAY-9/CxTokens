@@ -9,21 +9,21 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import ca.cxtokens.Config;
+import ca.cxtokens.Storage;
 import ca.cxtokens.CxTokens;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
+import ca.cxtokens.Shop.GlobalShop;
 
 public class AuctionHouse {
     CxTokens tokens;
-    private int sweepID = 0;
     public ArrayList<Item> auctionItems = new ArrayList<>();
 
     public AuctionHouse(CxTokens tokens) {
         this.tokens = tokens;
 
         // Sweeping goes over the items in the house and either remove them, continue, or sell them to the highest bidder
-        this.sweepID = this.tokens.getServer().getScheduler().scheduleSyncRepeatingTask(this.tokens, new Runnable() {
+        this.tokens.getServer().getScheduler().scheduleSyncRepeatingTask(this.tokens, new Runnable() {
             @Override
             public void run() {
                 tokens.getLogger().info("Running Auction House sweep...");
@@ -57,13 +57,22 @@ public class AuctionHouse {
         Inventory auctionInv = Bukkit.createInventory(null, 54, Utils.formatText("&a&lAuction House - Page " + (pageIndex + 1)));
         auctionInv.clear();
 
-        /*
-         * (pageIndex * 36) is used to "scroll" the pages in the auction house
-         * Example: 
-         *  pI = 0: get the first page until it's end (35)
-         *  pI = 3: get the third page until it's end (~105)
-         */
-        for (int i = (0 + (pageIndex * 36)); i < this.auctionItems.size(); i++) {
+        // read Shop/Static/Store.java for why this is this
+        int start = pageIndex * GlobalShop.MAX_ITEMS_PER_PAGE;
+        int limit = GlobalShop.MAX_ITEMS_PER_PAGE;
+        if (start > 0) {
+            limit = (this.auctionItems.size() % start) + GlobalShop.MAX_ITEMS_PER_PAGE;
+        }
+        if (this.auctionItems.size() < GlobalShop.MAX_ITEMS_PER_PAGE) {
+            limit = this.auctionItems.size();
+        }
+
+        int storageIndex = 0;
+        for (int i = (0 + start); i < limit; i++) {
+            if (storageIndex == GlobalShop.MAX_ITEMS_PER_PAGE) {
+                break;
+            }
+
             Item temp = this.auctionItems.get(i);
 
             ItemStack stack = temp.item.clone();
@@ -73,12 +82,13 @@ public class AuctionHouse {
             lore.add(Utils.formatText("&aCurrent Bid: &lT$" + temp.currentBid));
             lore.add(Utils.formatText("&aSeller: &l" + temp.seller.getName()));
             lore.add(Utils.formatText("&aTime Remaining: &l" + temp.sweepsUntilComplete + "m"));
-            lore.add(Utils.formatText("&cPlace Bid: &lT$" + Math.round(temp.currentBid * Config.config.getDouble("auction.bidIncreaseMultiplier", 1.25))));
+            lore.add(Utils.formatText("&cPlace Bid: &lT$" + Math.round(temp.currentBid * Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25))));
             meta.setLore(lore);
 
             stack.setItemMeta(meta);
 
-            auctionInv.setItem(i, stack);
+            auctionInv.setItem(storageIndex, stack);
+            storageIndex++;
         }
 
         ItemStack backOrExit = new ItemStack(Material.RED_CONCRETE, 1);
@@ -91,7 +101,7 @@ public class AuctionHouse {
         backOrExit.setItemMeta(boeMeta);
         auctionInv.setItem(45, backOrExit);
 
-        if (pageIndex < (Math.round(this.auctionItems.size() / 36) - 1)) {
+        if (pageIndex < Math.round(this.auctionItems.size() / GlobalShop.MAX_ITEMS_PER_PAGE)) {
             ItemStack next = new ItemStack(Material.GREEN_CONCRETE, 1);
             ItemMeta nextMeta = next.getItemMeta();
             nextMeta.setDisplayName(Utils.formatText("&aGo to page " + (pageIndex + 2))); // + 2 is just so the pages go 1, 2, 3,... instead of 0, 1, 2,...

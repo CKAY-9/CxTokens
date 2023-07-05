@@ -1,7 +1,9 @@
 package ca.cxtokens.Shop.Static;
 
 import java.util.ArrayList;
+import java.util.Set;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,8 +11,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
+import ca.cxtokens.Storage;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
+import ca.cxtokens.Shop.GlobalShop;
 
 public class StaticInteractionHandle implements Listener {
     /*
@@ -27,7 +31,7 @@ public class StaticInteractionHandle implements Listener {
             player.sendMessage(Utils.formatText("&cYou don't have enough tokens to purchase this item!"));
             return;
         }
-        
+
         tokenPlayer.subtractTokens(item.price, false);
         player.getInventory().addItem(new ItemStack(item.stack.getType(), item.stack.getAmount()));
     }
@@ -44,7 +48,8 @@ public class StaticInteractionHandle implements Listener {
             if (it != null && it.getType() == item.stack.getType()) {
                 foundIndexes.add(i);
                 currentStackAmount += it.getAmount();
-                if (currentStackAmount >= itemNum) break;
+                if (currentStackAmount >= itemNum)
+                    break;
             }
             i++;
         }
@@ -52,7 +57,7 @@ public class StaticInteractionHandle implements Listener {
         if (currentStackAmount >= item.stack.getAmount()) {
             for (int j = 0; j < foundIndexes.size(); j++) {
                 int index = foundIndexes.get(j);
-                itemNum -= player.getInventory().getItem(index).getAmount();   
+                itemNum -= player.getInventory().getItem(index).getAmount();
                 if (itemNum <= 0) {
                     player.getInventory().getItem(index).setAmount(Math.abs(itemNum));
                 } else {
@@ -68,7 +73,7 @@ public class StaticInteractionHandle implements Listener {
     private void sellItem(Item item, Player player) {
         TokenPlayer tokenPlayer = TokenPlayer.convertPlayerToTokenPlayer(player);
         if (!player.getInventory().contains(item.stack.getType())) {
-            player.sendMessage(Utils.formatText("&cYou has to have this item in your inventory to sell!"));
+            player.sendMessage(Utils.formatText("&cYou have to have this item in your inventory to sell!"));
             return;
         }
 
@@ -76,11 +81,11 @@ public class StaticInteractionHandle implements Listener {
             player.sendMessage(Utils.formatText("&cYou don't have enough of this item to sell it!"));
             return;
         }
-        
-        int sellPrice = Math.round(item.price * item.sellMultiplier);
+
+        int sellPrice = (int) Math.round(item.price * item.sellMultiplier);
         tokenPlayer.addTokens(sellPrice, false);
     }
-    
+
     @EventHandler
     public void onStoreClick(InventoryClickEvent e) {
         if (e.getClickedInventory() == null) {
@@ -110,25 +115,34 @@ public class StaticInteractionHandle implements Listener {
             }
 
             // Go Back
-            Store.openStaticStorePage(TokenPlayer.convertPlayerToTokenPlayer((Player) e.getWhoClicked()), (currentPage - 1));
+            Store.openStaticStorePage(TokenPlayer.convertPlayerToTokenPlayer((Player) e.getWhoClicked()),
+                    (currentPage - 1));
             return;
         }
 
-        if (clicked == NEXT_PAGE) {
+        if (clicked == NEXT_PAGE && currentPage < Math.round(Storage.storeItems.getConfigurationSection("items").getKeys(false).size() / GlobalShop.MAX_ITEMS_PER_PAGE)) {
             e.getView().close();
-            Store.openStaticStorePage(TokenPlayer.convertPlayerToTokenPlayer((Player) e.getWhoClicked()), (currentPage + 1));
+            Store.openStaticStorePage(TokenPlayer.convertPlayerToTokenPlayer((Player) e.getWhoClicked()),
+                    (currentPage + 1));
             return;
         }
 
-        if (clicked >= Pages.pages[currentPage].length) {
-            return;
-        }
-        if (currentPage > Pages.pages.length) {
+        Set<String> storeItemKeys = Storage.storeItems.getConfigurationSection("items").getKeys(false);
+        int index = clicked + (GlobalShop.MAX_ITEMS_PER_PAGE * currentPage);
+
+        if (clicked >= GlobalShop.MAX_ITEMS_PER_PAGE || clicked > (storeItemKeys.size() - (GlobalShop.MAX_ITEMS_PER_PAGE * currentPage) - 1)) {
             return;
         }
 
-        Item item = Pages.pages[currentPage][clicked];
-
+        String key = (String) storeItemKeys.toArray()[index];
+        Item item = new Item(
+            new ItemStack(
+                Material.matchMaterial(Storage.storeItems.getString("items." + key + ".material", "air")),
+                Storage.storeItems.getInt("items." + key + ".amount", 0)),
+            Storage.storeItems.getInt("items." + key + ".price", 0),
+            Storage.storeItems.getDouble("items." + key + ".sellMultiplier", 0)
+        );
+            
         if (e.getClick().isLeftClick()) {
             purchaseItem(item, (Player) e.getWhoClicked());
             return;

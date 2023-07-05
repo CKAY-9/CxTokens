@@ -3,7 +3,7 @@ package ca.cxtokens.Events;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import ca.cxtokens.Config;
+import ca.cxtokens.Storage;
 import ca.cxtokens.CxTokens;
 import ca.cxtokens.TokenPlayer;
 
@@ -16,14 +16,14 @@ public class MiscEvents {
         this.tokens = tokens;
         this.tokens.getLogger().info("Registering Misc Events");
 
-        if (Config.config.getBoolean("routineTokens.enabled", true)) {
-            int timeBetweenRoutine = 20 * Config.config.getInt("routineTokens.waitTimeInSeconds", 300);
+        if (Storage.config.getBoolean("routineTokens.enabled", true)) {
+            int timeBetweenRoutine = 20 * Storage.config.getInt("routineTokens.waitTimeInSeconds", 300);
 
             this.tokens.getLogger().info("Registering routine tokens");
             this.tokens.getServer().getScheduler().scheduleSyncRepeatingTask(this.tokens, new Runnable() {
                 @Override
                 public void run() {
-                    int tokenAmount = Config.config.getInt("routineTokens.amountOfTokens", 50);
+                    int tokenAmount = Storage.config.getInt("routineTokens.amountOfTokens", 50);
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         TokenPlayer.convertPlayerToTokenPlayer(p)
                             .addTokens(tokenAmount, false);;
@@ -31,9 +31,9 @@ public class MiscEvents {
                 }
             }, timeBetweenRoutine, timeBetweenRoutine);
         }
-        if (Config.config.getBoolean("lottery.enabled", true)) {
+        if (Storage.config.getBoolean("lottery.enabled", true)) {
             lottery = new Lottery(this.tokens);
-            int timeBetweenLottery = 20 * Config.config.getInt("lottery.waitTimeInSeconds", 1800);
+            int timeBetweenLottery = 20 * Storage.config.getInt("lottery.waitTimeInSeconds", 1800);
     
             this.tokens.getLogger().info("Registering token lottery");
             this.tokens.getServer().getScheduler().scheduleSyncRepeatingTask(this.tokens, 

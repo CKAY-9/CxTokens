@@ -20,10 +20,10 @@ public class TokenPlayer {
 
     public void updateTokenPlayer() {
         try {
-            Config.data.set("players." + this.ply.getUniqueId() + ".tokens", this.tokens);
-            Config.data.set("players." + this.ply.getUniqueId() + ".bounty", this.bounty);
-            Config.data.set("players." + this.ply.getUniqueId() + ".name", this.ply.getName());
-            Config.data.save(Config.dataFile);
+            Storage.data.set("players." + this.ply.getUniqueId() + ".tokens", this.tokens);
+            Storage.data.set("players." + this.ply.getUniqueId() + ".bounty", this.bounty);
+            Storage.data.set("players." + this.ply.getUniqueId() + ".name", this.ply.getName());
+            Storage.data.save(Storage.dataFile);
         } catch (IOException ex) {
             Utils.getPlugin().getLogger().warning(ex.toString());
         }
@@ -56,12 +56,12 @@ public class TokenPlayer {
     }
     
     public int getTokens() {
-        return Config.data.getInt("players." + ply.getUniqueId() + ".tokens", Config.config.getInt("config.defaultTokenAmount", 500));
+        return Storage.data.getInt("players." + ply.getUniqueId() + ".tokens", Storage.config.getInt("config.defaultTokenAmount", 500));
     }
 
     public void reset(boolean silent) {
-        if (!Config.data.isSet("players." + ply.getUniqueId())) return;
-        this.tokens = Config.config.getInt("config.defaultTokenAmount", 500);
+        if (!Storage.data.isSet("players." + ply.getUniqueId())) return;
+        this.tokens = Storage.config.getInt("config.defaultTokenAmount", 500);
         updateTokenPlayer();
         if (silent) return;
         ply.sendMessage(Utils.formatText("&aSuccessfully reset your token account!"));
@@ -75,7 +75,7 @@ public class TokenPlayer {
     public void setBounty(int bountyPayout, boolean silent) {
         this.bounty = bountyPayout;
         updateTokenPlayer();
-        if (Config.config.getBoolean("bounty.showInName", true)) {
+        if (Storage.config.getBoolean("bounty.showInName", true)) {
             ply.setDisplayName(ply.getName() + Utils.formatText("&c&l [BOUNTY: T$" + this.bounty + "]"));
             ply.setPlayerListName(ply.getName() + Utils.formatText("&c&l [BOUNTY: T$" + this.bounty + "]"));
         }
@@ -104,26 +104,26 @@ public class TokenPlayer {
      * 
      */
     public static TokenPlayer convertPlayerToTokenPlayer(Player p) {
-        if (!Config.data.isSet("players." + p.getUniqueId())) {
+        if (!Storage.data.isSet("players." + p.getUniqueId())) {
             // Create new token data in file
             try {
-                Config.data.set("players." + p.getUniqueId() + ".tokens", Config.config.getInt("config.defaultTokenAmount", 500));
-                Config.data.set("players." + p.getUniqueId() + ".name", p.getName());
-                Config.data.save(Config.dataFile);
+                Storage.data.set("players." + p.getUniqueId() + ".tokens", Storage.config.getInt("config.defaultTokenAmount", 500));
+                Storage.data.set("players." + p.getUniqueId() + ".name", p.getName());
+                Storage.data.save(Storage.dataFile);
             } catch (IOException ex) {
                 Utils.getPlugin().getLogger().warning(ex.toString());
                 return new TokenPlayer(0, 0, p);
             }
         }
-        if (!Config.data.isSet("players." + p.getUniqueId() + ".bounty")) {
+        if (!Storage.data.isSet("players." + p.getUniqueId() + ".bounty")) {
             try {
-                Config.data.set("players." + p.getUniqueId() + ".bounty", 0);
-                Config.data.save(Config.dataFile);
+                Storage.data.set("players." + p.getUniqueId() + ".bounty", 0);
+                Storage.data.save(Storage.dataFile);
             } catch (IOException ex) {
                 Utils.getPlugin().getLogger().warning(ex.toString());
                 return new TokenPlayer(0, 0, p);
             }
         }
-        return new TokenPlayer(Config.data.getInt("players." + p.getUniqueId() + ".tokens"), Config.data.getInt("players." + p.getUniqueId() + ".bounty"), p);
+        return new TokenPlayer(Storage.data.getInt("players." + p.getUniqueId() + ".tokens"), Storage.data.getInt("players." + p.getUniqueId() + ".bounty"), p);
     }
 }

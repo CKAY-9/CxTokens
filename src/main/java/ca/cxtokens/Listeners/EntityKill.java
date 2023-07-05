@@ -7,7 +7,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-import ca.cxtokens.Config;
+import ca.cxtokens.Storage;
 import ca.cxtokens.TokenPlayer;
 
 public class EntityKill implements Listener {
@@ -17,12 +17,12 @@ public class EntityKill implements Listener {
             return;
         }
 
-        if (!Config.config.getBoolean("mobRewards.enabled", true)) {
+        if (!Storage.config.getBoolean("mobRewards.enabled", true)) {
             return;
         }
 
-        int minAmount = Config.config.getInt("mobRewards.minReward", 5);
-        int maxAmount = Config.config.getInt("mobRewards.maxRewards", 10);
+        int minAmount = Storage.config.getInt("mobRewards.minReward", 5);
+        int maxAmount = Storage.config.getInt("mobRewards.maxRewards", 10);
         Random rand = new Random();
         int giveAmount = rand.nextInt(minAmount, maxAmount + 1);
 

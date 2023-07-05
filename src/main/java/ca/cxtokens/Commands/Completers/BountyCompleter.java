@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import ca.cxtokens.Config;
+import ca.cxtokens.Storage;
 
 public class BountyCompleter implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
@@ -22,7 +22,7 @@ public class BountyCompleter implements TabCompleter {
             return players;
         }
         if (args.length == 2) {
-            return Collections.singletonList(Integer.toString(Config.config.getInt("bounty.minBounty", 500)));
+            return Collections.singletonList(Integer.toString(Storage.config.getInt("bounty.minBounty", 500)));
         }
 
         return null;

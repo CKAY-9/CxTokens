@@ -3,7 +3,7 @@ package ca.cxtokens.Shop.Public;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import ca.cxtokens.Config;
+import ca.cxtokens.Storage;
 
 public class Item {
     public Player seller;
@@ -16,7 +16,7 @@ public class Item {
         this.seller = seller;
         this.currentBid = currentBid;
         this.item = item;
-        this.sweepsUntilComplete = Config.config.getInt("auction.sweepsPerItem", 60);
+        this.sweepsUntilComplete = Storage.config.getInt("auction.sweepsPerItem", 60);
         this.bidder = null;
     }
 }

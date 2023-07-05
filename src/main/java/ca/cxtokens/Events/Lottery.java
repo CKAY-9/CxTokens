@@ -6,7 +6,7 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import ca.cxtokens.Config;
+import ca.cxtokens.Storage;
 import ca.cxtokens.CxTokens;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
@@ -30,7 +30,7 @@ public class Lottery implements Runnable {
     public void removePlayerFromLottery(Player p) {
         for (TokenPlayer temp : this.joinedPlayers) {
             if (temp.ply == p) {
-                temp.addTokens(Config.config.getInt("lottery.entryConst", 150), true);
+                temp.addTokens(Storage.config.getInt("lottery.entryConst", 150), true);
                 joinedPlayers.remove(temp);
                 break;
             }
@@ -60,7 +60,7 @@ public class Lottery implements Runnable {
                     p.sendMessage("");
                     p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
                     p.sendMessage(Utils.formatText("&aType \"/tlottery\" to join in!"));
-                    p.sendMessage(Utils.formatText("&aJoin cost: T$" + Config.config.getInt("lottery.entryCost", 150)));
+                    p.sendMessage(Utils.formatText("&aJoin cost: T$" + Storage.config.getInt("lottery.entryCost", 150)));
                     p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
                     p.sendMessage("");
                 }
@@ -77,13 +77,13 @@ public class Lottery implements Runnable {
                 }
 
                 TokenPlayer selected = joinedPlayers.get(new Random().nextInt(joinedPlayers.size()));
-                selected.addTokens(joinedPlayers.size() * Config.config.getInt("lottery.entryCost", 150), false);
+                selected.addTokens(joinedPlayers.size() * Storage.config.getInt("lottery.entryCost", 150), false);
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     p.sendMessage("");
                     p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
                     p.sendMessage(Utils.formatText("&a" + selected.ply.getName() + " has won the lottery!"));
-                    p.sendMessage(Utils.formatText("&aThey won T$" + joinedPlayers.size() * Config.config.getInt("lottery.entryCost", 150)));
+                    p.sendMessage(Utils.formatText("&aThey won T$" + joinedPlayers.size() * Storage.config.getInt("lottery.entryCost", 150)));
                     p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
                     p.sendMessage("");
                 }

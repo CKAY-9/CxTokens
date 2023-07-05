@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import ca.cxtokens.Config;
+import ca.cxtokens.Storage;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
 
@@ -17,7 +17,7 @@ public class BountyCommand implements CommandExecutor {
         if (!(sender instanceof Player)) {
             return false;
         }
-        if (!Config.config.getBoolean("bounty.enabled", true)) {
+        if (!Storage.config.getBoolean("bounty.enabled", true)) {
             sender.sendMessage(Utils.formatText("&cBounties are not enabled on this server!"));
             return false;
         }
@@ -33,7 +33,7 @@ public class BountyCommand implements CommandExecutor {
             }
 
             boolean isSelf = bountyPlayer.getUniqueId().equals(player.getUniqueId());
-            if (isSelf && !Config.config.getBoolean("bounty.allowSelfBounty", true)) {
+            if (isSelf && !Storage.config.getBoolean("bounty.allowSelfBounty", true)) {
                 sender.sendMessage(Utils.formatText("&cYou cannot place a bounty on yourself!"));
                 return false;
             }
@@ -41,13 +41,13 @@ public class BountyCommand implements CommandExecutor {
             int bountyPayout = Integer.parseInt(args[1]);
             TokenPlayer me = TokenPlayer.convertPlayerToTokenPlayer(player);
 
-            if (bountyPayout > Config.config.getInt("bounty.maxBounty", Integer.MAX_VALUE)) {
-                sender.sendMessage(Utils.formatText("&cThe maximum bounty amount is T$" + Config.config.getInt("bounty.maxBounty", Integer.MAX_VALUE) + "!"));
+            if (bountyPayout > Storage.config.getInt("bounty.maxBounty", Integer.MAX_VALUE)) {
+                sender.sendMessage(Utils.formatText("&cThe maximum bounty amount is T$" + Storage.config.getInt("bounty.maxBounty", Integer.MAX_VALUE) + "!"));
                 return false;
             }
 
-            if (bountyPayout < Config.config.getInt("bounty.minBounty", 500)) {
-                sender.sendMessage(Utils.formatText("&cThe minimum bounty amount is T$" + Config.config.getInt("bounty.minBounty", 500) + "!"));
+            if (bountyPayout < Storage.config.getInt("bounty.minBounty", 500)) {
+                sender.sendMessage(Utils.formatText("&cThe minimum bounty amount is T$" + Storage.config.getInt("bounty.minBounty", 500) + "!"));
                 return false;
             }
 

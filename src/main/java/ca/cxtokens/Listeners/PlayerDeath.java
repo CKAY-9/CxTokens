@@ -5,7 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import ca.cxtokens.Config;
+import ca.cxtokens.Storage;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
 
@@ -21,7 +21,7 @@ public class PlayerDeath implements Listener {
         TokenPlayer killer = TokenPlayer.convertPlayerToTokenPlayer(e.getEntity().getPlayer());
 
         boolean isSelf = killer.ply.getUniqueId().equals(player.ply.getUniqueId());
-        if (isSelf && !Config.config.getBoolean("bounty.allowSelfBounty", true)) {
+        if (isSelf && !Storage.config.getBoolean("bounty.allowSelfBounty", true)) {
             return;
         }
 
