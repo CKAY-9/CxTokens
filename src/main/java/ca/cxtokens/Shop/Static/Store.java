@@ -22,6 +22,9 @@ public class Store {
         Inventory storeInv = Bukkit.createInventory(null, 54, Utils.formatText("&a&lStore - Page " + (pageIndex + 1)));
         storeInv.clear();
 
+        // Fill enchant books
+        
+
         Item[] items = Pages.pages[pageIndex];
         for (int i = 0; i < items.length; i++) {
             ItemStack stack = new ItemStack(items[i].stack.getType(), 1);
