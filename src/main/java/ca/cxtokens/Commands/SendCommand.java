@@ -35,8 +35,12 @@ public class SendCommand implements CommandExecutor {
                 player.ply.sendMessage(Utils.formatText("&cYou don't have enough tokens to send this amount!"));
                 return false;
             }
-            if (Bukkit.getPlayerExact(targetPlayer) == null) {
+            if (Bukkit.getPlayer(targetPlayer) == null) {
                 player.ply.sendMessage(Utils.formatText("&cThis player either doesn't exist or isn't online!"));
+                return false;
+            }
+            if (Bukkit.getPlayer(targetPlayer).getUniqueId().equals(player.ply.getUniqueId())) {
+                player.ply.sendMessage(Utils.formatText("&cYou cannot send money to yourself!"));
                 return false;
             }
 
