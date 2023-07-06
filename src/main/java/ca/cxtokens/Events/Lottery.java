@@ -60,7 +60,7 @@ public class Lottery implements Runnable {
                     p.sendMessage("");
                     p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
                     p.sendMessage(Utils.formatText("&aType \"/tlottery\" to join in!"));
-                    p.sendMessage(Utils.formatText("&aJoin cost: T$" + Storage.config.getInt("lottery.entryCost", 150)));
+                    p.sendMessage(Utils.formatText("&aJoin cost: " + CxTokens.currency + Storage.config.getInt("lottery.entryCost", 150)));
                     p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
                     p.sendMessage("");
                 }
@@ -83,7 +83,7 @@ public class Lottery implements Runnable {
                     p.sendMessage("");
                     p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
                     p.sendMessage(Utils.formatText("&a" + selected.ply.getName() + " has won the lottery!"));
-                    p.sendMessage(Utils.formatText("&aThey won T$" + joinedPlayers.size() * Storage.config.getInt("lottery.entryCost", 150)));
+                    p.sendMessage(Utils.formatText("&aThey won " + CxTokens.currency + (joinedPlayers.size() * Storage.config.getInt("lottery.entryCost", 150))));
                     p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
                     p.sendMessage("");
                 }

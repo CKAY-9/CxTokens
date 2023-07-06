@@ -11,6 +11,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import ca.cxtokens.CxTokens;
 import ca.cxtokens.Storage;
 import ca.cxtokens.Utils;
 
@@ -42,7 +43,7 @@ public class BalTopCommand implements CommandExecutor {
         int index = 0;
         for (String name : sortedMap.keySet()) {
             if (index == 5) break;
-            sender.sendMessage(Utils.formatText("&5" + name + " - &9T$" + sortedMap.get(name)));
+            sender.sendMessage(Utils.formatText("&5" + name + " - &9" + CxTokens.currency + sortedMap.get(name)));
             index++;
         }
         sender.sendMessage(Utils.formatText("&6&l-------------------------"));

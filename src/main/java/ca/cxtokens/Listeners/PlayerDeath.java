@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import ca.cxtokens.CxTokens;
 import ca.cxtokens.Storage;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
@@ -33,7 +34,7 @@ public class PlayerDeath implements Listener {
         }
         
         e.setDeathMessage("");
-        Bukkit.broadcastMessage(Utils.formatText("&a" + killer.ply.getName() + " claimed the bounty on " + player.ply.getName() + " for T$" + player.getBounty()));
+        Bukkit.broadcastMessage(Utils.formatText("&a" + killer.ply.getName() + " claimed the bounty on " + player.ply.getName() + " for " + CxTokens.currency + player.getBounty()));
 
         player.removeBounty();
     }

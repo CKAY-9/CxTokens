@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import ca.cxtokens.CxTokens;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
 
@@ -15,6 +16,6 @@ public class PlayerJoin implements Listener {
     public void playerJoinEvent(PlayerJoinEvent event) {
         Player ply = event.getPlayer();
         TokenPlayer tempToken = TokenPlayer.convertPlayerToTokenPlayer(ply);
-        ply.sendMessage(Utils.formatText("&aYour current token balance is T$" + tempToken.getTokens()));
+        ply.sendMessage(Utils.formatText("&aYour current token balance is " + CxTokens.currency + tempToken.getTokens()));
     }
 } 

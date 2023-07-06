@@ -9,6 +9,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import ca.cxtokens.CxTokens;
 import ca.cxtokens.Storage;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
@@ -59,8 +60,8 @@ public class Store {
             ItemMeta meta = stack.getItemMeta();
 
             ArrayList<String> lore = new ArrayList<>();
-            lore.add(Utils.formatText("&aBUY " + temp.stack.getAmount() + " FOR T$" + temp.price));
-            lore.add(Utils.formatText("&cSELL " + temp.stack.getAmount() + " FOR T$" + Math.round(temp.price * temp.sellMultiplier)));
+            lore.add(Utils.formatText("&aBUY " + temp.stack.getAmount() + " FOR " + CxTokens.currency + temp.price));
+            lore.add(Utils.formatText("&cSELL " + temp.stack.getAmount() + " FOR " + CxTokens.currency + Math.round(temp.price * temp.sellMultiplier)));
 
             meta.setLore(lore);
             stack.setItemMeta(meta);

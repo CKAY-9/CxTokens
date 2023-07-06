@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import ca.cxtokens.CxTokens;
 import ca.cxtokens.Storage;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
@@ -47,12 +48,12 @@ public class BountyCommand implements CommandExecutor {
             TokenPlayer me = TokenPlayer.convertPlayerToTokenPlayer(player);
 
             if (bountyPayout > Storage.config.getLong("bounty.maxBounty", Long.MAX_VALUE)) {
-                sender.sendMessage(Utils.formatText("&cThe maximum bounty amount is T$" + Storage.config.getLong("bounty.maxBounty", Long.MAX_VALUE) + "!"));
+                sender.sendMessage(Utils.formatText("&cThe maximum bounty amount is " + CxTokens.currency + Storage.config.getLong("bounty.maxBounty", Long.MAX_VALUE) + "!"));
                 return false;
             }
 
             if (bountyPayout < Storage.config.getLong("bounty.minBounty", 500)) {
-                sender.sendMessage(Utils.formatText("&cThe minimum bounty amount is T$" + Storage.config.getLong("bounty.minBounty", 500L) + "!"));
+                sender.sendMessage(Utils.formatText("&cThe minimum bounty amount is " + CxTokens.currency + Storage.config.getLong("bounty.minBounty", 500L) + "!"));
                 return false;
             }
 

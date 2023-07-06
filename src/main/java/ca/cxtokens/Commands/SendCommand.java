@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import ca.cxtokens.CxTokens;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
 
@@ -48,8 +49,8 @@ public class SendCommand implements CommandExecutor {
             target.addTokens(sendAmount, true);
             player.subtractTokens(sendAmount, true);
 
-            target.ply.sendMessage(Utils.formatText("&aYou have recieved T$" + sendAmount + " from " + player.ply.getName()));
-            player.ply.sendMessage(Utils.formatText("&aYou sent T$" + sendAmount + " to " + target.ply.getName()));
+            target.ply.sendMessage(Utils.formatText("&aYou have recieved " + CxTokens.currency + sendAmount + " from " + player.ply.getName()));
+            player.ply.sendMessage(Utils.formatText("&aYou sent " + CxTokens.currency + sendAmount + " to " + target.ply.getName()));
         } catch (Exception ex) {
             Utils.getPlugin().getLogger().info(ex.toString());
             sender.sendMessage(Utils.formatText("&cError executing command: " + ex.getMessage()));

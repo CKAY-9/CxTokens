@@ -1,6 +1,6 @@
 # CxTokens
 
-*Plugin Version: 0.2 (1.2 beta)*</br>
+*Plugin Version: 0.2.1 (1.2.1 beta)*</br>
 *Minecraft Version: 1.19+*
 
 CxTokens is a token (money) system for Spigot/Paper Minecraft servers. 
@@ -10,7 +10,8 @@ This plugin is not fully complete and still needs to be finished. Some features 
 
 ## Features
 - Lottery event
+- Auction House
 - Item Store
-- Useful commands (ex: /treset, /tsend)
+- Commands
 - Local data storing (no need for a database)
-- Configuration file for ease-of-use
+- Highly configurable

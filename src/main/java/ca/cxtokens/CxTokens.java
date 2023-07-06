@@ -33,6 +33,8 @@ public final class CxTokens extends JavaPlugin {
     public MiscEvents events;
     public AuctionHouse auctionHouse;
 
+    public static String currency = "T$";
+
     @Override
     public void onEnable() {
         Storage.initializeData();   

@@ -31,7 +31,7 @@ public class AuctionInteractionHandle implements Listener {
         TokenPlayer tokenPlayer = TokenPlayer.convertPlayerToTokenPlayer(player);
 
         if (tokenPlayer.getTokens() < Math.round(item.currentBid * Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25))) {
-            player.sendMessage(Utils.formatText("&cYou need to have at least T$" + Math.round(item.currentBid * Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25)) + " to place a bid!"));
+            player.sendMessage(Utils.formatText("&cYou need to have at least " + CxTokens.currency + Math.round(item.currentBid * Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25)) + " to place a bid!"));
             return;
         }
 
@@ -44,8 +44,8 @@ public class AuctionInteractionHandle implements Listener {
         // set new bidder
         item.bidder = player;
         item.currentBid = (long) Math.round(item.currentBid * Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25));
-        player.sendMessage(Utils.formatText("&aYour bid has been placed for T$" + item.currentBid));
-        item.seller.sendMessage(Utils.formatText("&aYour " + item.item.getType().name() + " has recieved a new bid of T$" + item.currentBid));
+        player.sendMessage(Utils.formatText("&aYour bid has been placed for " + CxTokens.currency + item.currentBid));
+        item.seller.sendMessage(Utils.formatText("&aYour " + item.item.getType().name() + " has recieved a new bid of " + CxTokens.currency + item.currentBid));
     }
 
     @EventHandler

@@ -55,10 +55,10 @@ public class AuctionHouse {
                             }
 
                             // give
-                            item.seller.sendMessage(Utils.formatText("&aYour item has been sold for T$" + item.currentBid + " on the Auction House!"));
+                            item.seller.sendMessage(Utils.formatText("&aYour item has been sold for " + CxTokens.currency + item.currentBid + " on the Auction House!"));
                             TokenPlayer.convertPlayerToTokenPlayer(item.seller).addTokens(item.currentBid, true);
 
-                            item.bidder.sendMessage(Utils.formatText("&aSuccessfully bought an item off the Auction House for T$" + item.currentBid));
+                            item.bidder.sendMessage(Utils.formatText("&aSuccessfully bought an item off the Auction House for " + CxTokens.currency + item.currentBid));
                             item.bidder.getInventory().addItem(item.item);
                         }
 
@@ -96,10 +96,10 @@ public class AuctionHouse {
             ItemMeta meta = stack.getItemMeta();
 
             ArrayList<String> lore = new ArrayList<>();
-            lore.add(Utils.formatText("&aCurrent Bid: &lT$" + temp.currentBid));
+            lore.add(Utils.formatText("&aCurrent Bid: &l" + CxTokens.currency + temp.currentBid));
             lore.add(Utils.formatText("&aSeller: &l" + temp.seller.getName()));
             lore.add(Utils.formatText("&aTime Remaining: &l" + temp.sweepsUntilComplete + "m"));
-            lore.add(Utils.formatText("&cPlace Bid: &lT$" + Math.round(temp.currentBid * Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25))));
+            lore.add(Utils.formatText("&cPlace Bid: &l" + CxTokens.currency + Math.round(temp.currentBid * Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25))));
             meta.setLore(lore);
 
             stack.setItemMeta(meta);

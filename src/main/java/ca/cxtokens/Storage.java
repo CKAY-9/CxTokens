@@ -48,6 +48,10 @@ public class Storage {
             if (!config.isSet("config.defaultTokenAmount")) {
                 config.set("config.defaultTokenAmount", 500L);
             }
+            if (!config.isSet("config.currency")) {
+                config.set("config.currency", "T$");
+            }
+            CxTokens.currency = config.getString("config.currency");
             
             // Mob Rewards
             if (!config.isSet("mobRewards.enabled")) {

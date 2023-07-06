@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import ca.cxtokens.CxTokens;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
 
@@ -29,11 +30,11 @@ public class BalanceCommand implements CommandExecutor {
                 return false;
             }
             TokenPlayer t = TokenPlayer.convertPlayerToTokenPlayer(p);
-            sender.sendMessage(Utils.formatText("&aThe current balance of " + p.getName() + " is T$" + t.getTokens()));
+            sender.sendMessage(Utils.formatText("&aThe current balance of " + p.getName() + " is " + CxTokens.currency + t.getTokens()));
         } else {
             // Local Player
             TokenPlayer t = TokenPlayer.convertPlayerToTokenPlayer((Player) sender);
-            sender.sendMessage(Utils.formatText("&aYour current balance is T$" + t.getTokens()));
+            sender.sendMessage(Utils.formatText("&aYour current balance is " + CxTokens.currency + t.getTokens()));
         }
         
         return false;

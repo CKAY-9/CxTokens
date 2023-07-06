@@ -38,21 +38,21 @@ public class TokenPlayer {
         this.tokens = overrideValue;
         updateTokenPlayer();
         if (silent) return;
-        this.ply.sendMessage(Utils.formatText("&aYour token balance has changed to T$" + overrideValue));
+        this.ply.sendMessage(Utils.formatText("&aYour token balance has changed to " + CxTokens.currency + overrideValue));
     }
 
     public void addTokens(long tokensToAdd, boolean silent) {
         this.tokens += tokensToAdd;
         updateTokenPlayer();
         if (silent) return;
-        this.ply.sendMessage(Utils.formatText("&aYou have recieved T$" + tokensToAdd));
+        this.ply.sendMessage(Utils.formatText("&aYou have recieved " + CxTokens.currency + tokensToAdd));
     }
 
     public void subtractTokens(long tokensToRemove, boolean silent) {
         this.tokens -= tokensToRemove;
         updateTokenPlayer();
         if (silent) return;
-        this.ply.sendMessage(Utils.formatText("&cYour token balance decreased by T$" + tokensToRemove));
+        this.ply.sendMessage(Utils.formatText("&cYour token balance decreased by " + CxTokens.currency + tokensToRemove));
     }
     
     public long getTokens() {
@@ -76,11 +76,11 @@ public class TokenPlayer {
         this.bounty = bountyPayout;
         updateTokenPlayer();
         if (Storage.config.getBoolean("bounty.showInName", true)) {
-            ply.setDisplayName(ply.getName() + Utils.formatText("&c&l [BOUNTY: T$" + this.bounty + "]"));
-            ply.setPlayerListName(ply.getName() + Utils.formatText("&c&l [BOUNTY: T$" + this.bounty + "]"));
+            ply.setDisplayName(ply.getName() + Utils.formatText("&c&l [BOUNTY: " + CxTokens.currency + this.bounty + "]"));
+            ply.setPlayerListName(ply.getName() + Utils.formatText("&c&l [BOUNTY: " + CxTokens.currency + this.bounty + "]"));
         }
         if (silent) return;
-        ply.sendMessage(Utils.formatText("&c&lSomeone has placed a bounty on you for T$" + bountyPayout + "!"));
+        ply.sendMessage(Utils.formatText("&c&lSomeone has placed a bounty on you for " + CxTokens.currency + bountyPayout + "!"));
     }
 
     public void removeBounty() {
