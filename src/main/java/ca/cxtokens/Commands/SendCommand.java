@@ -25,7 +25,7 @@ public class SendCommand implements CommandExecutor {
         try {
             TokenPlayer player = TokenPlayer.convertPlayerToTokenPlayer((Player) sender);
             String targetPlayer = args[0];
-            int sendAmount = Integer.parseInt(args[1]);
+            long sendAmount = Long.parseLong(args[1]);
 
             if (sendAmount < 0) {
                 player.ply.sendMessage(Utils.formatText("&cYou cannot send negative money!"));

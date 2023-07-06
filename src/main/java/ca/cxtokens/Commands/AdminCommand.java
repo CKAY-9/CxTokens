@@ -40,13 +40,13 @@ public class AdminCommand implements CommandExecutor {
 
             switch (toDo.toLowerCase()) {
                 case "set":
-                    TokenPlayer.convertPlayerToTokenPlayer(target).setTokens(Integer.parseInt(args[2]), true);
+                    TokenPlayer.convertPlayerToTokenPlayer(target).setTokens(Long.parseLong(args[2]), true);
                     break;
                 case "add":
-                    TokenPlayer.convertPlayerToTokenPlayer(target).addTokens(Integer.parseInt(args[2]), true);
+                    TokenPlayer.convertPlayerToTokenPlayer(target).addTokens(Long.parseLong(args[2]), true);
                     break;
                 case "subtract":
-                    TokenPlayer.convertPlayerToTokenPlayer(target).subtractTokens(Integer.parseInt(args[2]), true);
+                    TokenPlayer.convertPlayerToTokenPlayer(target).subtractTokens(Long.parseLong(args[2]), true);
                     break;
                 case "reset":
                     TokenPlayer.convertPlayerToTokenPlayer(target).reset(true);

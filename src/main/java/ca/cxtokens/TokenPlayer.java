@@ -4,11 +4,11 @@ import java.io.IOException;
 import org.bukkit.entity.Player;
 
 public class TokenPlayer {
-    private int tokens;
-    private int bounty;
+    private long tokens;
+    private long bounty;
     public Player ply;
     
-    public TokenPlayer(int tokens, int bounty, Player ply) {
+    public TokenPlayer(long tokens, long bounty, Player ply) {
         this.tokens = tokens;
         this.bounty = bounty;
         this.ply = ply;
@@ -34,34 +34,34 @@ public class TokenPlayer {
      * TOKENS
      * 
      */
-    public void setTokens(int overrideValue, boolean silent) {
+    public void setTokens(long overrideValue, boolean silent) {
         this.tokens = overrideValue;
         updateTokenPlayer();
         if (silent) return;
         this.ply.sendMessage(Utils.formatText("&aYour token balance has changed to T$" + overrideValue));
     }
 
-    public void addTokens(int tokensToAdd, boolean silent) {
+    public void addTokens(long tokensToAdd, boolean silent) {
         this.tokens += tokensToAdd;
         updateTokenPlayer();
         if (silent) return;
         this.ply.sendMessage(Utils.formatText("&aYou have recieved T$" + tokensToAdd));
     }
 
-    public void subtractTokens(int tokensToRemove, boolean silent) {
+    public void subtractTokens(long tokensToRemove, boolean silent) {
         this.tokens -= tokensToRemove;
         updateTokenPlayer();
         if (silent) return;
         this.ply.sendMessage(Utils.formatText("&cYour token balance decreased by T$" + tokensToRemove));
     }
     
-    public int getTokens() {
-        return Storage.data.getInt("players." + ply.getUniqueId() + ".tokens", Storage.config.getInt("config.defaultTokenAmount", 500));
+    public long getTokens() {
+        return Storage.data.getLong("players." + ply.getUniqueId() + ".tokens", Storage.config.getInt("config.defaultTokenAmount", 500));
     }
 
     public void reset(boolean silent) {
         if (!Storage.data.isSet("players." + ply.getUniqueId())) return;
-        this.tokens = Storage.config.getInt("config.defaultTokenAmount", 500);
+        this.tokens = Storage.config.getLong("config.defaultTokenAmount", 500);
         updateTokenPlayer();
         if (silent) return;
         ply.sendMessage(Utils.formatText("&aSuccessfully reset your token account!"));
@@ -72,7 +72,7 @@ public class TokenPlayer {
      * BOUNTIES
      * 
      */
-    public void setBounty(int bountyPayout, boolean silent) {
+    public void setBounty(long bountyPayout, boolean silent) {
         this.bounty = bountyPayout;
         updateTokenPlayer();
         if (Storage.config.getBoolean("bounty.showInName", true)) {
@@ -90,7 +90,7 @@ public class TokenPlayer {
         ply.setPlayerListName(ply.getName());
     }
 
-    public int getBounty() {
+    public long getBounty() {
         return this.bounty;
     }
 
@@ -124,6 +124,6 @@ public class TokenPlayer {
                 return new TokenPlayer(0, 0, p);
             }
         }
-        return new TokenPlayer(Storage.data.getInt("players." + p.getUniqueId() + ".tokens"), Storage.data.getInt("players." + p.getUniqueId() + ".bounty"), p);
+        return new TokenPlayer(Storage.data.getLong("players." + p.getUniqueId() + ".tokens"), Storage.data.getLong("players." + p.getUniqueId() + ".bounty"), p);
     }
 }

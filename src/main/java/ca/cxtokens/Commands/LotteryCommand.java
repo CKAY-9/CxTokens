@@ -35,7 +35,7 @@ public class LotteryCommand implements CommandExecutor {
         }
 
         TokenPlayer player = TokenPlayer.convertPlayerToTokenPlayer((Player) sender);
-        if (player.getTokens() < Storage.config.getInt("lottery.entryCost", 150)) {
+        if (player.getTokens() < Storage.config.getLong("lottery.entryCost", 150L)) {
             player.ply.sendMessage(Utils.formatText("&cYou don't have enough to cover the entry cost!"));
             return false;
         }
@@ -45,7 +45,7 @@ public class LotteryCommand implements CommandExecutor {
             return false;
         }
 
-        player.subtractTokens(Storage.config.getInt("lottery.entryCost", 150), false);
+        player.subtractTokens(Storage.config.getLong("lottery.entryCost", 150L), false);
         player.ply.sendMessage(Utils.formatText("&aYou have entered the lottery!"));
         this.tokens.events.lottery.joinedPlayers.add(player);
         

@@ -38,7 +38,7 @@ public class AuctionHouse {
                         
                         // Clear item or give to player
                         if (item.bidder == null) {
-                            if (item.seller.getInventory().getContents().length >= 36) {
+                            if (item.seller.getInventory().firstEmpty() == -1) {
                                 // wait for inventory to have space
                                 flag = false;
                                 continue;
@@ -48,7 +48,7 @@ public class AuctionHouse {
                             item.seller.sendMessage(Utils.formatText("&cNo one bought your item on the auction house :("));
                             item.seller.getInventory().addItem(item.item);
                         } else {
-                            if (item.bidder.getInventory().getContents().length >= 36) {
+                            if (item.bidder.getInventory().firstEmpty() == -1) {
                                 // wait for inventory to have space
                                 flag = false;
                                 continue;
@@ -129,7 +129,7 @@ public class AuctionHouse {
         player.openInventory(auctionInv);
     }
 
-    public void sellItemOnHouse(TokenPlayer player, int sellPrice) {
+    public void sellItemOnHouse(TokenPlayer player, long sellPrice) {
         if (player.ply.getInventory().getItemInMainHand().getType() == Material.AIR) {
             player.ply.sendMessage(Utils.formatText("&cYou need to have an item in your main hand to sell!"));
             return;

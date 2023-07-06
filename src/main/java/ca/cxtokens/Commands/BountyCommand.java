@@ -43,16 +43,16 @@ public class BountyCommand implements CommandExecutor {
                 return false;
             }
 
-            int bountyPayout = Integer.parseInt(args[1]);
+            long bountyPayout = Long.parseLong(args[1]);
             TokenPlayer me = TokenPlayer.convertPlayerToTokenPlayer(player);
 
-            if (bountyPayout > Storage.config.getInt("bounty.maxBounty", Integer.MAX_VALUE)) {
-                sender.sendMessage(Utils.formatText("&cThe maximum bounty amount is T$" + Storage.config.getInt("bounty.maxBounty", Integer.MAX_VALUE) + "!"));
+            if (bountyPayout > Storage.config.getLong("bounty.maxBounty", Long.MAX_VALUE)) {
+                sender.sendMessage(Utils.formatText("&cThe maximum bounty amount is T$" + Storage.config.getLong("bounty.maxBounty", Long.MAX_VALUE) + "!"));
                 return false;
             }
 
-            if (bountyPayout < Storage.config.getInt("bounty.minBounty", 500)) {
-                sender.sendMessage(Utils.formatText("&cThe minimum bounty amount is T$" + Storage.config.getInt("bounty.minBounty", 500) + "!"));
+            if (bountyPayout < Storage.config.getLong("bounty.minBounty", 500)) {
+                sender.sendMessage(Utils.formatText("&cThe minimum bounty amount is T$" + Storage.config.getLong("bounty.minBounty", 500L) + "!"));
                 return false;
             }
 

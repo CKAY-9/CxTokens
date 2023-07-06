@@ -46,34 +46,34 @@ public class Storage {
 
             // Fill config
             if (!config.isSet("config.defaultTokenAmount")) {
-                config.set("config.defaultTokenAmount", 500);
+                config.set("config.defaultTokenAmount", 500L);
             }
             
             // Mob Rewards
             if (!config.isSet("mobRewards.enabled")) {
                 config.set("mobRewards.enabled", true);
-                config.set("mobRewards.maxReward", 10);
-                config.set("mobRewards.minReward", 5);
+                config.set("mobRewards.maxReward", 10L);
+                config.set("mobRewards.minReward", 5L);
             }
 
             // Routine tokens
             if (!config.isSet("routineTokens.enabled")) {
                 config.set("routineTokens.enabled", true);
                 config.set("routineTokens.waitTimeInSeconds", 300);
-                config.set("routineTokens.amountOfTokens", 50);
+                config.set("routineTokens.amountOfTokens", 50L);
             }
 
             // Lottery
             if (!config.isSet("lottery.enabled")) {
                 config.set("lottery.enabled", true);
                 config.set("lottery.waitTimeInSeconds", 1800);
-                config.set("lottery.entryCost", 150);
+                config.set("lottery.entryCost", 150L);
             }
 
             // Auction House
             if (!config.isSet("auction.enabled")) {
                 config.set("auction.enabled", true);
-                config.set("auction.sweepsPerItem", 60);
+                config.set("auction.sweepsPerItem", 60L);
                 config.set("auction.bidIncreaseMultiplier", 1.25);
             }
 
@@ -81,8 +81,8 @@ public class Storage {
                 config.set("bounty.enabled", true);
                 config.set("bounty.showInName", true);
                 config.set("bounty.allowSelfBounty", true);
-                config.set("bounty.minBounty", 500);
-                config.set("bounty.maxBounty", Integer.MAX_VALUE);
+                config.set("bounty.minBounty", 500L);
+                config.set("bounty.maxBounty", Long.MAX_VALUE);
             }
 
             config.save(configFile);

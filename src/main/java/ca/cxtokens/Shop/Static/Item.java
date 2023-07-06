@@ -14,10 +14,10 @@ import ca.cxtokens.Utils;
 
 public class Item {
     public ItemStack stack = new ItemStack(Material.AIR, 0);
-    public int price = 0;
+    public long price = 0L;
     public double sellMultiplier = 0.5;
 
-    public Item(ItemStack stack, int price, double sellMultiplier) {
+    public Item(ItemStack stack, long price, double sellMultiplier) {
         this.stack = stack;
         this.price = price;
         this.sellMultiplier = sellMultiplier;

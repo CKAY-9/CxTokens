@@ -19,20 +19,20 @@ public class BalTopCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         // Stolen from me https://github.com/Camerxxn/The-Walls/blob/main/src/main/java/ca/camerxn/thewalls/Commands/WLeaderboard.java
         
-        HashMap<String, Integer> leadeboardEntries = new HashMap<>();
-        LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
-        ArrayList<Integer> list = new ArrayList<>();
+        HashMap<String, Long> leadeboardEntries = new HashMap<>();
+        LinkedHashMap<String, Long> sortedMap = new LinkedHashMap<>();
+        ArrayList<Long> list = new ArrayList<>();
         for (String s : Storage.data.getConfigurationSection("players").getKeys(false)) {
             Utils.getPlugin().getLogger().info(s);
-            leadeboardEntries.put(Storage.data.getString("players." + s + ".name"), Storage.data.getInt("players." + s + ".tokens"));
+            leadeboardEntries.put(Storage.data.getString("players." + s + ".name"), Storage.data.getLong("players." + s + ".tokens"));
         }
-        for (Map.Entry<String, Integer> entry : leadeboardEntries.entrySet()) {
+        for (Map.Entry<String, Long> entry : leadeboardEntries.entrySet()) {
             list.add(entry.getValue());
         }
         Collections.sort(list); 
         Collections.reverse(list);
-        for (int num : list) {
-            for (Entry<String, Integer> entry : leadeboardEntries.entrySet()) {
+        for (long num : list) {
+            for (Entry<String, Long> entry : leadeboardEntries.entrySet()) {
                 if (entry.getValue().equals(num)) {
                     sortedMap.put(entry.getKey(), num);
                 }

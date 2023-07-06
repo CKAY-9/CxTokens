@@ -22,7 +22,7 @@ public class BountyCompleter implements TabCompleter {
             return players;
         }
         if (args.length == 2) {
-            return Collections.singletonList(Integer.toString(Storage.config.getInt("bounty.minBounty", 500)));
+            return Collections.singletonList(Long.toString(Storage.config.getLong("bounty.minBounty", 500L)));
         }
 
         return null;

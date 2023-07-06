@@ -21,10 +21,10 @@ public class EntityKill implements Listener {
             return;
         }
 
-        int minAmount = Storage.config.getInt("mobRewards.minReward", 5);
-        int maxAmount = Storage.config.getInt("mobRewards.maxRewards", 10);
+        long minAmount = Storage.config.getLong("mobRewards.minReward", 5L);
+        long maxAmount = Storage.config.getLong("mobRewards.maxRewards", 10L);
         Random rand = new Random();
-        int giveAmount = rand.nextInt(minAmount, maxAmount + 1);
+        long giveAmount = rand.nextLong(minAmount, maxAmount + 1);
 
         TokenPlayer.convertPlayerToTokenPlayer(e.getEntity().getKiller()).addTokens(giveAmount, false);
     }

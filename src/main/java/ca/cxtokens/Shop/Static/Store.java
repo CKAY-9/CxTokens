@@ -50,7 +50,7 @@ public class Store {
                     Material.matchMaterial(Storage.storeItems.getString("items." + key + ".material", "air")),
                     Storage.storeItems.getInt("items." + key + ".amount", 0)
                 ),
-                Storage.storeItems.getInt("items." + key + ".price", 0),
+                Storage.storeItems.getLong("items." + key + ".price", 0),
                 Storage.storeItems.getDouble("items." + key + ".sellMultiplier", 0)
             );
 

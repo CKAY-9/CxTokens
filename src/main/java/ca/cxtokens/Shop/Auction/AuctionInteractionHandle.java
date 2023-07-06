@@ -43,7 +43,7 @@ public class AuctionInteractionHandle implements Listener {
         
         // set new bidder
         item.bidder = player;
-        item.currentBid = (int) Math.round(item.currentBid * Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25));
+        item.currentBid = (long) Math.round(item.currentBid * Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25));
         player.sendMessage(Utils.formatText("&aYour bid has been placed for T$" + item.currentBid));
         item.seller.sendMessage(Utils.formatText("&aYour " + item.item.getType().name() + " has recieved a new bid of T$" + item.currentBid));
     }

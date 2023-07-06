@@ -90,7 +90,7 @@ public class StaticInteractionHandle implements Listener {
             return;
         }
 
-        int sellPrice = (int) Math.round(item.price * item.sellMultiplier);
+        long sellPrice = Math.round(item.price * item.sellMultiplier);
         tokenPlayer.addTokens(sellPrice, false);
     }
 
@@ -136,7 +136,7 @@ public class StaticInteractionHandle implements Listener {
         }
 
         // Prevent purchases if the blaming inventory is full
-        if (e.getWhoClicked().getInventory().getContents().length >= 36) {
+        if (e.getWhoClicked().getInventory().firstEmpty() == -1) {
             e.getWhoClicked().sendMessage(Utils.formatText("&cYou need to have free inventory space to purchase an item"));
             return;
         }
@@ -153,7 +153,7 @@ public class StaticInteractionHandle implements Listener {
             new ItemStack(
                 Material.matchMaterial(Storage.storeItems.getString("items." + key + ".material", "air")),
                 Storage.storeItems.getInt("items." + key + ".amount", 0)),
-            Storage.storeItems.getInt("items." + key + ".price", 0),
+            Storage.storeItems.getLong("items." + key + ".price", 0),
             Storage.storeItems.getDouble("items." + key + ".sellMultiplier", 0)
         );
 

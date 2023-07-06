@@ -8,17 +8,17 @@ import ca.cxtokens.Storage;
 public class Item {
     public Player seller;
     public Player bidder;
-    public int currentBid;
+    public long currentBid;
     public ItemStack item;
     public boolean sold;
-    public int sweepsUntilComplete;
+    public long sweepsUntilComplete;
 
-    public Item(Player seller, int currentBid, ItemStack item) {
+    public Item(Player seller, long currentBid, ItemStack item) {
         this.seller = seller;
         this.currentBid = currentBid;
         this.item = item;
         this.sold = false;
-        this.sweepsUntilComplete = Storage.config.getInt("auction.sweepsPerItem", 60);
+        this.sweepsUntilComplete = Storage.config.getLong("auction.sweepsPerItem", 60);
         this.bidder = null;
     }
 }
