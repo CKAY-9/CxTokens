@@ -33,12 +33,27 @@ public class AuctionHouse {
                     item.sweepsUntilComplete--;
 
                     if (item.sweepsUntilComplete < 0) {
+                        item.sold = true;
+                        boolean flag = true;
+                        
                         // Clear item or give to player
                         if (item.bidder == null) {
+                            if (item.seller.getInventory().getContents().length >= 36) {
+                                // wait for inventory to have space
+                                flag = false;
+                                continue;
+                            }
+
                             // remove
                             item.seller.sendMessage(Utils.formatText("&cNo one bought your item on the auction house :("));
                             item.seller.getInventory().addItem(item.item);
                         } else {
+                            if (item.bidder.getInventory().getContents().length >= 36) {
+                                // wait for inventory to have space
+                                flag = false;
+                                continue;
+                            }
+
                             // give
                             item.seller.sendMessage(Utils.formatText("&aYour item has been sold for T$" + item.currentBid + " on the Auction House!"));
                             TokenPlayer.convertPlayerToTokenPlayer(item.seller).addTokens(item.currentBid, true);
@@ -46,7 +61,8 @@ public class AuctionHouse {
                             item.bidder.sendMessage(Utils.formatText("&aSuccessfully bought an item off the Auction House for T$" + item.currentBid));
                             item.bidder.getInventory().addItem(item.item);
                         }
-                        auctionItems.remove(i);
+
+                        if (flag) auctionItems.remove(i);
                     }
                 }
             }
@@ -74,6 +90,7 @@ public class AuctionHouse {
             }
 
             Item temp = this.auctionItems.get(i);
+            if (temp.sold) continue;
 
             ItemStack stack = temp.item.clone();
             ItemMeta meta = stack.getItemMeta();

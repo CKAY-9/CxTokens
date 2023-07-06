@@ -135,6 +135,12 @@ public class StaticInteractionHandle implements Listener {
             return;
         }
 
+        // Prevent purchases if the blaming inventory is full
+        if (e.getWhoClicked().getInventory().getContents().length >= 36) {
+            e.getWhoClicked().sendMessage(Utils.formatText("&cYou need to have free inventory space to purchase an item"));
+            return;
+        }
+
         Set<String> storeItemKeys = Storage.storeItems.getConfigurationSection("items").getKeys(false);
         int index = clicked + (GlobalShop.MAX_ITEMS_PER_PAGE * currentPage);
 
