@@ -26,6 +26,12 @@ public class StaticInteractionHandle implements Listener {
     private final int NEXT_PAGE = 53;
 
     private void purchaseItem(Item item, String key, Player player) {
+        // Prevent purchases if the blaming inventory is full
+        if (player.getInventory().firstEmpty() == -1) {
+            player.sendMessage(Utils.formatText("&cYou need to have free inventory space to purchase an item"));
+            return;
+        }
+
         TokenPlayer tokenPlayer = TokenPlayer.convertPlayerToTokenPlayer(player);
         if (tokenPlayer.getTokens() < item.price) {
             player.sendMessage(Utils.formatText("&cYou don't have enough tokens to purchase this item!"));
@@ -132,12 +138,6 @@ public class StaticInteractionHandle implements Listener {
             e.getView().close();
             Store.openStaticStorePage(TokenPlayer.convertPlayerToTokenPlayer((Player) e.getWhoClicked()),
                     (currentPage + 1));
-            return;
-        }
-
-        // Prevent purchases if the blaming inventory is full
-        if (e.getWhoClicked().getInventory().firstEmpty() == -1) {
-            e.getWhoClicked().sendMessage(Utils.formatText("&cYou need to have free inventory space to purchase an item"));
             return;
         }
 

@@ -28,7 +28,6 @@ public class PlayerLeave implements Listener {
             Item item = this.tokens.auctionHouse.auctionItems.get(i);
             if (item.seller.getUniqueId() == e.getPlayer().getUniqueId()) {
                 // remove item and give money back to bidder
-                item.seller.getInventory().clear(0); // TODO: not this
                 item.seller.getInventory().addItem(item.item);
                 if (item.bidder != null) {
                     TokenPlayer.convertPlayerToTokenPlayer(item.bidder).addTokens(item.currentBid, true);

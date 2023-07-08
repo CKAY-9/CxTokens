@@ -60,11 +60,11 @@ public class AuctionHouse {
 
                             item.bidder.sendMessage(Utils.formatText("&aSuccessfully bought an item off the Auction House for " + CxTokens.currency + item.currentBid));
                             item.bidder.getInventory().addItem(item.item);
-                        }
-
+                        } 
                         if (flag) auctionItems.remove(i);
                     }
                 }
+                tokens.getLogger().info("Finished Auction House sweep!");
             }
         }, 20 * 60, 20 * 60);
     }
@@ -132,6 +132,11 @@ public class AuctionHouse {
     public void sellItemOnHouse(TokenPlayer player, long sellPrice) {
         if (player.ply.getInventory().getItemInMainHand().getType() == Material.AIR) {
             player.ply.sendMessage(Utils.formatText("&cYou need to have an item in your main hand to sell!"));
+            return;
+        }
+
+        if (sellPrice < 0) {
+            player.ply.sendMessage(Utils.formatText("&cItems cannot have a negative price!"));
             return;
         }
 

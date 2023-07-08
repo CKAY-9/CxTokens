@@ -40,9 +40,11 @@ public class LotteryCommand implements CommandExecutor {
             return false;
         }
 
-        if (this.tokens.events.lottery.joinedPlayers.contains(player)) {
-            player.ply.sendMessage(Utils.formatText("&cYou are already in the lottery!"));
-            return false;
+        for (TokenPlayer temp : this.tokens.events.lottery.joinedPlayers) {
+            if (temp.ply.getUniqueId() == player.ply.getUniqueId()) {
+                player.ply.sendMessage(Utils.formatText("&cYou are already in the lottery!"));
+                return false;
+            }
         }
 
         player.subtractTokens(Storage.config.getLong("lottery.entryCost", 150L), false);
