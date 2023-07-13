@@ -9,12 +9,26 @@ import ca.cxtokens.CxTokens;
 import ca.cxtokens.Storage;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
+import ca.cxtokens.Shop.Auction.Viewer;
 
 public class AuctionCommand implements CommandExecutor {
     CxTokens tokens;
 
     public AuctionCommand(CxTokens tokens) {
         this.tokens = tokens;
+    }
+
+    private void setupHouseForPlayer(Player p) {
+        for (Viewer viewer : this.tokens.auctionHouse.viewers) {
+            if (viewer.player.getUniqueId().toString().equals(p.getUniqueId().toString())) {
+                viewer.openPage(0);
+                return;
+            }
+        }
+
+        Viewer newViewer = new Viewer(p, 0, this.tokens.auctionHouse);
+        this.tokens.auctionHouse.viewers.add(newViewer);
+        newViewer.openPage(0);
     }
 
     @Override
@@ -38,7 +52,7 @@ public class AuctionCommand implements CommandExecutor {
             String selectedView = args[0];
             switch (selectedView.toLowerCase()) {
                 case "house":
-                    this.tokens.auctionHouse.openAuctionHouse((Player) sender, 0);
+                    setupHouseForPlayer((Player) sender);
                     break;
                 case "sell":
                     long sellPrice = Long.parseLong(args[1]);

@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import ca.cxtokens.CxTokens;
+import ca.cxtokens.Storage;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
 
@@ -35,25 +36,50 @@ public class AdminCommand implements CommandExecutor {
         }
 
         try {
-            String toDo = args[0];
-            Player target = Bukkit.getPlayer(args[1]);
+            if (!args[0].equalsIgnoreCase("config")) {
+                // Player handler
+                String toDo = args[0];
+                Player target = Bukkit.getPlayer(args[1]);
 
-            switch (toDo.toLowerCase()) {
-                case "set":
-                    TokenPlayer.convertPlayerToTokenPlayer(target).setTokens(Long.parseLong(args[2]), true);
-                    break;
-                case "add":
-                    TokenPlayer.convertPlayerToTokenPlayer(target).addTokens(Long.parseLong(args[2]), true);
-                    break;
-                case "subtract":
-                    TokenPlayer.convertPlayerToTokenPlayer(target).subtractTokens(Long.parseLong(args[2]), true);
-                    break;
-                case "reset":
-                    TokenPlayer.convertPlayerToTokenPlayer(target).reset(true);
-                    break;
+                switch (toDo.toLowerCase()) {
+                    case "set":
+                        TokenPlayer.convertPlayerToTokenPlayer(target).setTokens(Long.parseLong(args[2]), true);
+                        break;
+                    case "add":
+                        TokenPlayer.convertPlayerToTokenPlayer(target).addTokens(Long.parseLong(args[2]), true);
+                        break;
+                    case "subtract":
+                        TokenPlayer.convertPlayerToTokenPlayer(target).subtractTokens(Long.parseLong(args[2]), true);
+                        break;
+                    case "reset":
+                        TokenPlayer.convertPlayerToTokenPlayer(target).reset(true);
+                        break;
+                }
+
+                player.sendMessage(Utils.formatText("&aSuccessfully executed command!"));
+            } else {
+                // Config handler
+                String initialKey = args[1];
+                String innerKey = args[2];
+                String newValue = args[3];
+                
+                // :( i can't think of a cleaner way
+                if (Utils.isBool(newValue)) {
+                    Storage.config.set(initialKey + "." + innerKey, Boolean.parseBoolean(newValue));
+                }
+                if (Utils.isInteger(newValue)) {
+                    Storage.config.set(initialKey + "." + innerKey, Integer.parseInt(newValue));
+                }
+                if (Utils.isLong(newValue)) {
+                    Storage.config.set(initialKey + "." + innerKey, Long.parseLong(newValue));
+                }
+                if (Utils.isDouble(newValue)) {
+                    Storage.config.set(initialKey + "." + innerKey, Double.parseDouble(newValue));
+                }
+                
+                Storage.config.save(Storage.configFile);
+                player.sendMessage(Utils.formatText("&aSuccessfully updated config!"));
             }
-
-            player.sendMessage(Utils.formatText("&aSuccessfully executed command!"));
         } catch (Exception ex) {
             Utils.getPlugin().getLogger().info(ex.toString());
             player.sendMessage(Utils.formatText("&cError executing command: " + ex.getMessage()));

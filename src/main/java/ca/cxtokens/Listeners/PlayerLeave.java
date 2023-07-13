@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import ca.cxtokens.CxTokens;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Shop.Auction.Item;
+import ca.cxtokens.Shop.Auction.Viewer;
 
 public class PlayerLeave implements Listener {
     private CxTokens tokens;
@@ -40,6 +41,16 @@ public class PlayerLeave implements Listener {
                 item.bidder = null;
                 TokenPlayer.convertPlayerToTokenPlayer(e.getPlayer()).addTokens(item.currentBid, true);
                 break;
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void removeViewer(PlayerQuitEvent e) {
+        for (Viewer viewer : this.tokens.auctionHouse.viewers) {
+            if (viewer.player.getUniqueId().toString().equals(e.getPlayer().getUniqueId().toString())) {
+                this.tokens.auctionHouse.viewers.remove(viewer);
+                return;
             }
         }
     }

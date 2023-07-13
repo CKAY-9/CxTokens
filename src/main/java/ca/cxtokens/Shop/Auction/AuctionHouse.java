@@ -17,6 +17,8 @@ import ca.cxtokens.Shop.GlobalShop;
 
 public class AuctionHouse {
     CxTokens tokens;
+    // viewers are used for refreshing pages and other things related to the auction house
+    public ArrayList<Viewer> viewers = new ArrayList<>();
     public ArrayList<Item> auctionItems = new ArrayList<>();
 
     public AuctionHouse(CxTokens tokens) {
@@ -65,8 +67,29 @@ public class AuctionHouse {
                     }
                 }
                 tokens.getLogger().info("Finished Auction House sweep!");
+
+                updateViewers();
             }
         }, 20 * 60, 20 * 60);
+    }
+
+    public void updateViewers() {
+        if (viewers.size() <= 0) return;
+
+        tokens.getLogger().info("Updating auction house viewers...");
+        for (Viewer viewer : viewers) {
+            viewer.openPage(viewer.page);
+        }
+        tokens.getLogger().info("Updated auction house viewers!");
+    }
+
+    public Viewer getViewerFromPlayer(Player p) {
+        for (Viewer v : this.viewers) {
+            if (v.player.getUniqueId().toString().equals(p.getUniqueId().toString())) {
+                return v;
+            }
+        }
+        return null;
     }
 
     public void openAuctionHouse(Player player, int pageIndex) {
@@ -146,5 +169,7 @@ public class AuctionHouse {
         this.auctionItems.add(new Item(player.ply, sellPrice, itemToSell));
         player.ply.getInventory().getItemInMainHand().setAmount(0);
         player.ply.sendMessage(Utils.formatText("&aYour item is now on the Auction House!"));
+
+        this.updateViewers();
     }
 }

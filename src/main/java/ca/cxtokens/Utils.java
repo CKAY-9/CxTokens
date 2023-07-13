@@ -21,4 +21,35 @@ public class Utils {
     public static Plugin getPlugin() {
         return Bukkit.getPluginManager().getPlugin("CxTokens");
     }
+
+    public static boolean isInteger(String s) {
+        try {
+            int x = Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+
+    public static boolean isLong(String s) {
+        try {
+            long x = Long.parseLong(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+
+    public static boolean isBool(String s) {
+        return s.equalsIgnoreCase("true") || s.equalsIgnoreCase("false");
+    }
+
+    public static boolean isDouble(String s) {
+        try {
+            double x = Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
 }

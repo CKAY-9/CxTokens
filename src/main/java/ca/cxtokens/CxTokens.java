@@ -39,6 +39,12 @@ public final class CxTokens extends JavaPlugin {
     public void onEnable() {
         Storage.initializeData();   
 
+        // CxToken specific events
+        this.events = new MiscEvents(this);
+        if (Storage.config.getBoolean("auction.enabled", true)) {
+            this.auctionHouse = new AuctionHouse(this);
+        }
+
         // Events
         this.getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         this.getServer().getPluginManager().registerEvents(new EntityKill(), this);
@@ -66,12 +72,6 @@ public final class CxTokens extends JavaPlugin {
         this.getCommand("tauction").setTabCompleter(new AuctionCompleter());
         this.getCommand("tsend").setTabCompleter(new SendCompleter());
         this.getCommand("tbounty").setTabCompleter(new BountyCompleter());
-
-        // CxToken specific events
-        this.events = new MiscEvents(this);
-        if (Storage.config.getBoolean("auction.enabled", true)) {
-            this.auctionHouse = new AuctionHouse(this);
-        }
 
         // this is used if the plugin is reset and setup values for every player
         for (Player p : Bukkit.getOnlinePlayers()) {

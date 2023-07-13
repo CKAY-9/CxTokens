@@ -47,6 +47,8 @@ public class AuctionInteractionHandle implements Listener {
         player.sendMessage(Utils.formatText("&aYour bid has been placed for " + CxTokens.currency + item.currentBid));
         tokenPlayer.subtractTokens(item.currentBid, false);
         item.seller.sendMessage(Utils.formatText("&aYour " + item.item.getType().name() + " has recieved a new bid of " + CxTokens.currency + item.currentBid));
+
+        this.tokens.auctionHouse.updateViewers();
     }
 
     @EventHandler
@@ -78,13 +80,13 @@ public class AuctionInteractionHandle implements Listener {
             }
 
             // Go Back
-            this.tokens.auctionHouse.openAuctionHouse((Player) e.getWhoClicked(), (currentPage - 1));
+            this.tokens.auctionHouse.getViewerFromPlayer((Player) e.getWhoClicked()).prevPage();
             return;
         }
 
         if (clicked == NEXT_PAGE && currentPage < Math.round(this.tokens.auctionHouse.auctionItems.size() / GlobalShop.MAX_ITEMS_PER_PAGE)) {
             e.getView().close();
-            this.tokens.auctionHouse.openAuctionHouse((Player) e.getWhoClicked(), (currentPage + 1));
+            this.tokens.auctionHouse.getViewerFromPlayer((Player) e.getWhoClicked()).nextPage();
             return;
         }
 
