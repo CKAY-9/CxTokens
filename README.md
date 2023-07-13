@@ -11,6 +11,7 @@ This plugin is not fully complete and still needs to be finished. Some features 
 ## Features
 - Lottery event
 - Auction House
+- Bounties
 - Item Store
 - Commands
 - Local data storing (no need for a database)
