@@ -2,8 +2,10 @@ package ca.cxtokens.Shop.Auction;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 
 import ca.cxtokens.Storage;
@@ -29,6 +31,11 @@ public class AuctionInteractionHandle implements Listener {
     private void placeBid(int index, int page, Player player) {
         Item item = this.tokens.auctionHouse.auctionItems.get(index);
         TokenPlayer tokenPlayer = TokenPlayer.convertPlayerToTokenPlayer(player);
+
+        if (tokenPlayer.ply.getUniqueId().toString().equals(item.seller.getUniqueId().toString())) {
+            player.sendMessage(Utils.formatText("&cYou cannot bid on your own item!"));
+            return;
+        }
 
         if (tokenPlayer.getTokens() < Math.round(item.currentBid * Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25))) {
             player.sendMessage(Utils.formatText("&cYou need to have at least " + CxTokens.currency + Math.round(item.currentBid * Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25)) + " to place a bid!"));
@@ -98,5 +105,14 @@ public class AuctionInteractionHandle implements Listener {
 
         placeBid(index, currentPage, (Player) e.getWhoClicked());
         e.getView().close();
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void auctionHouseClose(InventoryCloseEvent e) {
+        for (Viewer viewer : this.tokens.auctionHouse.viewers) {
+            if (viewer.player.getUniqueId().toString().equals(e.getPlayer().getUniqueId().toString())) {
+                this.tokens.auctionHouse.viewers.remove(viewer);
+            }
+        }
     }
 }
