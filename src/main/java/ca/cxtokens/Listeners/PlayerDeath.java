@@ -19,7 +19,7 @@ public class PlayerDeath implements Listener {
             return;
         }
 
-        TokenPlayer killer = TokenPlayer.convertPlayerToTokenPlayer(e.getEntity().getPlayer());
+        TokenPlayer killer = TokenPlayer.convertPlayerToTokenPlayer(e.getEntity().getKiller());
 
         boolean isSelf = killer.ply.getUniqueId().equals(player.ply.getUniqueId());
         if (isSelf && !Storage.config.getBoolean("bounty.allowSelfBounty", true)) {
