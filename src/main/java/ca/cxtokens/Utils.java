@@ -24,7 +24,7 @@ public class Utils {
 
     public static boolean isInteger(String s) {
         try {
-            int x = Integer.parseInt(s);
+            Integer.parseInt(s);
             return true;
         } catch (NumberFormatException ex) {
             return false;
@@ -33,7 +33,7 @@ public class Utils {
 
     public static boolean isLong(String s) {
         try {
-            long x = Long.parseLong(s);
+            Long.parseLong(s);
             return true;
         } catch (NumberFormatException ex) {
             return false;
@@ -46,7 +46,7 @@ public class Utils {
 
     public static boolean isDouble(String s) {
         try {
-            double x = Double.parseDouble(s);
+            Double.parseDouble(s);
             return true;
         } catch (NumberFormatException ex) {
             return false;
