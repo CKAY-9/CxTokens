@@ -22,7 +22,7 @@ public class Achievements implements Listener {
         Player player = event.getPlayer();
         Advancement advancement = event.getAdvancement();
         String advancement_key = advancement.getKey().getKey(); // TODO: add specific rewards for advancements
-        
+
         long min_amount = Storage.config.getLong("achievements.minReward", 50L);
         long max_amount = Storage.config.getLong("achievements.maxReward", 750L);
         Random rand = new Random();
