@@ -19,6 +19,7 @@ import ca.cxtokens.Commands.Completers.AuctionCompleter;
 import ca.cxtokens.Commands.Completers.BountyCompleter;
 import ca.cxtokens.Commands.Completers.SendCompleter;
 import ca.cxtokens.Events.MiscEvents;
+import ca.cxtokens.Listeners.Achievements;
 import ca.cxtokens.Listeners.EntityKill;
 import ca.cxtokens.Listeners.PlayerDeath;
 import ca.cxtokens.Listeners.PlayerJoin;
@@ -50,6 +51,7 @@ public final class CxTokens extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new EntityKill(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerLeave(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
+        this.getServer().getPluginManager().registerEvents(new Achievements(), this);
 
         // Store handlers
         this.getServer().getPluginManager().registerEvents(new StaticInteractionHandle(), this);
@@ -65,6 +67,7 @@ public final class CxTokens extends JavaPlugin {
         this.getCommand("tbounty").setExecutor(new BountyCommand());
         this.getCommand("tauction").setExecutor(new AuctionCommand(this));
         this.getCommand("cxtokens").setExecutor(new AboutCommand());
+        this.getCommand("tabout").setExecutor(new AboutCommand());
         this.getCommand("tadmin").setExecutor(new AdminCommand(this));
 
         // Completers

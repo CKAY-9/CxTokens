@@ -185,6 +185,12 @@ public class Storage {
                 Utils.getPlugin().getLogger().info("\n\n\n!!! I RECOMMEND CHANGING THE DEFAULT STORE ITEMS CONFIG !!!\n\n");
             }
 
+            if (!config.isSet("achievements.enabled")) {
+                config.set("achievements.enabled", true);
+                config.set("achievements.minReward", 50L);
+                config.set("achievements.maxReward", 750L);
+            }
+
             storeItems.save(storeItemsFile);
         } catch (IOException ex) {
             Utils.getPlugin().getLogger().warning(ex.toString());
