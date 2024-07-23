@@ -21,10 +21,20 @@ public class Achievements implements Listener {
 
         Player player = event.getPlayer();
         Advancement advancement = event.getAdvancement();
-        String advancement_key = advancement.getKey().getKey(); // TODO: add specific rewards for advancements
+        String advancement_key = advancement.getKey().getKey();
+
+        if (Storage.config.getBoolean("achievements.disableRecipes", true) && advancement_key.contains("recipes/")) {
+            return;
+        }
 
         long min_amount = Storage.config.getLong("achievements.minReward", 50L);
         long max_amount = Storage.config.getLong("achievements.maxReward", 750L);
+
+        if (Storage.config.isSet("achievements.custom." + advancement_key)) {
+            min_amount = Storage.config.getLong("achievements.custom." + advancement_key + ".minReward", 50L);
+            max_amount = Storage.config.getLong("achievements.custom." + advancement_key + ".maxReward", 750L);
+        }
+
         Random rand = new Random();
         long give_amount = rand.nextLong(min_amount, max_amount + 1);
         TokenPlayer.convertPlayerToTokenPlayer(player).addTokens(give_amount, false);

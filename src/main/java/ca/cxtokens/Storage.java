@@ -60,6 +60,11 @@ public class Storage {
                 config.set("mobRewards.minReward", 5L);
             }
 
+            if (!config.isSet("mobRewards.custom")) {
+                config.set("mobRewards.custom.Zombie.maxReward", 50L);
+                config.set("mobRewards.custom.Zombie.minReward", 25L);
+            }
+
             // Routine tokens
             if (!config.isSet("routineTokens.enabled")) {
                 config.set("routineTokens.enabled", true);
@@ -81,6 +86,7 @@ public class Storage {
                 config.set("auction.bidIncreaseMultiplier", 1.25);
             }
 
+            // Bounty
             if (!config.isSet("bounty.enabled")) {
                 config.set("bounty.enabled", true);
                 config.set("bounty.showInName", true);
@@ -89,10 +95,17 @@ public class Storage {
                 config.set("bounty.maxBounty", Long.MAX_VALUE);
             }
 
+            // Achievements
             if (!config.isSet("achievements.enabled")) {
                 config.set("achievements.enabled", true);
+                config.set("achievements.disableRecipes", true);
                 config.set("achievements.minReward", 50L);
                 config.set("achievements.maxReward", 750L);
+            }
+
+            if (!config.isSet("achievements.custom")) {
+                config.set("achievements.custom.story/enter_the_end.minReward", 1000L);
+                config.set("achievements.custom.story/enter_the_end.maxReward", 2000L);
             }
 
             config.save(configFile);
