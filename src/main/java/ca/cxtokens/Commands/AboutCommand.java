@@ -9,7 +9,7 @@ import ca.cxtokens.Utils;
 public class AboutCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        sender.sendMessage(Utils.formatText("&c&lCxTokens 1.0: Achieving More by CKAY9"));
+        sender.sendMessage(Utils.formatText("&c&lCxTokens 1.0.1: Connected by CKAY9"));
         sender.sendMessage(Utils.formatText("&cCommands: "));
         sender.sendMessage(Utils.formatText("&c  - /ttop: Get the top players in terms of tokens"));
         sender.sendMessage(Utils.formatText("&c  - /tbounty <player> <number>: Set a bounty on a player"));

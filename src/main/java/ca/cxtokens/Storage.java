@@ -48,10 +48,19 @@ public class Storage {
             if (!config.isSet("config.defaultTokenAmount")) {
                 config.set("config.defaultTokenAmount", 500L);
             }
+
             if (!config.isSet("config.currency")) {
                 config.set("config.currency", "T$");
             }
+
             CxTokens.currency = config.getString("config.currency");
+            
+            if (!config.isSet("config.http.enabled")) {
+                config.set("config.http.enabled", false);
+                config.set("config.http.url", "http://localhost:8080/api/tokens/update");
+                config.set("config.http.updateInSeconds", 60);
+                config.set("config.http.authorization", "EMPTY_KEY");
+            }
             
             // Mob Rewards
             if (!config.isSet("mobRewards.enabled")) {
