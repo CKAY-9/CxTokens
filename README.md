@@ -58,3 +58,10 @@ Headers {
     Authorization: YOUR_AUTH_KEY
 }
 ```
+
+<div align="center">
+    <img src="./assets/2024-03-23_16.07.07-min.png" height=auto width=auto>
+    <img src="./assets/2024-03-23_16.07.27-min.png" height=auto width=auto>
+    <img src="./assets/2024-03-23_16.08.27-min.png" height=auto width=auto>
+    <img src="./assets/2024-03-23_16.09.00-min.png" height=auto width=auto>
+</div>
