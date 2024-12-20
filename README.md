@@ -59,6 +59,8 @@ Headers {
 }
 ```
 
+<a href="https://github.com/CKAY-9/cxtokens-web">Example website using CxTokens HTTP data</a>
+
 <div align="center">
     <img src="./assets/2024-03-23_16.07.07-min.png" height=auto width=auto>
     <img src="./assets/2024-03-23_16.07.27-min.png" height=auto width=auto>
