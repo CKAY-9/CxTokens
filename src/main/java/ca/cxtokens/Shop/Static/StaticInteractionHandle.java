@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import ca.cxtokens.Storage;
@@ -27,9 +28,26 @@ public class StaticInteractionHandle implements Listener {
 
     private void purchaseItem(Item item, String key, Player player) {
         // Prevent purchases if the blaming inventory is full
-        if (player.getInventory().firstEmpty() == -1) {
-            player.sendMessage(Utils.formatText("&cYou need to have free inventory space to purchase an item"));
-            return;
+        Inventory player_inventory = player.getInventory();
+        if (player_inventory.firstEmpty() == -1) {
+            // Check all items in inventory
+            boolean flag = false;
+            for (int i = 0; i < player_inventory.getContents().length; i++) {
+                ItemStack temp_stack = player_inventory.getContents()[i];
+                if (temp_stack.getType() != item.stack.getType()) continue;
+
+                // Check if adding will go above max size
+                Utils.getPlugin().getLogger().info("Item: " + item.stack.getAmount() + ", Stack: " + temp_stack.getAmount() + ", Max: " + item.stack.getMaxStackSize());
+                if (item.stack.getAmount() + temp_stack.getAmount() <= item.stack.getMaxStackSize()) {
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (!flag) {
+                player.sendMessage(Utils.formatText("&cYou need to have free inventory space to purchase an item"));
+                return;
+            }
         }
 
         TokenPlayer tokenPlayer = TokenPlayer.convertPlayerToTokenPlayer(player);
@@ -47,7 +65,7 @@ public class StaticInteractionHandle implements Listener {
         }
 
         tokenPlayer.subtractTokens(item.price, false);
-        player.getInventory().addItem(itemStackToGive);
+        player_inventory.addItem(itemStackToGive);
     }
 
     // I honestly can't come up with a better solution rn
