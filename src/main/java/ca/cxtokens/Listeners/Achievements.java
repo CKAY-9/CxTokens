@@ -36,7 +36,9 @@ public class Achievements implements Listener {
         }
 
         Random rand = new Random();
-        long give_amount = rand.nextLong(min_amount, max_amount + 1);
-        TokenPlayer.convertPlayerToTokenPlayer(player).addTokens(give_amount, false);
+        float maxPercent = rand.nextFloat();
+        long giveAmount = Math.max(min_amount, Math.round(max_amount * maxPercent));
+
+        TokenPlayer.convertPlayerToTokenPlayer(player).addTokens(giveAmount, false);
     }
 }

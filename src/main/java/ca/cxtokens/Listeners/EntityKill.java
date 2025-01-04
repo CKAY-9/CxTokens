@@ -35,7 +35,8 @@ public class EntityKill implements Listener {
         }
 
         Random rand = new Random();
-        long giveAmount = rand.nextLong(minAmount, maxAmount + 1);
+        float maxPercent = rand.nextFloat();
+        long giveAmount = Math.max(minAmount, Math.round(maxAmount * maxPercent));
 
         TokenPlayer.convertPlayerToTokenPlayer(e.getEntity().getKiller()).addTokens(giveAmount, false);
     }
