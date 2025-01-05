@@ -7,12 +7,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import ca.cxtokens.CxTokens;
 import ca.cxtokens.Storage;
+import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
 
 public class BalTopCommand implements CommandExecutor {
@@ -23,10 +26,23 @@ public class BalTopCommand implements CommandExecutor {
         HashMap<String, Long> leadeboardEntries = new HashMap<>();
         LinkedHashMap<String, Long> sortedMap = new LinkedHashMap<>();
         ArrayList<Long> list = new ArrayList<>();
-        for (String s : Storage.data.getConfigurationSection("players").getKeys(false)) {
-            Utils.getPlugin().getLogger().info(s);
-            leadeboardEntries.put(Storage.data.getString("players." + s + ".name"), Storage.data.getLong("players." + s + ".tokens"));
+        if (Storage.config.getBoolean("config.useOnlinePlayersOnlyForBalTop", true)) {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                leadeboardEntries.put(p.getName(), TokenPlayer.convertPlayerToTokenPlayer(p).getTokens());
+            }
+        } else {
+            for (String s : Storage.data.getConfigurationSection("players").getKeys(false)) {
+                leadeboardEntries.put(Storage.data.getString("players." + s + ".name"), Storage.data.getLong("players." + s + ".tokens"));
+            }
         }
+
+        if (leadeboardEntries.size() <= 0) {
+            sender.sendMessage(Utils.formatText("&6&l-------- BAL TOP --------"));
+            sender.sendMessage(Utils.formatText("&cNO PLAYER DATA AVAILABLE"));
+            sender.sendMessage(Utils.formatText("&6&l-------------------------"));
+            return false;
+        }
+
         for (Map.Entry<String, Long> entry : leadeboardEntries.entrySet()) {
             list.add(entry.getValue());
         }
