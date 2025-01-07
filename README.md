@@ -39,17 +39,45 @@ CxTokens is a token (money) system for Spigot/Paper Minecraft servers.
 ### HTTP Updates
 **Note: by default this is off.** 
 
-This allows you to POST request the player data in data.yml to your webserver. The player data is sent as a JSON Array with the key "player_data": 
+This allows you to POST request the CxTokens data to your webserver.
+
 ```
-[
-    {
-        uuid: string,
-        name: string,
-        tokens: long (number),
-        bounty: long (number)
-    }, 
-    ...
-]
+{
+    player_data: [
+        {
+            uuid: string,
+            name: string,
+            tokens: long (number),
+            bounty: long (number)
+        }, 
+        ...
+    ],
+    store_data: [
+        {
+            itemName: string,
+            material: string,
+            price: long (number),
+            stack: integer (number),
+            sellMultiplier: double (number)
+        },
+        ...
+    ],
+    auction_data: [
+        {
+            sellerName: string,
+            sellerUUID: string,
+            biddername: string,
+            bidderUUID: string,
+            currentBid: long (number),
+            itemName: string,
+            itemMaterial: string,
+            itemCount: integer (number),
+            sold: boolean,
+            sweepsRemaining: long (number)
+        },
+        ...
+    ]
+}
 ```
 
 Additionally, the authorization header is sent with whatever is provided in the config file. This is to make sure you are processing valid requests from verified sources:
