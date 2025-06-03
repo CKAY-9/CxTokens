@@ -18,6 +18,7 @@ public class AboutCommand implements CommandExecutor {
         sender.sendMessage(Utils.formatText("&c  - /treset: Reset your tokens to the server default"));
         sender.sendMessage(Utils.formatText("&c  - /tsend <player> <number>: Send tokens to a player"));
         sender.sendMessage(Utils.formatText("&c  - /tstore: Open the default Token Store"));
+        sender.sendMessage(Utils.formatText("&c  - /tsell: Sell a container's (e.g. chests) contents all at once"));
         sender.sendMessage(Utils.formatText("&c  - /tauction <house/sell> <number>: Open the Auction House"));
         if (sender.isOp()) {
             sender.sendMessage(Utils.formatText("&c  - /tadmin <set/add/subtract/reset> <player> <number>: Admin Utilities"));

@@ -56,7 +56,8 @@ public class AuctionCommand implements CommandExecutor {
                     break;
                 case "sell":
                     long sellPrice = Long.parseLong(args[1]);
-                    this.tokens.auctionHouse.sellItemOnHouse(TokenPlayer.convertPlayerToTokenPlayer((Player) sender), sellPrice);
+                    this.tokens.auctionHouse.sellItemOnHouse(TokenPlayer.convertPlayerToTokenPlayer((Player) sender),
+                            sellPrice);
                     break;
             }
         } catch (Exception ex) {

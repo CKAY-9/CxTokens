@@ -33,6 +33,7 @@ CxTokens is a token (money) system for Spigot/Paper Minecraft servers.
 - tauction: Open the live auction house
 - ttop: See who has the most tokens
 - tsend: Send tokens to a player
+- tsell: Sell a container's (e.g. chests) contents all at once
 - treset: Reset your token profile
 - tlottery: Join the token lottery if its happening
 

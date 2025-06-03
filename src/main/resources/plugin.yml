@@ -27,4 +27,5 @@ commands:
     description: Reset your token count to the starting amount
   tlottery:
     description: Token lottery
-
+  tsell:
+    description: Sell a container at once

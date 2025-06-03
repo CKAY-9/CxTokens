@@ -12,6 +12,7 @@ import ca.cxtokens.Commands.BalanceCommand;
 import ca.cxtokens.Commands.BountyCommand;
 import ca.cxtokens.Commands.LotteryCommand;
 import ca.cxtokens.Commands.ResetCommand;
+import ca.cxtokens.Commands.SellCommand;
 import ca.cxtokens.Commands.SendCommand;
 import ca.cxtokens.Commands.StoreCommand;
 import ca.cxtokens.Commands.Completers.AdminCompleter;
@@ -75,6 +76,7 @@ public final class CxTokens extends JavaPlugin {
         this.getCommand("cxtokens").setExecutor(new AboutCommand());
         this.getCommand("tabout").setExecutor(new AboutCommand());
         this.getCommand("tadmin").setExecutor(new AdminCommand(this));
+        this.getCommand("tsell").setExecutor(new SellCommand());
 
         // Completers
         this.getCommand("tadmin").setTabCompleter(new AdminCompleter());

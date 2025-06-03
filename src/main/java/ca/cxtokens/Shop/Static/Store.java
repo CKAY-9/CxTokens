@@ -39,13 +39,14 @@ public class Store {
         }
 
         int storageIndex = 0;
+        String[] key_array = keys.toArray(String[]::new);
         for (int i = (0 + start); i < limit; i++) {
             if (storageIndex == GlobalShop.MAX_ITEMS_PER_PAGE) {
                 break;
             }
 
             // construct item
-            String key = (String) keys.toArray()[i];
+            String key = key_array[i];
             Item temp = new Item(
                 new ItemStack(
                     Material.matchMaterial(Storage.storeItems.getString("items." + key + ".material", "air")),
