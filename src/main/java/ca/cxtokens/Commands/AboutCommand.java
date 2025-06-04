@@ -9,7 +9,7 @@ import ca.cxtokens.Utils;
 public class AboutCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        sender.sendMessage(Utils.formatText("&c&lCxTokens 1.0.2 by CKAY9"));
+        sender.sendMessage(Utils.formatText("&cCxTokens &c&l1.0.3&r&c by CKAY9"));
         sender.sendMessage(Utils.formatText("&cCommands: "));
         sender.sendMessage(Utils.formatText("&c  - /ttop: Get the top players in terms of tokens"));
         sender.sendMessage(Utils.formatText("&c  - /tbounty <player> <number>: Set a bounty on a player"));
@@ -18,7 +18,7 @@ public class AboutCommand implements CommandExecutor {
         sender.sendMessage(Utils.formatText("&c  - /treset: Reset your tokens to the server default"));
         sender.sendMessage(Utils.formatText("&c  - /tsend <player> <number>: Send tokens to a player"));
         sender.sendMessage(Utils.formatText("&c  - /tstore: Open the default Token Store"));
-        sender.sendMessage(Utils.formatText("&c  - /tsell: Sell a container's (e.g. chests) contents all at once"));
+        sender.sendMessage(Utils.formatText("&c  - /tsell <chunk/container>: Sell a container's or chunks's contents all at once"));
         sender.sendMessage(Utils.formatText("&c  - /tauction <house/sell> <number>: Open the Auction House"));
         if (sender.isOp()) {
             sender.sendMessage(Utils.formatText("&c  - /tadmin <set/add/subtract/reset> <player> <number>: Admin Utilities"));

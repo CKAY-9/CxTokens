@@ -23,7 +23,7 @@ public class BountyCommand implements CommandExecutor {
         }
 
         if (args.length <= 0) {
-            sender.sendMessage(Utils.formatText("&c&lCommand Usage for " + command.getName() + ":"));
+            sender.sendMessage(Utils.formatText("&cCommand Usage for &c&l" + command.getName() + "&r&c:"));
             sender.sendMessage(Utils.formatText("&c  <player> <number>"));
             return false;
         }
@@ -48,12 +48,12 @@ public class BountyCommand implements CommandExecutor {
             TokenPlayer me = TokenPlayer.convertPlayerToTokenPlayer(player);
 
             if (bountyPayout > Storage.config.getLong("bounty.maxBounty", Long.MAX_VALUE)) {
-                sender.sendMessage(Utils.formatText("&cThe maximum bounty amount is " + CxTokens.currency + Storage.config.getLong("bounty.maxBounty", Long.MAX_VALUE) + "!"));
+                sender.sendMessage(Utils.formatText("&cThe maximum bounty amount is &c&l" + CxTokens.currency + Storage.config.getLong("bounty.maxBounty", Long.MAX_VALUE) + "&r&c!"));
                 return false;
             }
 
             if (bountyPayout < Storage.config.getLong("bounty.minBounty", 500)) {
-                sender.sendMessage(Utils.formatText("&cThe minimum bounty amount is " + CxTokens.currency + Storage.config.getLong("bounty.minBounty", 500L) + "!"));
+                sender.sendMessage(Utils.formatText("&cThe minimum bounty amount is &c&l" + CxTokens.currency + Storage.config.getLong("bounty.minBounty", 500L) + "&r&c!"));
                 return false;
             }
 

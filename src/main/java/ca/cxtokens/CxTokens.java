@@ -18,6 +18,7 @@ import ca.cxtokens.Commands.StoreCommand;
 import ca.cxtokens.Commands.Completers.AdminCompleter;
 import ca.cxtokens.Commands.Completers.AuctionCompleter;
 import ca.cxtokens.Commands.Completers.BountyCompleter;
+import ca.cxtokens.Commands.Completers.SellCompleter;
 import ca.cxtokens.Commands.Completers.SendCompleter;
 import ca.cxtokens.Events.HTTPUpdate;
 import ca.cxtokens.Events.MiscEvents;
@@ -83,6 +84,7 @@ public final class CxTokens extends JavaPlugin {
         this.getCommand("tauction").setTabCompleter(new AuctionCompleter());
         this.getCommand("tsend").setTabCompleter(new SendCompleter());
         this.getCommand("tbounty").setTabCompleter(new BountyCompleter());
+        this.getCommand("tsell").setTabCompleter(new SellCompleter());
 
         // this is used if the plugin is reset and setup values for every player
         for (Player p : Bukkit.getOnlinePlayers()) {

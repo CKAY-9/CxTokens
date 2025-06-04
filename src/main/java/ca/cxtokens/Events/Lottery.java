@@ -59,8 +59,8 @@ public class Lottery implements Runnable {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     p.sendMessage("");
                     p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
-                    p.sendMessage(Utils.formatText("&aType \"/tlottery\" to join in!"));
-                    p.sendMessage(Utils.formatText("&aJoin cost: " + CxTokens.currency + Storage.config.getInt("lottery.entryCost", 150)));
+                    p.sendMessage(Utils.formatText("&aType &a&l\"/tlottery\"&r&a to join in!"));
+                    p.sendMessage(Utils.formatText("&aJoin cost: &a&l" + CxTokens.currency + Storage.config.getInt("lottery.entryCost", 150)));
                     p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
                     p.sendMessage("");
                 }

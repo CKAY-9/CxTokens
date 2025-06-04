@@ -121,6 +121,11 @@ public class Storage {
                 config.set("achievements.custom.story/enter_the_end.maxReward", 2000L);
             }
 
+            if (!config.isSet("chunk_selling.enabled")) {
+                config.set("chunk_selling.enabled", true);
+                config.set("chunk_selling.cooldown_in_minutes", 30);
+            }
+
             config.save(configFile);
 
             // Static Store Items

@@ -47,7 +47,7 @@ public class AuctionHouse {
                             }
 
                             // remove
-                            item.seller.sendMessage(Utils.formatText("&cNo one bought your item on the auction house :("));
+                            item.seller.sendMessage(Utils.formatText("&cNo one bought your item on the auction house. Returning..."));
                             item.seller.getInventory().addItem(item.item);
                         } else {
                             if (item.bidder.getInventory().firstEmpty() == -1) {
@@ -57,10 +57,10 @@ public class AuctionHouse {
                             }
 
                             // give
-                            item.seller.sendMessage(Utils.formatText("&aYour item has been sold for " + CxTokens.currency + item.currentBid + " on the Auction House!"));
+                            item.seller.sendMessage(Utils.formatText("&aYour item has been sold for &a&l" + CxTokens.currency + item.currentBid + "&r&a on the Auction House!"));
                             TokenPlayer.convertPlayerToTokenPlayer(item.seller).addTokens(item.currentBid, true);
 
-                            item.bidder.sendMessage(Utils.formatText("&aSuccessfully bought an item off the Auction House for " + CxTokens.currency + item.currentBid));
+                            item.bidder.sendMessage(Utils.formatText("&aSuccessfully bought an item off the Auction House for &a&l" + CxTokens.currency + item.currentBid));
                             item.bidder.getInventory().addItem(item.item);
                         } 
                         if (flag) auctionItems.remove(i);

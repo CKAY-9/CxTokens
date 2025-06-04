@@ -43,7 +43,7 @@ public class AuctionCommand implements CommandExecutor {
         }
 
         if (args.length <= 0) {
-            sender.sendMessage(Utils.formatText("&c&lCommand Usage for " + command.getName() + ":"));
+            sender.sendMessage(Utils.formatText("&cCommand Usage for &c&l" + command.getName() + "&r&c:"));
             sender.sendMessage(Utils.formatText("&c  <house/sell> <number>"));
             return false;
         }

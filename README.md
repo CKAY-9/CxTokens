@@ -2,7 +2,7 @@
     <img src="./assets/Icon.png" width=250 height = 250 />
 </div>
 
-*Plugin Version: 1.0.2*</br>
+*Plugin Version: 1.0.3*</br>
 *Minecraft Version: 1.19+*
 
 CxTokens is a token (money) system for Spigot/Paper Minecraft servers. 

@@ -38,22 +38,22 @@ public class AuctionInteractionHandle implements Listener {
         }
 
         if (tokenPlayer.getTokens() < Math.round(item.currentBid * Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25))) {
-            player.sendMessage(Utils.formatText("&cYou need to have at least " + CxTokens.currency + Math.round(item.currentBid * Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25)) + " to place a bid!"));
+            player.sendMessage(Utils.formatText("&cYou need to have at least &c&l" + CxTokens.currency + Math.round(item.currentBid * Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25)) + "&r&c to place a bid!"));
             return;
         }
 
         // reset previous bidder
         if (item.bidder != null) {
             TokenPlayer.convertPlayerToTokenPlayer(item.bidder).addTokens(item.currentBid, true);
-            item.bidder.sendMessage(Utils.formatText("&eYour bid on " + item.seller.getName() + "'s " + item.item.getItemMeta().getDisplayName() + " has been beat out! (Page: " + (page + 1) + ")"));
+            item.bidder.sendMessage(Utils.formatText("&eYour bid on " + item.seller.getName() + "'s &e&l" + item.item.getItemMeta().getDisplayName() + "&r&e has been beat out! (Page: &e&l" + (page + 1) + "&r&e)"));
         }
         
         // set new bidder
         item.bidder = player;
         item.currentBid = (long) Math.round(item.currentBid * Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25));
-        player.sendMessage(Utils.formatText("&aYour bid has been placed for " + CxTokens.currency + item.currentBid));
+        player.sendMessage(Utils.formatText("&aYour bid has been placed for &a&l" + CxTokens.currency + item.currentBid));
         tokenPlayer.subtractTokens(item.currentBid, false);
-        item.seller.sendMessage(Utils.formatText("&aYour " + item.item.getType().name() + " has recieved a new bid of " + CxTokens.currency + item.currentBid));
+        item.seller.sendMessage(Utils.formatText("&aYour &a&l" + item.item.getType().name() + "&r&a has recieved a new bid of &a&l" + CxTokens.currency + item.currentBid));
 
         this.tokens.auctionHouse.updateViewers();
     }

@@ -12,10 +12,10 @@ import ca.cxtokens.Utils;
 import org.bukkit.event.EventPriority;
 
 public class PlayerJoin implements Listener {
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void playerJoinEvent(PlayerJoinEvent event) {
         Player ply = event.getPlayer();
         TokenPlayer tempToken = TokenPlayer.convertPlayerToTokenPlayer(ply);
-        ply.sendMessage(Utils.formatText("&aYour current token balance is " + CxTokens.currency + tempToken.getTokens()));
+        ply.sendMessage(Utils.formatText("&aYour current token balance is &a&l" + CxTokens.currency + tempToken.getTokens()));
     }
 } 

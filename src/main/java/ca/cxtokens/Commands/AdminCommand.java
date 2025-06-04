@@ -30,7 +30,7 @@ public class AdminCommand implements CommandExecutor {
         }
 
         if (args.length <= 0) {
-            sender.sendMessage(Utils.formatText("&c&lCommand Usage for " + command.getName() + ":"));
+            sender.sendMessage(Utils.formatText("&cCommand Usage for &c&l" + command.getName() + "&r&c:"));
             sender.sendMessage(Utils.formatText("&c  <set/add/subtract/reset> <player> <number>"));
             return false;
         }

@@ -49,8 +49,8 @@ public class SendCommand implements CommandExecutor {
             target.addTokens(sendAmount, true);
             player.subtractTokens(sendAmount, true);
 
-            target.ply.sendMessage(Utils.formatText("&aYou have recieved " + CxTokens.currency + sendAmount + " from " + player.ply.getName()));
-            player.ply.sendMessage(Utils.formatText("&aYou sent " + CxTokens.currency + sendAmount + " to " + target.ply.getName()));
+            target.ply.sendMessage(Utils.formatText("&aYou have recieved &a&l" + CxTokens.currency + sendAmount + "&r&a from &a&l" + player.ply.getName()));
+            player.ply.sendMessage(Utils.formatText("&aYou sent &a&l" + CxTokens.currency + sendAmount + "&r&a to &a&l" + target.ply.getName()));
         } catch (Exception ex) {
             Utils.getPlugin().getLogger().info(ex.toString());
             sender.sendMessage(Utils.formatText("&cError executing command: " + ex.getMessage()));
