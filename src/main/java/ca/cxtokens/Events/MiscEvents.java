@@ -24,7 +24,7 @@ public class MiscEvents {
                     int tokenAmount = Storage.config.getInt("routineTokens.amountOfTokens", 50);
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         TokenPlayer.convertPlayerToTokenPlayer(p)
-                            .addTokens(tokenAmount, false);;
+                            .addTokens(tokenAmount, false);
                     }
                 }
             }, timeBetweenRoutine, timeBetweenRoutine);

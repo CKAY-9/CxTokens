@@ -30,7 +30,7 @@ public class Lottery implements Runnable {
     public void removePlayerFromLottery(Player p) {
         for (TokenPlayer temp : this.joinedPlayers) {
             if (temp.ply == p) {
-                temp.addTokens(Storage.config.getInt("lottery.entryConst", 150), true);
+                temp.addTokens(Storage.config.getInt("lottery.entryCost", 150), true);
                 joinedPlayers.remove(temp);
                 break;
             }

@@ -30,17 +30,14 @@ public class Store {
         // this just makes sure we don't over index our array
         Set<String> keys = Storage.storeItems.getConfigurationSection("items").getKeys(false);
         int start = pageIndex * GlobalShop.MAX_ITEMS_PER_PAGE;
-        int limit = GlobalShop.MAX_ITEMS_PER_PAGE;
-        if (start > 0) {
-            limit = (keys.size() % start) + GlobalShop.MAX_ITEMS_PER_PAGE;
-        }
-        if (keys.size() < GlobalShop.MAX_ITEMS_PER_PAGE) {
+        int limit = start + GlobalShop.MAX_ITEMS_PER_PAGE;
+        if (keys.size() < GlobalShop.MAX_ITEMS_PER_PAGE || limit >= keys.size()) {
             limit = keys.size();
         }
 
         int storageIndex = 0;
         String[] key_array = keys.toArray(String[]::new);
-        for (int i = (0 + start); i < limit; i++) {
+        for (int i = start; i < limit; i++) {
             if (storageIndex == GlobalShop.MAX_ITEMS_PER_PAGE) {
                 break;
             }
@@ -57,7 +54,12 @@ public class Store {
             );
 
 
-            ItemStack stack = new ItemStack(temp.stack.getType(), 1);
+            ItemStack stack;
+            if (Storage.config.getBoolean("static_store.display_item_count", true)) {
+                stack = new ItemStack(temp.stack.getType(), temp.stack.getAmount());
+            } else {
+                stack = new ItemStack(temp.stack.getType(), 1);
+            }
             ItemMeta meta = stack.getItemMeta();
 
             ArrayList<String> lore = new ArrayList<>();

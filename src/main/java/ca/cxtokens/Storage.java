@@ -126,6 +126,10 @@ public class Storage {
                 config.set("chunk_selling.cooldown_in_minutes", 30);
             }
 
+            if (!config.isSet("static_store.display_item_count")) {
+                config.set("static_store.display_item_count", true);
+            }
+
             config.save(configFile);
 
             // Static Store Items

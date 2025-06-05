@@ -6,6 +6,7 @@ import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -37,7 +38,6 @@ public class StaticInteractionHandle implements Listener {
                 if (temp_stack.getType() != item.stack.getType()) continue;
 
                 // Check if adding will go above max size
-                Utils.getPlugin().getLogger().info("Item: " + item.stack.getAmount() + ", Stack: " + temp_stack.getAmount() + ", Max: " + item.stack.getMaxStackSize());
                 if (item.stack.getAmount() + temp_stack.getAmount() <= item.stack.getMaxStackSize()) {
                     flag = true;
                     break;
@@ -118,7 +118,7 @@ public class StaticInteractionHandle implements Listener {
         tokenPlayer.addTokens(sellPrice, false);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onStoreClick(InventoryClickEvent e) {
         if (e.getClickedInventory() == null) {
             return;
@@ -137,6 +137,7 @@ public class StaticInteractionHandle implements Listener {
 
         int currentPage = Integer.parseInt(e.getView().getTitle().split(" ")[3]) - 1;
         int clicked = e.getSlot();
+        e.setCancelled(true);
 
         if (clicked == BACK_EXIT) {
             e.getView().close();
