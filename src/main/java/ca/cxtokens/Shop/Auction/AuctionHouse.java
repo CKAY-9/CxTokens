@@ -98,11 +98,8 @@ public class AuctionHouse {
 
         // read Shop/Static/Store.java for why this is this
         int start = pageIndex * GlobalShop.MAX_ITEMS_PER_PAGE;
-        int limit = GlobalShop.MAX_ITEMS_PER_PAGE;
-        if (start > 0) {
-            limit = (this.auctionItems.size() % start) + GlobalShop.MAX_ITEMS_PER_PAGE;
-        }
-        if (this.auctionItems.size() < GlobalShop.MAX_ITEMS_PER_PAGE) {
+        int limit = start + GlobalShop.MAX_ITEMS_PER_PAGE;
+        if (this.auctionItems.size() < GlobalShop.MAX_ITEMS_PER_PAGE || limit >= this.auctionItems.size()) {
             limit = this.auctionItems.size();
         }
 
