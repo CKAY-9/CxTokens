@@ -16,6 +16,6 @@ public class PlayerJoin implements Listener {
     public void playerJoinEvent(PlayerJoinEvent event) {
         Player ply = event.getPlayer();
         TokenPlayer tempToken = TokenPlayer.convertPlayerToTokenPlayer(ply);
-        ply.sendMessage(Utils.formatText("&aYour current token balance is &a&l" + CxTokens.currency + tempToken.getTokens()));
+        ply.sendMessage(Utils.formatText("&aYour current balance is &a&l" + CxTokens.currency + tempToken.getTokens()));
     }
 } 
