@@ -163,4 +163,14 @@ public class TokenPlayer {
         return new TokenPlayer(Storage.data.getLong("players." + p.getUniqueId() + ".tokens"),
                 Storage.data.getLong("players." + p.getUniqueId() + ".bounty"), p);
     }
+
+    public static TokenPlayer getTokenPlayer(CxTokens tokens, Player player) {
+        TokenPlayer token = tokens.token_players.get(player.getUniqueId());
+        if (token == null) {
+            token = convertPlayerToTokenPlayer(player);
+            tokens.token_players.put(player.getUniqueId(), token);
+        }
+
+        return token;
+    }
 }

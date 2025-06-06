@@ -30,7 +30,7 @@ public class AuctionInteractionHandle implements Listener {
 
     private void placeBid(int index, int page, Player player) {
         Item item = this.tokens.auctionHouse.auctionItems.get(index);
-        TokenPlayer tokenPlayer = TokenPlayer.convertPlayerToTokenPlayer(player);
+        TokenPlayer tokenPlayer = TokenPlayer.getTokenPlayer(this.tokens, player);
 
         if (tokenPlayer.ply.getUniqueId().toString().equals(item.seller.getUniqueId().toString())) {
             player.sendMessage(Utils.formatText("&cYou cannot bid on your own item!"));
@@ -44,7 +44,7 @@ public class AuctionInteractionHandle implements Listener {
 
         // reset previous bidder
         if (item.bidder != null) {
-            TokenPlayer.convertPlayerToTokenPlayer(item.bidder).addTokens(item.currentBid, true);
+            TokenPlayer.getTokenPlayer(this.tokens, item.bidder).addTokens(item.currentBid, true);
             item.bidder.sendMessage(Utils.formatText("&eYour bid on " + item.seller.getName() + "'s &e&l" + item.item.getItemMeta().getDisplayName() + "&r&e has been beat out! (Page: &e&l" + (page + 1) + "&r&e)"));
         }
         

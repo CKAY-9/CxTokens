@@ -12,6 +12,12 @@ import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
 
 public class BountyCommand implements CommandExecutor {
+    private CxTokens tokens;
+
+    public BountyCommand(CxTokens tokens) {
+        this.tokens = tokens;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
@@ -39,7 +45,7 @@ public class BountyCommand implements CommandExecutor {
             }
 
             if (args.length == 1) {
-                TokenPlayer target_token = TokenPlayer.convertPlayerToTokenPlayer(bountyPlayer);
+                TokenPlayer target_token = TokenPlayer.getTokenPlayer(this.tokens, bountyPlayer);
                 if (target_token.hasBounty()) {
                     player.sendMessage(Utils.formatText("&c&l" + bountyPlayer.getName() + "&r&c has a bounty of &c&l"
                             + CxTokens.currency + target_token.getBounty()));
@@ -57,7 +63,7 @@ public class BountyCommand implements CommandExecutor {
             }
 
             long bountyPayout = Long.parseLong(args[1]);
-            TokenPlayer me = TokenPlayer.convertPlayerToTokenPlayer(player);
+            TokenPlayer me = TokenPlayer.getTokenPlayer(this.tokens, player);
 
             if (bountyPayout > Storage.config.getLong("bounty.maxBounty", Long.MAX_VALUE)) {
                 sender.sendMessage(Utils.formatText("&cThe maximum bounty amount is &c&l" + CxTokens.currency
@@ -81,7 +87,7 @@ public class BountyCommand implements CommandExecutor {
                 return false;
             }
 
-            TokenPlayer target = TokenPlayer.convertPlayerToTokenPlayer(bountyPlayer);
+            TokenPlayer target = TokenPlayer.getTokenPlayer(this.tokens, bountyPlayer);
 
             if (target.hasBounty() && !Storage.config.getBoolean("bounty.allow_stacking", true)) {
                 sender.sendMessage(Utils.formatText("&cThis player already has a bounty!"));

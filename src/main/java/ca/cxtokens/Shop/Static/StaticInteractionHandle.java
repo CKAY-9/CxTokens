@@ -13,6 +13,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import ca.cxtokens.CxTokens;
 import ca.cxtokens.Storage;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
@@ -26,6 +27,11 @@ public class StaticInteractionHandle implements Listener {
      */
     private final int BACK_EXIT = 45;
     private final int NEXT_PAGE = 53;
+    private CxTokens tokens;
+
+    public StaticInteractionHandle(CxTokens tokens) {
+        this.tokens = tokens;
+    }
 
     private void purchaseItem(Item item, String key, Player player) {
         // Prevent purchases if the blaming inventory is full
@@ -50,7 +56,7 @@ public class StaticInteractionHandle implements Listener {
             }
         }
 
-        TokenPlayer tokenPlayer = TokenPlayer.convertPlayerToTokenPlayer(player);
+        TokenPlayer tokenPlayer = TokenPlayer.getTokenPlayer(this.tokens, player);
         if (tokenPlayer.getTokens() < item.price) {
             player.sendMessage(Utils.formatText("&cYou don't have enough tokens to purchase this item!"));
             return;
@@ -103,7 +109,7 @@ public class StaticInteractionHandle implements Listener {
     }
 
     private void sellItem(Item item, Player player) {
-        TokenPlayer tokenPlayer = TokenPlayer.convertPlayerToTokenPlayer(player);
+        TokenPlayer tokenPlayer = TokenPlayer.getTokenPlayer(this.tokens, player);
         if (!player.getInventory().contains(item.stack.getType())) {
             player.sendMessage(Utils.formatText("&cYou have to have this item in your inventory to sell!"));
             return;
@@ -148,14 +154,14 @@ public class StaticInteractionHandle implements Listener {
             }
 
             // Go Back
-            Store.openStaticStorePage(TokenPlayer.convertPlayerToTokenPlayer((Player) e.getWhoClicked()),
+            Store.openStaticStorePage(TokenPlayer.getTokenPlayer(this.tokens, (Player) e.getWhoClicked()),
                     (currentPage - 1));
             return;
         }
 
         if (clicked == NEXT_PAGE && currentPage < Math.round(Storage.storeItems.getConfigurationSection("items").getKeys(false).size() / GlobalShop.MAX_ITEMS_PER_PAGE)) {
             e.getView().close();
-            Store.openStaticStorePage(TokenPlayer.convertPlayerToTokenPlayer((Player) e.getWhoClicked()),
+            Store.openStaticStorePage(TokenPlayer.getTokenPlayer(this.tokens, (Player) e.getWhoClicked()),
                     (currentPage + 1));
             return;
         }

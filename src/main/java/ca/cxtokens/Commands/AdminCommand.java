@@ -41,18 +41,26 @@ public class AdminCommand implements CommandExecutor {
                 String toDo = args[0];
                 Player target = Bukkit.getPlayer(args[1]);
 
+                if (target == null) {
+                    sender.sendMessage(Utils.formatText("&cCommand Usage for &c&l" + command.getName() + "&r&c:"));
+                    sender.sendMessage(Utils.formatText("&c  <set/add/subtract/reset> <player> <number>"));
+                    return false;
+                }
+
+                TokenPlayer token = TokenPlayer.getTokenPlayer(this.tokens, player);
+
                 switch (toDo.toLowerCase()) {
                     case "set":
-                        TokenPlayer.convertPlayerToTokenPlayer(target).setTokens(Long.parseLong(args[2]), true);
+                        token.setTokens(Long.parseLong(args[2]), true);
                         break;
                     case "add":
-                        TokenPlayer.convertPlayerToTokenPlayer(target).addTokens(Long.parseLong(args[2]), true);
+                        token.addTokens(Long.parseLong(args[2]), true);
                         break;
                     case "subtract":
-                        TokenPlayer.convertPlayerToTokenPlayer(target).subtractTokens(Long.parseLong(args[2]), true);
+                        token.subtractTokens(Long.parseLong(args[2]), true);
                         break;
                     case "reset":
-                        TokenPlayer.convertPlayerToTokenPlayer(target).reset(true);
+                        token.reset(true);
                         break;
                 }
 

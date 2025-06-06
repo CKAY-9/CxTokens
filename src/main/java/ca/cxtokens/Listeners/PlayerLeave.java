@@ -31,7 +31,7 @@ public class PlayerLeave implements Listener {
                 // remove item and give money back to bidder
                 item.seller.getInventory().addItem(item.item);
                 if (item.bidder != null) {
-                    TokenPlayer.convertPlayerToTokenPlayer(item.bidder).addTokens(item.currentBid, true);
+                    TokenPlayer.getTokenPlayer(this.tokens, item.bidder).addTokens(item.currentBid, true);
                 }
                 this.tokens.auctionHouse.auctionItems.remove(i);
                 break;
@@ -39,7 +39,7 @@ public class PlayerLeave implements Listener {
             if (item.bidder.getUniqueId() == e.getPlayer().getUniqueId()) {
                 // set bidder to null
                 item.bidder = null;
-                TokenPlayer.convertPlayerToTokenPlayer(e.getPlayer()).addTokens(item.currentBid, true);
+                TokenPlayer.getTokenPlayer(this.tokens, e.getPlayer()).addTokens(item.currentBid, true);
                 break;
             }
         }

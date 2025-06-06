@@ -9,10 +9,17 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
+import ca.cxtokens.CxTokens;
 import ca.cxtokens.Storage;
 import ca.cxtokens.TokenPlayer;
 
 public class EntityKill implements Listener {
+    private CxTokens tokens;
+
+    public EntityKill(CxTokens tokens) {
+        this.tokens = tokens;
+    }
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityKill(EntityDeathEvent e) {
         if (!Storage.config.getBoolean("mobRewards.enabled", true)) {
@@ -38,6 +45,6 @@ public class EntityKill implements Listener {
         float maxPercent = rand.nextFloat();
         long giveAmount = Math.max(minAmount, Math.round(maxAmount * maxPercent));
 
-        TokenPlayer.convertPlayerToTokenPlayer(e.getEntity().getKiller()).addTokens(giveAmount, false);
+        TokenPlayer.getTokenPlayer(this.tokens, e.getEntity().getKiller()).addTokens(giveAmount, false);
     }
 }

@@ -37,6 +37,11 @@ class ItemData {
 
 public class SellCommand implements CommandExecutor {
     private HashMap<UUID, Integer> chunk_cooldowns;
+    private CxTokens tokens;
+
+    public SellCommand(CxTokens tokens) {
+        this.tokens = tokens;
+    }
 
     public SellCommand() {
         this.chunk_cooldowns = new HashMap<>();
@@ -140,7 +145,7 @@ public class SellCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        TokenPlayer token_player = TokenPlayer.convertPlayerToTokenPlayer(player);
+        TokenPlayer token_player = TokenPlayer.getTokenPlayer(this.tokens, player);
         
         if (args.length == 1 && args[0].equalsIgnoreCase("chunk")) {
             Integer cooldown = this.chunk_cooldowns.get(player.getUniqueId());

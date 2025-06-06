@@ -34,7 +34,7 @@ public class LotteryCommand implements CommandExecutor {
             return false;
         }
 
-        TokenPlayer player = TokenPlayer.convertPlayerToTokenPlayer((Player) sender);
+        TokenPlayer player = TokenPlayer.getTokenPlayer(this.tokens, (Player) sender);
         if (player.getTokens() < Storage.config.getLong("lottery.entryCost", 150L)) {
             player.ply.sendMessage(Utils.formatText("&cYou don't have enough to cover the entry cost!"));
             return false;

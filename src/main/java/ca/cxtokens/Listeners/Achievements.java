@@ -9,10 +9,17 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 
+import ca.cxtokens.CxTokens;
 import ca.cxtokens.Storage;
 import ca.cxtokens.TokenPlayer;
 
 public class Achievements implements Listener {
+    private CxTokens tokens;
+
+    public Achievements(CxTokens tokens) {
+        this.tokens = tokens;
+    }
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void onAchievementEarned(PlayerAdvancementDoneEvent event) {
         if (!Storage.config.getBoolean("achievements.enabled", true)) {
@@ -39,6 +46,6 @@ public class Achievements implements Listener {
         float maxPercent = rand.nextFloat();
         long giveAmount = Math.max(min_amount, Math.round(max_amount * maxPercent));
 
-        TokenPlayer.convertPlayerToTokenPlayer(player).addTokens(giveAmount, false);
+        TokenPlayer.getTokenPlayer(this.tokens, player).addTokens(giveAmount, false);
     }
 }

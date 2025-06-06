@@ -11,6 +11,12 @@ import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
 
 public class SendCommand implements CommandExecutor {
+    private CxTokens tokens;
+
+    public SendCommand(CxTokens tokens) {
+        this.tokens = tokens;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
@@ -24,7 +30,7 @@ public class SendCommand implements CommandExecutor {
         }
         
         try {
-            TokenPlayer player = TokenPlayer.convertPlayerToTokenPlayer((Player) sender);
+            TokenPlayer player = TokenPlayer.getTokenPlayer(this.tokens, (Player) sender);
             String targetPlayer = args[0];
             long sendAmount = Long.parseLong(args[1]);
 
@@ -45,7 +51,7 @@ public class SendCommand implements CommandExecutor {
                 return false;
             }
 
-            TokenPlayer target = TokenPlayer.convertPlayerToTokenPlayer(Bukkit.getPlayer(targetPlayer));
+            TokenPlayer target = TokenPlayer.getTokenPlayer(this.tokens, Bukkit.getPlayer(targetPlayer));
             target.addTokens(sendAmount, true);
             player.subtractTokens(sendAmount, true);
 

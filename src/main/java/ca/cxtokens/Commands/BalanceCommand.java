@@ -11,6 +11,12 @@ import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
 
 public class BalanceCommand implements CommandExecutor {
+    private CxTokens tokens;
+
+    public BalanceCommand(CxTokens tokens) {
+        this.tokens = tokens;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
@@ -29,11 +35,11 @@ public class BalanceCommand implements CommandExecutor {
                 sender.sendMessage(Utils.formatText("&cThe player with the name of &c&l" + args[0] + "&r&c either doesn't exist or isn't online!"));
                 return false;
             }
-            TokenPlayer t = TokenPlayer.convertPlayerToTokenPlayer(p);
+            TokenPlayer t = TokenPlayer.getTokenPlayer(this.tokens, p);
             sender.sendMessage(Utils.formatText("&aThe current balance of " + p.getName() + " is &a&l" + CxTokens.currency + t.getTokens()));
         } else {
             // Local Player
-            TokenPlayer t = TokenPlayer.convertPlayerToTokenPlayer((Player) sender);
+            TokenPlayer t = TokenPlayer.getTokenPlayer(this.tokens, (Player) sender);
             sender.sendMessage(Utils.formatText("&aYour current balance is &a&l" + CxTokens.currency + t.getTokens()));
         }
         

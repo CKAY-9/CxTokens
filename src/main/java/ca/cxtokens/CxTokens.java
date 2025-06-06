@@ -1,5 +1,8 @@
 package ca.cxtokens;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,12 +40,13 @@ public final class CxTokens extends JavaPlugin {
     public MiscEvents events;
     public AuctionHouse auctionHouse;
     public HTTPUpdate httpUpdate;
-
+    public HashMap<UUID, TokenPlayer> token_players;
     public static String currency = "T$";
 
     @Override
     public void onEnable() {
         Storage.initializeData();   
+        this.token_players = new HashMap<>();
 
         // CxToken specific events
         this.events = new MiscEvents(this);
@@ -55,24 +59,24 @@ public final class CxTokens extends JavaPlugin {
         }
 
         // Events
-        this.getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
-        this.getServer().getPluginManager().registerEvents(new EntityKill(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
+        this.getServer().getPluginManager().registerEvents(new EntityKill(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerLeave(this), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
-        this.getServer().getPluginManager().registerEvents(new Achievements(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerDeath(this), this);
+        this.getServer().getPluginManager().registerEvents(new Achievements(this), this);
 
         // Store handlers
-        this.getServer().getPluginManager().registerEvents(new StaticInteractionHandle(), this);
+        this.getServer().getPluginManager().registerEvents(new StaticInteractionHandle(this), this);
         this.getServer().getPluginManager().registerEvents(new AuctionInteractionHandle(this), this);
 
         // Commands
         this.getCommand("tlottery").setExecutor(new LotteryCommand(this));
-        this.getCommand("tbal").setExecutor(new BalanceCommand());
-        this.getCommand("tstore").setExecutor(new StoreCommand());
-        this.getCommand("treset").setExecutor(new ResetCommand());
-        this.getCommand("tsend").setExecutor(new SendCommand());
-        this.getCommand("ttop").setExecutor(new BalTopCommand());
-        this.getCommand("tbounty").setExecutor(new BountyCommand());
+        this.getCommand("tbal").setExecutor(new BalanceCommand(this));
+        this.getCommand("tstore").setExecutor(new StoreCommand(this));
+        this.getCommand("treset").setExecutor(new ResetCommand(this));
+        this.getCommand("tsend").setExecutor(new SendCommand(this));
+        this.getCommand("ttop").setExecutor(new BalTopCommand(this));
+        this.getCommand("tbounty").setExecutor(new BountyCommand(this));
         this.getCommand("tauction").setExecutor(new AuctionCommand(this));
         this.getCommand("cxtokens").setExecutor(new AboutCommand());
         this.getCommand("tabout").setExecutor(new AboutCommand());
@@ -88,7 +92,7 @@ public final class CxTokens extends JavaPlugin {
 
         // this is used if the plugin is reset and setup values for every player
         for (Player p : Bukkit.getOnlinePlayers()) {
-            TokenPlayer.convertPlayerToTokenPlayer(p);
+            TokenPlayer.getTokenPlayer(this, p);
         }
     }
 
@@ -96,5 +100,6 @@ public final class CxTokens extends JavaPlugin {
     public void onDisable() {
         events.lottery.running = false;
         events.lottery.joinedPlayers.clear();
+        this.token_players.clear();
     }
 }

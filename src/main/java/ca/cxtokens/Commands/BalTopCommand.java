@@ -19,6 +19,12 @@ import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
 
 public class BalTopCommand implements CommandExecutor {
+    private CxTokens tokens;
+
+    public BalTopCommand(CxTokens tokens) {
+        this.tokens = tokens;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         // Stolen from me https://github.com/Camerxxn/The-Walls/blob/main/src/main/java/ca/camerxn/thewalls/Commands/WLeaderboard.java
@@ -28,7 +34,7 @@ public class BalTopCommand implements CommandExecutor {
         ArrayList<Long> list = new ArrayList<>();
         if (Storage.config.getBoolean("config.useOnlinePlayersOnlyForBalTop", true)) {
             for (Player p : Bukkit.getOnlinePlayers()) {
-                leadeboardEntries.put(p.getName(), TokenPlayer.convertPlayerToTokenPlayer(p).getTokens());
+                leadeboardEntries.put(p.getName(), TokenPlayer.getTokenPlayer(this.tokens, p).getTokens());
             }
         } else {
             for (String s : Storage.data.getConfigurationSection("players").getKeys(false)) {

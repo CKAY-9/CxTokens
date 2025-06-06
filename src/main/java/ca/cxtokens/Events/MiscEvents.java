@@ -9,7 +9,6 @@ import ca.cxtokens.TokenPlayer;
 
 public class MiscEvents {
     private CxTokens tokens;
-
     public Lottery lottery;
 
     public MiscEvents(CxTokens tokens) {
@@ -23,7 +22,7 @@ public class MiscEvents {
                 public void run() {
                     int tokenAmount = Storage.config.getInt("routineTokens.amountOfTokens", 50);
                     for (Player p : Bukkit.getOnlinePlayers()) {
-                        TokenPlayer.convertPlayerToTokenPlayer(p)
+                        TokenPlayer.getTokenPlayer(tokens, p)
                             .addTokens(tokenAmount, false);
                     }
                 }
