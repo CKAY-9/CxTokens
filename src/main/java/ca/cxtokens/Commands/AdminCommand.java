@@ -47,7 +47,7 @@ public class AdminCommand implements CommandExecutor {
                     return false;
                 }
 
-                TokenPlayer token = TokenPlayer.getTokenPlayer(this.tokens, player);
+                TokenPlayer token = TokenPlayer.getTokenPlayer(this.tokens, target);
 
                 switch (toDo.toLowerCase()) {
                     case "set":
