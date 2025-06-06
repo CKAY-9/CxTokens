@@ -24,15 +24,21 @@ public class Item {
     }
 
     public ItemStack addEnchantments(String storageKey, ItemStack stack) {
-        Set<String> enchantKeys = Storage.storeItems.getConfigurationSection("items." + storageKey + ".enchants").getKeys(false);
+        if (Storage.storeItems.getConfigurationSection("items." + storageKey + ".enchants") == null) {
+            return stack;
+        }
+        Set<String> enchantKeys = Storage.storeItems.getConfigurationSection("items." + storageKey + ".enchants")
+                .getKeys(false);
 
         for (String eKey : enchantKeys) {
-            String enchantToAdd = Storage.storeItems.getString("items." + storageKey + ".enchants." + eKey + ".enchant", "");
+            String enchantToAdd = Storage.storeItems.getString("items." + storageKey + ".enchants." + eKey + ".enchant",
+                    "");
             int enchantLevel = Storage.storeItems.getInt("items." + storageKey + ".enchants." + eKey + ".level", 0);
 
             Enchantment enchantmentToAdd = Enchantment.getByKey(NamespacedKey.fromString(enchantToAdd));
 
-            if (enchantmentToAdd == null) continue;
+            if (enchantmentToAdd == null)
+                continue;
 
             if (this.stack.getType() == Material.ENCHANTED_BOOK) {
                 EnchantmentStorageMeta meta = (EnchantmentStorageMeta) stack.getItemMeta();

@@ -124,7 +124,6 @@ public class SellCommand implements CommandExecutor {
                 token_player.addTokens(sell, true);
             }
 
-            // TODO: Save enchantments
             if (stack_total >= 1) {
                 inventory.addItem(new ItemStack(Material.matchMaterial(key), stack_total));
             }

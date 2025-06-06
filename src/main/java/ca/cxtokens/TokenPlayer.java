@@ -108,7 +108,6 @@ public class TokenPlayer {
             if (has_bounty_in_name) {
                 display_name = ply.getDisplayName().replaceAll(Utils.formatText("&c&l") + " \\[BOUNTY: " + Pattern.quote(CxTokens.currency) + "\\d+\\]", "").trim();
                 list_name = ply.getPlayerListName().replaceAll(Utils.formatText("&c&l") + " \\[BOUNTY: " + Pattern.quote(CxTokens.currency) + "\\d+\\]", "").trim();
-                Utils.getPlugin().getLogger().info(display_name);
             }
             ply.setDisplayName(
                     display_name + Utils.formatText("&c&l [BOUNTY: " + CxTokens.currency + this.bounty + "]"));

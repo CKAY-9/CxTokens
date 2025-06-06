@@ -77,7 +77,7 @@ public class StaticInteractionHandle implements Listener {
         int i = 0;
 
         for (ItemStack it : player.getInventory()) {
-            if (it != null && it.getType() == item.stack.getType()) {
+            if (it != null && Utils.generateHashFromItemStack(item.stack).equals(Utils.generateHashFromItemStack(it))) {
                 foundIndexes.add(i);
                 currentStackAmount += it.getAmount();
                 if (currentStackAmount >= itemNum)
@@ -180,6 +180,7 @@ public class StaticInteractionHandle implements Listener {
             purchaseItem(item, key, (Player) e.getWhoClicked());
             return;
         }
+        item.stack = item.addEnchantments(key, item.stack);
         sellItem(item, (Player) e.getWhoClicked());
     }
 }
