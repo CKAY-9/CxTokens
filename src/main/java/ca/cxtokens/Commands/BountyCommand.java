@@ -27,7 +27,7 @@ public class BountyCommand implements CommandExecutor {
             sender.sendMessage(Utils.formatText("&c  <player> <number>"));
             return false;
         }
-        
+
         try {
             String bountyPlayerName = args[0];
             Player bountyPlayer = Bukkit.getPlayer(bountyPlayerName);
@@ -35,6 +35,18 @@ public class BountyCommand implements CommandExecutor {
 
             if (bountyPlayer == null) {
                 sender.sendMessage(Utils.formatText("&cThis player either doesn't exist or isn't online!"));
+                return false;
+            }
+
+            if (args.length == 1) {
+                TokenPlayer target_token = TokenPlayer.convertPlayerToTokenPlayer(bountyPlayer);
+                if (target_token.hasBounty()) {
+                    player.sendMessage(Utils.formatText("&c&l" + bountyPlayer.getName() + "&r&c has a bounty of &c&l"
+                            + CxTokens.currency + target_token.getBounty()));
+                    return false;
+                }
+
+                player.sendMessage(Utils.formatText("&a&l" + bountyPlayer.getName() + "&r&a currently has no bounty"));
                 return false;
             }
 
@@ -48,12 +60,14 @@ public class BountyCommand implements CommandExecutor {
             TokenPlayer me = TokenPlayer.convertPlayerToTokenPlayer(player);
 
             if (bountyPayout > Storage.config.getLong("bounty.maxBounty", Long.MAX_VALUE)) {
-                sender.sendMessage(Utils.formatText("&cThe maximum bounty amount is &c&l" + CxTokens.currency + Storage.config.getLong("bounty.maxBounty", Long.MAX_VALUE) + "&r&c!"));
+                sender.sendMessage(Utils.formatText("&cThe maximum bounty amount is &c&l" + CxTokens.currency
+                        + Storage.config.getLong("bounty.maxBounty", Long.MAX_VALUE) + "&r&c!"));
                 return false;
             }
 
             if (bountyPayout < Storage.config.getLong("bounty.minBounty", 500)) {
-                sender.sendMessage(Utils.formatText("&cThe minimum bounty amount is &c&l" + CxTokens.currency + Storage.config.getLong("bounty.minBounty", 500L) + "&r&c!"));
+                sender.sendMessage(Utils.formatText("&cThe minimum bounty amount is &c&l" + CxTokens.currency
+                        + Storage.config.getLong("bounty.minBounty", 500L) + "&r&c!"));
                 return false;
             }
 
@@ -75,7 +89,7 @@ public class BountyCommand implements CommandExecutor {
             }
 
             target.setBounty(bountyPayout + target.getBounty(), false);
-            
+
             // data overwrites itself if the player is itself
             if (isSelf) {
                 target.subtractTokens(bountyPayout, true);
@@ -86,8 +100,8 @@ public class BountyCommand implements CommandExecutor {
         } catch (Exception ex) {
             Utils.getPlugin().getLogger().info(ex.toString());
             sender.sendMessage(Utils.formatText("&cError executing command: " + ex.getMessage()));
-        } 
-        
+        }
+
         return false;
     }
 }
