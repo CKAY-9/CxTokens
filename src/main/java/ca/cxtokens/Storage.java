@@ -108,6 +108,10 @@ public class Storage {
                 config.set("bounty.maxBounty", Long.MAX_VALUE);
             }
 
+            if (!config.isSet("bounty.allow_stacking")) {
+                config.set("bounty.allow_stacking", true);
+            }
+
             // Achievements
             if (!config.isSet("achievements.enabled")) {
                 config.set("achievements.enabled", true);

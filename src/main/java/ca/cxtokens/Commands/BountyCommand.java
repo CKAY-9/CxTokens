@@ -69,12 +69,12 @@ public class BountyCommand implements CommandExecutor {
 
             TokenPlayer target = TokenPlayer.convertPlayerToTokenPlayer(bountyPlayer);
 
-            if (target.hasBounty()) {
+            if (target.hasBounty() && !Storage.config.getBoolean("bounty.allow_stacking", true)) {
                 sender.sendMessage(Utils.formatText("&cThis player already has a bounty!"));
                 return false;
             }
 
-            target.setBounty(bountyPayout, false);
+            target.setBounty(bountyPayout + target.getBounty(), false);
             
             // data overwrites itself if the player is itself
             if (isSelf) {
