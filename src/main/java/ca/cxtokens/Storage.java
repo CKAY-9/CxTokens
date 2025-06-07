@@ -134,6 +134,10 @@ public class Storage {
                 config.set("static_store.display_item_count", true);
             }
 
+            if (!config.isSet("player_death.steal_token_percentage")) {
+                config.set("player_death.steal_token_percentage", 33);
+            }
+
             config.save(configFile);
 
             // Static Store Items
