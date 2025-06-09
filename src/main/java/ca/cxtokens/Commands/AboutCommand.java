@@ -20,6 +20,7 @@ public class AboutCommand implements CommandExecutor {
         sender.sendMessage(Utils.formatText("&c  - /tstore: Open the default Token Store"));
         sender.sendMessage(Utils.formatText("&c  - /tsell <chunk/container>: Sell a container's or chunks's contents all at once"));
         sender.sendMessage(Utils.formatText("&c  - /tauction <house/sell> <number>: Open the Auction House"));
+        sender.sendMessage(Utils.formatText("&c  - /tvault: Create a token vault"));
         if (sender.isOp()) {
             sender.sendMessage(Utils.formatText("&c  - /tadmin <set/add/subtract/reset> <player> <number>: Admin Utilities"));
         }
