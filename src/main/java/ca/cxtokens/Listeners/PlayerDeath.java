@@ -2,6 +2,7 @@ package ca.cxtokens.Listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
@@ -17,7 +18,7 @@ public class PlayerDeath implements Listener {
         this.tokens = tokens;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void stealTokenHandle(PlayerDeathEvent e) {
         int percentage = Storage.config.getInt("player_death.steal_token_percentage", 33);
         if (percentage <= 0 || e.getEntity() == null || e.getEntity().getKiller() == null) {
@@ -31,19 +32,19 @@ public class PlayerDeath implements Listener {
             return;
         }
 
-        long tokens_to_steal = Math.round(player.getTokens() * (percentage / 100));
+        long tokens_to_steal = Math.round(player.getTokens() * ((double) percentage / 100));
         player.subtractTokens(tokens_to_steal, true);
         killer.addTokens(tokens_to_steal, true);
 
         player.ply.sendMessage(
             Utils.formatText(
-                "&c&l" + killer.ply.getName() + " &r&c has stolen &c&l" + CxTokens.currency + "" + tokens_to_steal + " &r&c from you"));
+                "&c&l" + killer.ply.getName() + "&r&c has stolen &c&l" + CxTokens.currency + "" + tokens_to_steal + " &r&cfrom you"));
         killer.ply.sendMessage(
             Utils.formatText(
-                "&c&lYou &r&c have stolen &c&l" + CxTokens.currency + "" + tokens_to_steal + " &r&c from &c&l" + player.ply.getName()));
+                "&c&lYou &r&chave stolen &c&l" + CxTokens.currency + "" + tokens_to_steal + " &r&cfrom &c&l" + player.ply.getName()));
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void playerBountyHandle(PlayerDeathEvent e) {
         TokenPlayer player = TokenPlayer.getTokenPlayer(this.tokens, e.getEntity());
         if (!player.hasBounty()) {
