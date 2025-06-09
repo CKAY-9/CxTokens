@@ -41,9 +41,6 @@ public class SellCommand implements CommandExecutor {
 
     public SellCommand(CxTokens tokens) {
         this.tokens = tokens;
-    }
-
-    public SellCommand() {
         this.chunk_cooldowns = new HashMap<>();
         if (Storage.config.getBoolean("chunk_selling.enabled", true)) {
             for (Player player : Bukkit.getOnlinePlayers()) {

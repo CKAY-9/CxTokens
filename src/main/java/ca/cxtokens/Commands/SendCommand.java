@@ -23,7 +23,7 @@ public class SendCommand implements CommandExecutor {
             return false;
         }
 
-        if (args.length <= 0) {
+        if (args.length <= 1) {
             sender.sendMessage(Utils.formatText("&c&lCommand Usage for " + command.getName() + ":"));
             sender.sendMessage(Utils.formatText("&c  <player> <number>"));
             return false;

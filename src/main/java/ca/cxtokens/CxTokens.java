@@ -90,7 +90,7 @@ public final class CxTokens extends JavaPlugin {
         this.getCommand("cxtokens").setExecutor(new AboutCommand());
         this.getCommand("tabout").setExecutor(new AboutCommand());
         this.getCommand("tadmin").setExecutor(new AdminCommand(this));
-        this.getCommand("tsell").setExecutor(new SellCommand());
+        this.getCommand("tsell").setExecutor(new SellCommand(this));
         this.getCommand("tvault").setExecutor(new VaultCommand(this));
 
         // Completers
