@@ -92,6 +92,16 @@ public class Storage {
                 config.set("lottery.entryCost", 150L);
             }
 
+            // Vaults
+            if (!config.isSet("vaults.enabled")) {
+                config.set("vaults.enabled", true);
+                config.set("vaults.max_value", Long.MAX_VALUE);
+                config.set("vaults.cost", 0);
+                config.set("vaults.maximum_deposit", 2500);
+                config.set("vaults.minimum_deposit", 1);
+                config.set("vaults.alert_on_break", true);
+            }
+
             // Auction House
             if (!config.isSet("auction.enabled")) {
                 config.set("auction.enabled", true);

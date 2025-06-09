@@ -18,6 +18,7 @@ import ca.cxtokens.Commands.ResetCommand;
 import ca.cxtokens.Commands.SellCommand;
 import ca.cxtokens.Commands.SendCommand;
 import ca.cxtokens.Commands.StoreCommand;
+import ca.cxtokens.Commands.VaultCommand;
 import ca.cxtokens.Commands.Completers.AdminCompleter;
 import ca.cxtokens.Commands.Completers.AuctionCompleter;
 import ca.cxtokens.Commands.Completers.BountyCompleter;
@@ -33,6 +34,8 @@ import ca.cxtokens.Listeners.PlayerLeave;
 import ca.cxtokens.Shop.Auction.AuctionHouse;
 import ca.cxtokens.Shop.Auction.AuctionInteractionHandle;
 import ca.cxtokens.Shop.Static.StaticInteractionHandle;
+import ca.cxtokens.Vaults.VaultBlock;
+import ca.cxtokens.Vaults.Vaults;
 
 public final class CxTokens extends JavaPlugin {
 
@@ -41,11 +44,12 @@ public final class CxTokens extends JavaPlugin {
     public AuctionHouse auctionHouse;
     public HTTPUpdate httpUpdate;
     public HashMap<UUID, TokenPlayer> token_players;
+    public Vaults vaults;
     public static String currency = "T$";
 
     @Override
     public void onEnable() {
-        Storage.initializeData();   
+        Storage.initializeData();
         this.token_players = new HashMap<>();
 
         // CxToken specific events
@@ -56,6 +60,11 @@ public final class CxTokens extends JavaPlugin {
 
         if (Storage.config.getBoolean("config.http.enabled", false)) {
             this.httpUpdate = new HTTPUpdate(this);
+        }
+
+        // Vaults
+        if (Storage.config.getBoolean("vaults.enabled", true)) {
+            this.vaults = new Vaults(this);
         }
 
         // Events
@@ -82,6 +91,7 @@ public final class CxTokens extends JavaPlugin {
         this.getCommand("tabout").setExecutor(new AboutCommand());
         this.getCommand("tadmin").setExecutor(new AdminCommand(this));
         this.getCommand("tsell").setExecutor(new SellCommand());
+        this.getCommand("tvault").setExecutor(new VaultCommand(this));
 
         // Completers
         this.getCommand("tadmin").setTabCompleter(new AdminCompleter());
@@ -101,5 +111,13 @@ public final class CxTokens extends JavaPlugin {
         events.lottery.running = false;
         events.lottery.joinedPlayers.clear();
         this.token_players.clear();
+
+        if (Storage.config.getBoolean("vaults.enabled", true)) {
+            for (VaultBlock block : this.vaults.player_vaults) {
+                block.clearArmorStands();
+            }
+            this.vaults.saveAllVaults();
+            this.vaults.player_vaults.clear();
+        }
     }
 }

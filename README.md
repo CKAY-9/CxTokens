@@ -2,7 +2,7 @@
     <img src="./assets/Icon.png" width=250 height = 250 />
 </div>
 
-*Plugin Version: 1.1.2*</br>
+*Plugin Version: 1.1.3*</br>
 *Minecraft Version: 1.19+*
 
 CxTokens is a token (money) system for Spigot/Paper Minecraft servers. 
@@ -23,6 +23,7 @@ CxTokens is a token (money) system for Spigot/Paper Minecraft servers.
 - Local data storing (no need for a database)
 - HTTP updates
 - Highly configurable
+- Vaults
 
 ### Commands
 - cxtokens/tabout: Information about CxTokens
@@ -36,6 +37,7 @@ CxTokens is a token (money) system for Spigot/Paper Minecraft servers.
 - tsell: Sell a container's (e.g. chests) contents all at once
 - treset: Reset your token profile
 - tlottery: Join the token lottery if its happening
+- tvault: Create vaults
 
 ### HTTP Updates
 **Note: by default this is off.** 
