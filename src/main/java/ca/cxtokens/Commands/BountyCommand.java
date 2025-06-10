@@ -24,7 +24,7 @@ public class BountyCommand implements CommandExecutor {
             return false;
         }
         if (!Storage.config.getBoolean("bounty.enabled", true)) {
-            sender.sendMessage(Utils.formatText("&cBounties are not enabled on this server!"));
+            sender.sendMessage(Utils.formatText("&c&lBounties &r&care disabled on this server"));
             return false;
         }
 

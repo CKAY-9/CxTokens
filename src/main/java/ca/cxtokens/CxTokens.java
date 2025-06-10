@@ -24,7 +24,6 @@ import ca.cxtokens.Commands.Completers.AuctionCompleter;
 import ca.cxtokens.Commands.Completers.BountyCompleter;
 import ca.cxtokens.Commands.Completers.SellCompleter;
 import ca.cxtokens.Commands.Completers.SendCompleter;
-import ca.cxtokens.Events.HTTPUpdate;
 import ca.cxtokens.Events.MiscEvents;
 import ca.cxtokens.Listeners.Achievements;
 import ca.cxtokens.Listeners.EntityKill;
@@ -42,7 +41,6 @@ public final class CxTokens extends JavaPlugin {
     public Utils utils = new Utils(this);
     public MiscEvents events;
     public AuctionHouse auctionHouse;
-    public HTTPUpdate httpUpdate;
     public HashMap<UUID, TokenPlayer> token_players;
     public Vaults vaults;
     public static String currency = "T$";
@@ -56,10 +54,6 @@ public final class CxTokens extends JavaPlugin {
         this.events = new MiscEvents(this);
         if (Storage.config.getBoolean("auction.enabled", true)) {
             this.auctionHouse = new AuctionHouse(this);
-        }
-
-        if (Storage.config.getBoolean("config.http.enabled", false)) {
-            this.httpUpdate = new HTTPUpdate(this);
         }
 
         // Vaults

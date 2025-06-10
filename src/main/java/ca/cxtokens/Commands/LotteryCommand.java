@@ -20,7 +20,7 @@ public class LotteryCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!Storage.config.getBoolean("lottery.enabled", true)) {
-            sender.sendMessage(Utils.formatText("&cToken Lotteries are not enabled on this server!"));
+            sender.sendMessage(Utils.formatText("&c&lLotteries &r&care disabled on this server"));
             return false;
         }
 

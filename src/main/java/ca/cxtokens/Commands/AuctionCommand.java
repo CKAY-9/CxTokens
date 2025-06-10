@@ -34,7 +34,7 @@ public class AuctionCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!Storage.config.getBoolean("auction.enabled", true)) {
-            sender.sendMessage(Utils.formatText("&cThe Auction House isn't enabled on this server!"));
+            sender.sendMessage(Utils.formatText("&c&lThe Auction House &r&cis disabled on this server"));
             return false;
         }
 

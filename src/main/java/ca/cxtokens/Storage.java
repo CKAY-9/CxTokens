@@ -55,13 +55,6 @@ public class Storage {
 
             CxTokens.currency = config.getString("config.currency");
 
-            if (!config.isSet("config.http.enabled")) {
-                config.set("config.http.enabled", false);
-                config.set("config.http.url", "http://localhost:8080/api/tokens/update");
-                config.set("config.http.updateInSeconds", 60);
-                config.set("config.http.authorization", "EMPTY_KEY");
-            }
-
             if (!config.isSet("config.useOnlinePlayersOnlyForBalTop")) {
                 config.set("config.useOnlinePlayersOnlyForBalTop", true);
             }
@@ -142,6 +135,10 @@ public class Storage {
 
             if (!config.isSet("static_store.display_item_count")) {
                 config.set("static_store.display_item_count", true);
+            }
+
+            if (!config.isSet("static_store.enabled")) {
+                config.set("static_store.enabled", true);
             }
 
             if (!config.isSet("player_death.steal_token_percentage")) {

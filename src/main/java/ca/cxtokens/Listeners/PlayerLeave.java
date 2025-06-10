@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import ca.cxtokens.CxTokens;
+import ca.cxtokens.Storage;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Shop.Auction.Item;
 import ca.cxtokens.Shop.Auction.Viewer;
@@ -27,6 +28,10 @@ public class PlayerLeave implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void auctionLeaveCheck(PlayerQuitEvent e) {
+        if (!Storage.config.getBoolean("auction.enabled", true)) {
+            return;
+        }
+
         for (int i = 0; i < this.tokens.auctionHouse.auctionItems.size(); i++) {
             Item item = this.tokens.auctionHouse.auctionItems.get(i);
             if (item.seller.getUniqueId() == e.getPlayer().getUniqueId()) {
@@ -51,6 +56,10 @@ public class PlayerLeave implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void removeViewer(PlayerQuitEvent e) {
+        if (!Storage.config.getBoolean("auction.enabled", true)) {
+            return;
+        }
+
         for (Viewer viewer : this.tokens.auctionHouse.viewers) {
             if (viewer.player.getUniqueId().toString().equals(e.getPlayer().getUniqueId().toString())) {
                 this.tokens.auctionHouse.viewers.remove(viewer);
