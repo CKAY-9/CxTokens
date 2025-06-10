@@ -54,11 +54,16 @@ public final class CxTokens extends JavaPlugin {
         this.events = new MiscEvents(this);
         if (Storage.config.getBoolean("auction.enabled", true)) {
             this.auctionHouse = new AuctionHouse(this);
+            this.getServer().getPluginManager().registerEvents(new AuctionInteractionHandle(this), this);
         }
 
         // Vaults
         if (Storage.config.getBoolean("vaults.enabled", true)) {
             this.vaults = new Vaults(this);
+        }
+
+        if (Storage.config.getBoolean("static_store.enabled", true)) {
+            this.getServer().getPluginManager().registerEvents(new StaticInteractionHandle(this), this);
         }
 
         // Events
@@ -67,10 +72,6 @@ public final class CxTokens extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerLeave(this), this);
         this.getServer().getPluginManager().registerEvents(new PlayerDeath(this), this);
         this.getServer().getPluginManager().registerEvents(new Achievements(this), this);
-
-        // Store handlers
-        this.getServer().getPluginManager().registerEvents(new StaticInteractionHandle(this), this);
-        this.getServer().getPluginManager().registerEvents(new AuctionInteractionHandle(this), this);
 
         // Commands
         this.getCommand("tlottery").setExecutor(new LotteryCommand(this));
