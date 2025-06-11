@@ -34,16 +34,13 @@ public class TokenPlayer {
         }
     }
 
-    /*
-     * 
-     * TOKENS
-     * 
-     */
     public void setTokens(long overrideValue, boolean silent) {
         this.tokens = overrideValue;
         updateTokenPlayer();
-        if (silent)
+        if (silent) {
             return;
+        }
+
         this.ply.sendMessage(
                 Utils.formatText("&aYour token balance has changed to &a&l" + CxTokens.currency + overrideValue));
     }
@@ -51,40 +48,41 @@ public class TokenPlayer {
     public void addTokens(long tokensToAdd, boolean silent) {
         this.tokens += tokensToAdd;
         updateTokenPlayer();
-        if (silent)
+        if (silent) {
             return;
+        }
+
         this.ply.sendMessage(Utils.formatText("&aYou have recieved &a&l" + CxTokens.currency + tokensToAdd));
     }
 
     public void subtractTokens(long tokensToRemove, boolean silent) {
         this.tokens -= tokensToRemove;
         updateTokenPlayer();
-        if (silent)
+        if (silent) {
             return;
+        }
+
         this.ply.sendMessage(
                 Utils.formatText("&cYour token balance decreased by &c&l" + CxTokens.currency + tokensToRemove));
     }
 
     public long getTokens() {
-        return Storage.data.getLong("players." + ply.getUniqueId() + ".tokens",
-                Storage.config.getInt("config.defaultTokenAmount", 500));
+        return this.tokens;
     }
 
     public void reset(boolean silent) {
-        if (!Storage.data.isSet("players." + ply.getUniqueId()))
+        if (!Storage.data.isSet("players." + ply.getUniqueId())) {
             return;
+        }
+
         this.tokens = Storage.config.getLong("config.defaultTokenAmount", 500);
         updateTokenPlayer();
-        if (silent)
+        if (silent) {
             return;
+        }
+        
         ply.sendMessage(Utils.formatText("&aSuccessfully reset your token account!"));
     }
-
-    /*
-     * 
-     * BOUNTIES
-     * 
-     */
 
     public void setBounty(long bountyPayout, boolean silent) {
         if (!silent) {
@@ -109,6 +107,7 @@ public class TokenPlayer {
                 display_name = ply.getDisplayName().replaceAll(Utils.formatText("&c&l") + " \\[BOUNTY: " + Pattern.quote(CxTokens.currency) + "\\d+\\]", "").trim();
                 list_name = ply.getPlayerListName().replaceAll(Utils.formatText("&c&l") + " \\[BOUNTY: " + Pattern.quote(CxTokens.currency) + "\\d+\\]", "").trim();
             }
+            
             ply.setDisplayName(
                     display_name + Utils.formatText("&c&l [BOUNTY: " + CxTokens.currency + this.bounty + "]"));
             ply.setPlayerListName(list_name
@@ -133,11 +132,6 @@ public class TokenPlayer {
         return this.bounty > 0;
     }
 
-    /*
-     * 
-     * CREATING
-     * 
-     */
     public static TokenPlayer convertPlayerToTokenPlayer(Player p) {
         if (!Storage.data.isSet("players." + p.getUniqueId())) {
             // Create new token data in file
@@ -151,6 +145,7 @@ public class TokenPlayer {
                 return new TokenPlayer(0, 0, p);
             }
         }
+
         if (!Storage.data.isSet("players." + p.getUniqueId() + ".bounty")) {
             try {
                 Storage.data.set("players." + p.getUniqueId() + ".bounty", 0);
@@ -160,6 +155,7 @@ public class TokenPlayer {
                 return new TokenPlayer(0, 0, p);
             }
         }
+        
         return new TokenPlayer(Storage.data.getLong("players." + p.getUniqueId() + ".tokens"),
                 Storage.data.getLong("players." + p.getUniqueId() + ".bounty"), p);
     }
