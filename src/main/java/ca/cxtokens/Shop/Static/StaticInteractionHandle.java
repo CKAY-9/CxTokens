@@ -126,6 +126,9 @@ public class StaticInteractionHandle implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onStoreClick(InventoryClickEvent e) {
+        if (!Storage.config.getBoolean("static_store.enabled", true)) {
+            return;
+        }
         if (e.getClickedInventory() == null) {
             return;
         }

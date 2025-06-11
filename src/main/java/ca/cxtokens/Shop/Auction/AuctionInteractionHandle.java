@@ -25,10 +25,18 @@ public class AuctionInteractionHandle implements Listener {
     CxTokens tokens;
 
     public AuctionInteractionHandle(CxTokens tokens) {
+        if (!Storage.config.getBoolean("auction.enabled", true)) {
+            return;
+        }
+
         this.tokens = tokens;
     } 
 
     private void placeBid(int index, int page, Player player) {
+        if (!Storage.config.getBoolean("auction.enabled", true)) {
+            return;
+        }
+
         Item item = this.tokens.auctionHouse.auctionItems.get(index);
         TokenPlayer tokenPlayer = TokenPlayer.getTokenPlayer(this.tokens, player);
 
@@ -60,6 +68,10 @@ public class AuctionInteractionHandle implements Listener {
 
     @EventHandler
     public void onAuctionClick(InventoryClickEvent e) {
+        if (!Storage.config.getBoolean("auction.enabled", true)) {
+            return;
+        }
+
         if (e.getClickedInventory() == null) {
             return;
         }
@@ -109,6 +121,10 @@ public class AuctionInteractionHandle implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void auctionHouseClose(InventoryCloseEvent e) {
+        if (!Storage.config.getBoolean("auction.enabled", true)) {
+            return;
+        }
+
         for (Viewer viewer : this.tokens.auctionHouse.viewers) {
             if (viewer.player.getUniqueId().toString().equals(e.getPlayer().getUniqueId().toString())) {
                 this.tokens.auctionHouse.viewers.remove(viewer);

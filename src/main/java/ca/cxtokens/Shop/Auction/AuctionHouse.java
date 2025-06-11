@@ -22,6 +22,10 @@ public class AuctionHouse {
     public ArrayList<Item> auctionItems = new ArrayList<>();
 
     public AuctionHouse(CxTokens tokens) {
+        if (!Storage.config.getBoolean("auction.enabled", true)) {
+            return;
+        }
+        
         this.tokens = tokens;
 
         // Sweeping goes over the items in the house and either remove them, continue, or sell them to the highest bidder
