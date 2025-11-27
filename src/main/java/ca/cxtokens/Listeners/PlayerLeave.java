@@ -23,7 +23,7 @@ public class PlayerLeave implements Listener {
             this.tokens.events.lottery.removePlayerFromLottery(e.getPlayer());
         }
 
-        this.tokens.token_players.remove(e.getPlayer().getUniqueId());
+        this.tokens.tokenPlayers.remove(e.getPlayer().getUniqueId());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -51,7 +51,7 @@ public class PlayerLeave implements Listener {
             }
         }
 
-        this.tokens.token_players.remove(e.getPlayer().getUniqueId());
+        this.tokens.tokenPlayers.remove(e.getPlayer().getUniqueId());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -67,6 +67,6 @@ public class PlayerLeave implements Listener {
             }
         }
         
-        this.tokens.token_players.remove(e.getPlayer().getUniqueId());
+        this.tokens.tokenPlayers.remove(e.getPlayer().getUniqueId());
     }
 }

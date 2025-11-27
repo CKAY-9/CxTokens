@@ -37,18 +37,16 @@ import ca.cxtokens.Vaults.VaultBlock;
 import ca.cxtokens.Vaults.Vaults;
 
 public final class CxTokens extends JavaPlugin {
-
-    public Utils utils = new Utils(this);
     public MiscEvents events;
     public AuctionHouse auctionHouse;
-    public HashMap<UUID, TokenPlayer> token_players;
+    public HashMap<UUID, TokenPlayer> tokenPlayers;
     public Vaults vaults;
     public static String currency = "T$";
 
     @Override
     public void onEnable() {
         Storage.initializeData();
-        this.token_players = new HashMap<>();
+        this.tokenPlayers = new HashMap<>();
 
         // CxToken specific events
         this.events = new MiscEvents(this);
@@ -105,7 +103,7 @@ public final class CxTokens extends JavaPlugin {
     public void onDisable() {
         events.lottery.running = false;
         events.lottery.joinedPlayers.clear();
-        this.token_players.clear();
+        this.tokenPlayers.clear();
 
         if (Storage.config.getBoolean("vaults.enabled", true)) {
             for (VaultBlock block : this.vaults.player_vaults) {

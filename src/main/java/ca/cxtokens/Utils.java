@@ -9,12 +9,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 public class Utils {
-
-    public CxTokens tokens;
-
-    public Utils(CxTokens tokens) {
-        this.tokens = tokens;
-    }
+    public static int LARGE_EXIT_PREVIOUS_SLOT = 45;
+    public static int SMALL_EXIT_PREVIOUS_SLOT = 18;
+    public static int LARGE_NEXT_PAGE_SLOT = 54;
+    public static int SMALL_NEXT_PAGE_SLOT = 27;
 
     public static String formatText(String s) {
         return ChatColor.translateAlternateColorCodes('&', s);
