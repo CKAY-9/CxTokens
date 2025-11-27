@@ -15,13 +15,6 @@ import ca.cxtokens.Utils;
 import ca.cxtokens.Shop.GlobalShop;
 
 public class AuctionInteractionHandle implements Listener {
-    /*
-     * Double chests have 54 slots (D.Bs are used for the store)
-     * 45 = bottom left slot
-     * 53 = bottom right slot
-     */
-    private final int BACK_EXIT = 45;
-    private final int NEXT_PAGE = 53;
     CxTokens tokens;
 
     public AuctionInteractionHandle(CxTokens tokens) {
@@ -90,7 +83,7 @@ public class AuctionInteractionHandle implements Listener {
         int currentPage = Integer.parseInt(e.getView().getTitle().split(" ")[4]) - 1;
         int clicked = e.getSlot();
 
-        if (clicked == BACK_EXIT) {
+        if (clicked == Utils.LARGE_EXIT_PREVIOUS_SLOT) {
             e.getView().close();
 
             // Exit
@@ -103,7 +96,7 @@ public class AuctionInteractionHandle implements Listener {
             return;
         }
 
-        if (clicked == NEXT_PAGE && currentPage < Math.round(this.tokens.auctionHouse.auctionItems.size() / GlobalShop.MAX_ITEMS_PER_PAGE)) {
+        if (clicked == Utils.LARGE_NEXT_PAGE_SLOT && currentPage < Math.round(this.tokens.auctionHouse.auctionItems.size() / GlobalShop.MAX_ITEMS_PER_PAGE)) {
             e.getView().close();
             this.tokens.auctionHouse.getViewerFromPlayer((Player) e.getWhoClicked()).nextPage();
             return;

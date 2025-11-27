@@ -16,12 +16,6 @@ import ca.cxtokens.Utils;
 import ca.cxtokens.Shop.GlobalShop;
 
 public class Store {
-    /*
-     * Static store has hardcoded values and can't be changed in-game.
-     * This is different from the Auction House which users can put items in and
-     * auction on them.
-    */
-
     public static void openStaticStorePage(TokenPlayer player, int pageIndex) {
         if (!Storage.config.getBoolean("static_store.enabled", true)) {
             return;

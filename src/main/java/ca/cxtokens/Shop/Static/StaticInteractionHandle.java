@@ -20,13 +20,6 @@ import ca.cxtokens.Utils;
 import ca.cxtokens.Shop.GlobalShop;
 
 public class StaticInteractionHandle implements Listener {
-    /*
-     * Double chests have 54 slots (D.Bs are used for the store)
-     * 45 = bottom left slot
-     * 53 = bottom right slot
-     */
-    private final int BACK_EXIT = 45;
-    private final int NEXT_PAGE = 53;
     private CxTokens tokens;
 
     public StaticInteractionHandle(CxTokens tokens) {
@@ -148,7 +141,7 @@ public class StaticInteractionHandle implements Listener {
         int clicked = e.getSlot();
         e.setCancelled(true);
 
-        if (clicked == BACK_EXIT) {
+        if (clicked == Utils.LARGE_EXIT_PREVIOUS_SLOT) {
             e.getView().close();
 
             // Exit
@@ -162,7 +155,7 @@ public class StaticInteractionHandle implements Listener {
             return;
         }
 
-        if (clicked == NEXT_PAGE && currentPage < Math.round(Storage.storeItems.getConfigurationSection("items").getKeys(false).size() / GlobalShop.MAX_ITEMS_PER_PAGE)) {
+        if (clicked == Utils.LARGE_NEXT_PAGE_SLOT && currentPage < Math.round(Storage.storeItems.getConfigurationSection("items").getKeys(false).size() / GlobalShop.MAX_ITEMS_PER_PAGE)) {
             e.getView().close();
             Store.openStaticStorePage(TokenPlayer.getTokenPlayer(this.tokens, (Player) e.getWhoClicked()),
                     (currentPage + 1));
