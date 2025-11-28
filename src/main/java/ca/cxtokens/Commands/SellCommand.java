@@ -67,6 +67,10 @@ public class SellCommand implements CommandExecutor {
         }
     }
 
+    /**
+     * Creates a hashmap with item data, generated from the storeItems.yml file
+     * @return The hashmap with item data
+     */
     private HashMap<String, ItemData> loadStaticStoreItems() {
         HashMap<String, ItemData> map = new HashMap<>();
         Set<String> keys = Storage.storeItems.getConfigurationSection("items").getKeys(false);
@@ -84,6 +88,13 @@ public class SellCommand implements CommandExecutor {
         return map;
     }
 
+    /**
+     * Attempts to sell all the item's possible in the container (chests, shulkers, etc.)
+     * 
+     * @param token_player Who is trying to sell the container
+     * @param container What container are they trying to sell
+     * @return The amount the container is sold for
+     */
     public long sellContainer(TokenPlayer token_player, Container container) {
         Inventory inventory = container.getInventory();
         ItemStack[] stacks = inventory.getContents();

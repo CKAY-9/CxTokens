@@ -24,9 +24,13 @@ public class Lottery implements Runnable {
         this.joinedPlayers = new ArrayList<TokenPlayer>();
     }
 
-    // This used for disconnects because it will result in an error if 
-    // the selected player is disconnected, and it will give money back to
-    // the disconnected player
+    /**
+     * This used for disconnects because it will result in an error if
+     * the selected player is disconnected, and it will give money back to
+     * the disconnected player
+     * 
+     * @param p The player to remove from the lottery
+     */
     public void removePlayerFromLottery(Player p) {
         for (TokenPlayer temp : this.joinedPlayers) {
             if (temp.ply == p) {
@@ -45,27 +49,29 @@ public class Lottery implements Runnable {
         }
 
         this.running = true;
-        this.announcementTask = this.tokens.getServer().getScheduler().scheduleSyncRepeatingTask(this.tokens, new Runnable() {
-            int currentIter = 0;
-            
-            @Override
-            public void run() {
-                currentIter++;
-                if (currentIter > 4) {
-                    Utils.getPlugin().getServer().getScheduler().cancelTask(announcementTask);
-                    return;
-                }
+        this.announcementTask = this.tokens.getServer().getScheduler().scheduleSyncRepeatingTask(this.tokens,
+                new Runnable() {
+                    int currentIter = 0;
 
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    p.sendMessage("");
-                    p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
-                    p.sendMessage(Utils.formatText("&aType &a&l\"/tlottery\"&r&a to join in!"));
-                    p.sendMessage(Utils.formatText("&aJoin cost: &a&l" + CxTokens.currency + Storage.config.getInt("lottery.entryCost", 150)));
-                    p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
-                    p.sendMessage("");
-                }
-            }
-        }, 0, 20 * 15);
+                    @Override
+                    public void run() {
+                        currentIter++;
+                        if (currentIter > 4) {
+                            Utils.getPlugin().getServer().getScheduler().cancelTask(announcementTask);
+                            return;
+                        }
+
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            p.sendMessage("");
+                            p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
+                            p.sendMessage(Utils.formatText("&aType &a&l\"/tlottery\"&r&a to join in!"));
+                            p.sendMessage(Utils.formatText("&aJoin cost: &a&l" + CxTokens.currency
+                                    + Storage.config.getInt("lottery.entryCost", 150)));
+                            p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
+                            p.sendMessage("");
+                        }
+                    }
+                }, 0, 20 * 15);
 
         this.doTask = this.tokens.getServer().getScheduler().scheduleSyncRepeatingTask(this.tokens, new Runnable() {
             @Override
@@ -83,7 +89,8 @@ public class Lottery implements Runnable {
                     p.sendMessage("");
                     p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
                     p.sendMessage(Utils.formatText("&a" + selected.ply.getName() + " has won the lottery!"));
-                    p.sendMessage(Utils.formatText("&aThey won " + CxTokens.currency + (joinedPlayers.size() * Storage.config.getInt("lottery.entryCost", 150))));
+                    p.sendMessage(Utils.formatText("&aThey won " + CxTokens.currency
+                            + (joinedPlayers.size() * Storage.config.getInt("lottery.entryCost", 150))));
                     p.sendMessage(Utils.formatText("&a&l--------- LOTTERY ---------"));
                     p.sendMessage("");
                 }

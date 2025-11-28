@@ -18,6 +18,10 @@ public class AuctionCommand implements CommandExecutor {
         this.tokens = tokens;
     }
 
+    /**
+     * Creates a new viewer for the auction house
+     * @param p The player who will be the viewer
+     */
     private void setupHouseForPlayer(Player p) {
         for (Viewer viewer : this.tokens.auctionHouse.viewers) {
             if (viewer.player.getUniqueId().toString().equals(p.getUniqueId().toString())) {

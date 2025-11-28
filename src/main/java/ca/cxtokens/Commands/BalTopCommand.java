@@ -26,9 +26,7 @@ public class BalTopCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        // Stolen from me https://github.com/Camerxxn/The-Walls/blob/main/src/main/java/ca/camerxn/thewalls/Commands/WLeaderboard.java
-        
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) { 
         HashMap<String, Long> leadeboardEntries = new HashMap<>();
         LinkedHashMap<String, Long> sortedMap = new LinkedHashMap<>();
         ArrayList<Long> list = new ArrayList<>();
