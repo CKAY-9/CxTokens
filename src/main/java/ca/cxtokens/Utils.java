@@ -11,8 +11,8 @@ import org.bukkit.plugin.Plugin;
 public class Utils {
     public static int LARGE_EXIT_PREVIOUS_SLOT = 45;
     public static int SMALL_EXIT_PREVIOUS_SLOT = 18;
-    public static int LARGE_NEXT_PAGE_SLOT = 54;
-    public static int SMALL_NEXT_PAGE_SLOT = 27;
+    public static int LARGE_NEXT_PAGE_SLOT = 53;
+    public static int SMALL_NEXT_PAGE_SLOT = 26;
 
     public static String formatText(String s) {
         return ChatColor.translateAlternateColorCodes('&', s);
