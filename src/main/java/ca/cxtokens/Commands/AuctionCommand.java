@@ -1,17 +1,17 @@
 package ca.cxtokens.Commands;
 
+import ca.cxtokens.CxTokens;
+import ca.cxtokens.Shop.Auction.Viewer;
+import ca.cxtokens.Storage;
+import ca.cxtokens.TokenPlayer;
+import ca.cxtokens.Utils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import ca.cxtokens.CxTokens;
-import ca.cxtokens.Storage;
-import ca.cxtokens.TokenPlayer;
-import ca.cxtokens.Utils;
-import ca.cxtokens.Shop.Auction.Viewer;
-
 public class AuctionCommand implements CommandExecutor {
+
     CxTokens tokens;
 
     public AuctionCommand(CxTokens tokens) {
@@ -24,7 +24,12 @@ public class AuctionCommand implements CommandExecutor {
      */
     private void setupHouseForPlayer(Player p) {
         for (Viewer viewer : this.tokens.auctionHouse.viewers) {
-            if (viewer.player.getUniqueId().toString().equals(p.getUniqueId().toString())) {
+            if (
+                viewer.player
+                    .getUniqueId()
+                    .toString()
+                    .equals(p.getUniqueId().toString())
+            ) {
                 viewer.openPage(0);
                 return;
             }
@@ -36,9 +41,18 @@ public class AuctionCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(
+        CommandSender sender,
+        Command command,
+        String label,
+        String[] args
+    ) {
         if (!Storage.config.getBoolean("auction.enabled", true)) {
-            sender.sendMessage(Utils.formatText("&c&lThe Auction House &r&cis disabled on this server"));
+            sender.sendMessage(
+                Utils.formatText(
+                    "&c&lThe Auction House &r&cis disabled on this server"
+                )
+            );
             return false;
         }
 
@@ -47,7 +61,11 @@ public class AuctionCommand implements CommandExecutor {
         }
 
         if (args.length <= 0) {
-            sender.sendMessage(Utils.formatText("&cCommand Usage for &c&l" + command.getName() + "&r&c:"));
+            sender.sendMessage(
+                Utils.formatText(
+                    "&cCommand Usage for &c&l" + command.getName() + "&r&c:"
+                )
+            );
             sender.sendMessage(Utils.formatText("&c  <house/sell> <number>"));
             return false;
         }
@@ -60,13 +78,22 @@ public class AuctionCommand implements CommandExecutor {
                     break;
                 case "sell":
                     long sellPrice = Long.parseLong(args[1]);
-                    TokenPlayer token = TokenPlayer.getTokenPlayer(this.tokens, (Player) sender);
+                    TokenPlayer token = TokenPlayer.getTokenPlayer(
+                        this.tokens,
+                        (Player) sender
+                    );
                     this.tokens.auctionHouse.sellItemOnHouse(token, sellPrice);
                     break;
             }
         } catch (Exception ex) {
-            Utils.getPlugin().getLogger().info(ex.toString());
-            sender.sendMessage(Utils.formatText("&cError executing command: " + ex.getMessage()));
+            if (CxTokens.LOGGING) {
+                Utils.getPlugin().getLogger().info(ex.toString());
+            }
+            sender.sendMessage(
+                Utils.formatText(
+                    "&cError executing command: " + ex.getMessage()
+                )
+            );
         }
 
         return false;

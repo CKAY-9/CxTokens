@@ -1,29 +1,22 @@
 package ca.cxtokens;
 
-import java.util.HashMap;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import ca.cxtokens.Commands.AboutCommand;
 import ca.cxtokens.Commands.AdminCommand;
 import ca.cxtokens.Commands.AuctionCommand;
 import ca.cxtokens.Commands.BalTopCommand;
 import ca.cxtokens.Commands.BalanceCommand;
 import ca.cxtokens.Commands.BountyCommand;
+import ca.cxtokens.Commands.Completers.AdminCompleter;
+import ca.cxtokens.Commands.Completers.AuctionCompleter;
+import ca.cxtokens.Commands.Completers.BountyCompleter;
+import ca.cxtokens.Commands.Completers.SellCompleter;
+import ca.cxtokens.Commands.Completers.SendCompleter;
 import ca.cxtokens.Commands.LotteryCommand;
 import ca.cxtokens.Commands.ResetCommand;
 import ca.cxtokens.Commands.SellCommand;
 import ca.cxtokens.Commands.SendCommand;
 import ca.cxtokens.Commands.StoreCommand;
 import ca.cxtokens.Commands.VaultCommand;
-import ca.cxtokens.Commands.Completers.AdminCompleter;
-import ca.cxtokens.Commands.Completers.AuctionCompleter;
-import ca.cxtokens.Commands.Completers.BountyCompleter;
-import ca.cxtokens.Commands.Completers.SellCompleter;
-import ca.cxtokens.Commands.Completers.SendCompleter;
 import ca.cxtokens.Events.MiscEvents;
 import ca.cxtokens.Listeners.Achievements;
 import ca.cxtokens.Listeners.EntityKill;
@@ -35,13 +28,20 @@ import ca.cxtokens.Shop.Auction.AuctionInteractionHandle;
 import ca.cxtokens.Shop.Static.StaticInteractionHandle;
 import ca.cxtokens.Vaults.VaultBlock;
 import ca.cxtokens.Vaults.Vaults;
+import java.util.HashMap;
+import java.util.UUID;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CxTokens extends JavaPlugin {
+
     public MiscEvents events;
     public AuctionHouse auctionHouse;
     public HashMap<UUID, TokenPlayer> tokenPlayers;
     public Vaults vaults;
     public static String currency = "T$";
+    public static boolean LOGGING = false;
 
     @Override
     public void onEnable() {
@@ -52,7 +52,9 @@ public final class CxTokens extends JavaPlugin {
         this.events = new MiscEvents(this);
         if (Storage.config.getBoolean("auction.enabled", true)) {
             this.auctionHouse = new AuctionHouse(this);
-            this.getServer().getPluginManager().registerEvents(new AuctionInteractionHandle(this), this);
+            this.getServer()
+                .getPluginManager()
+                .registerEvents(new AuctionInteractionHandle(this), this);
         }
 
         // Vaults
@@ -61,15 +63,29 @@ public final class CxTokens extends JavaPlugin {
         }
 
         if (Storage.config.getBoolean("static_store.enabled", true)) {
-            this.getServer().getPluginManager().registerEvents(new StaticInteractionHandle(this), this);
+            this.getServer()
+                .getPluginManager()
+                .registerEvents(new StaticInteractionHandle(this), this);
         }
 
+        CxTokens.LOGGING = Storage.config.getBoolean("config.logging", false);
+
         // Events
-        this.getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
-        this.getServer().getPluginManager().registerEvents(new EntityKill(this), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerLeave(this), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerDeath(this), this);
-        this.getServer().getPluginManager().registerEvents(new Achievements(this), this);
+        this.getServer()
+            .getPluginManager()
+            .registerEvents(new PlayerJoin(this), this);
+        this.getServer()
+            .getPluginManager()
+            .registerEvents(new EntityKill(this), this);
+        this.getServer()
+            .getPluginManager()
+            .registerEvents(new PlayerLeave(this), this);
+        this.getServer()
+            .getPluginManager()
+            .registerEvents(new PlayerDeath(this), this);
+        this.getServer()
+            .getPluginManager()
+            .registerEvents(new Achievements(this), this);
 
         // Commands
         this.getCommand("tlottery").setExecutor(new LotteryCommand(this));

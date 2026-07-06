@@ -1,8 +1,10 @@
 package ca.cxtokens.Commands.Send;
 
+import ca.cxtokens.CxTokens;
+import ca.cxtokens.TokenPlayer;
+import ca.cxtokens.Utils;
 import java.util.HashMap;
 import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,11 +18,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import ca.cxtokens.CxTokens;
-import ca.cxtokens.TokenPlayer;
-import ca.cxtokens.Utils;
-
 class SendTransfer {
+
     TokenPlayer player;
     TokenPlayer transferTarget;
     long amount;
@@ -49,7 +48,11 @@ class SendTransfer {
      * @param transferTarget The player who will receive the money
      * @param amount         The amount to send
      */
-    public SendTransfer(TokenPlayer player, TokenPlayer transferTarget, long amount) {
+    public SendTransfer(
+        TokenPlayer player,
+        TokenPlayer transferTarget,
+        long amount
+    ) {
         this.player = player;
         this.transferTarget = transferTarget;
         this.amount = amount;
@@ -57,6 +60,7 @@ class SendTransfer {
 }
 
 public class SendGUIHandler implements Listener {
+
     private CxTokens tokens;
     private HashMap<UUID, SendTransfer> transfers;
 
@@ -83,8 +87,11 @@ public class SendGUIHandler implements Listener {
      *             0: players indicies 0-44)
      */
     private void goToTargetPlayersPage(Player player, int page) {
-        Inventory inv = Bukkit.createInventory(null, 54,
-                Utils.formatText("&a&lSelect Transfer Target - " + (page + 1)));
+        Inventory inv = Bukkit.createInventory(
+            null,
+            54,
+            Utils.formatText("&a&lSelect Transfer Target - " + (page + 1))
+        );
         inv.clear();
 
         ItemStack backOrExit = new ItemStack(Material.RED_CONCRETE, 1);
@@ -97,7 +104,9 @@ public class SendGUIHandler implements Listener {
         backOrExit.setItemMeta(boeMeta);
         inv.setItem(Utils.LARGE_EXIT_PREVIOUS_SLOT, backOrExit);
 
-        Player[] onlinePlayers = Bukkit.getOnlinePlayers().toArray(new Player[0]);
+        Player[] onlinePlayers = Bukkit.getOnlinePlayers().toArray(
+            new Player[0]
+        );
         int start = page * 45;
         int end = 45;
         // prevent going over all the possible players
@@ -155,7 +164,11 @@ public class SendGUIHandler implements Listener {
             return;
         }
 
-        Inventory inv = Bukkit.createInventory(null, 27, Utils.formatText("&a&lSelect Transfer Amount"));
+        Inventory inv = Bukkit.createInventory(
+            null,
+            27,
+            Utils.formatText("&a&lSelect Transfer Amount")
+        );
         inv.clear();
 
         ItemStack backOrExit = new ItemStack(Material.RED_CONCRETE, 1);
@@ -166,46 +179,81 @@ public class SendGUIHandler implements Listener {
 
         ItemStack setZero = new ItemStack(Material.BROWN_STAINED_GLASS, 1);
         ItemMeta szMeta = setZero.getItemMeta();
-        szMeta.setDisplayName(Utils.formatText("&4Set to &l" + CxTokens.currency + "0"));
+        szMeta.setDisplayName(
+            Utils.formatText("&4Set to &l" + CxTokens.currency + "0")
+        );
         setZero.setItemMeta(szMeta);
         inv.setItem(SET_TO_ZERO, setZero);
 
-        ItemStack decreaseFiveHundred = new ItemStack(Material.RED_STAINED_GLASS, 1);
+        ItemStack decreaseFiveHundred = new ItemStack(
+            Material.RED_STAINED_GLASS,
+            1
+        );
         ItemMeta dfhMeta = decreaseFiveHundred.getItemMeta();
-        dfhMeta.setDisplayName(Utils.formatText("&cDecrease by &l" + CxTokens.currency + "500"));
+        dfhMeta.setDisplayName(
+            Utils.formatText("&cDecrease by &l" + CxTokens.currency + "500")
+        );
         decreaseFiveHundred.setItemMeta(dfhMeta);
         inv.setItem(DECREASE_FIVE_HUNDRED, decreaseFiveHundred);
 
-        ItemStack decreaseHundred = new ItemStack(Material.ORANGE_STAINED_GLASS, 1);
+        ItemStack decreaseHundred = new ItemStack(
+            Material.ORANGE_STAINED_GLASS,
+            1
+        );
         ItemMeta dhMeta = decreaseHundred.getItemMeta();
-        dhMeta.setDisplayName(Utils.formatText("&6Decrease by &l" + CxTokens.currency + "100"));
+        dhMeta.setDisplayName(
+            Utils.formatText("&6Decrease by &l" + CxTokens.currency + "100")
+        );
         decreaseHundred.setItemMeta(dhMeta);
         inv.setItem(DECREASE_HUNDRED, decreaseHundred);
 
         ItemStack send = new ItemStack(Material.PAPER, 1);
         ItemMeta sendMeta = send.getItemMeta();
-        sendMeta.setDisplayName(Utils
-                .formatText("&bSend &b&l" + CxTokens.currency + "" + transfer.amount + "&r&b to "
-                        + transfer.transferTarget.ply.getName()));
+        sendMeta.setDisplayName(
+            Utils.formatText(
+                "&bSend &b&l" +
+                    CxTokens.currency +
+                    "" +
+                    transfer.amount +
+                    "&r&b to " +
+                    transfer.transferTarget.ply.getName()
+            )
+        );
         send.setItemMeta(sendMeta);
         inv.setItem(SEND, send);
 
-        ItemStack increaseHundred = new ItemStack(Material.GREEN_STAINED_GLASS, 1);
+        ItemStack increaseHundred = new ItemStack(
+            Material.GREEN_STAINED_GLASS,
+            1
+        );
         ItemMeta ihMeta = increaseHundred.getItemMeta();
-        ihMeta.setDisplayName(Utils.formatText("&2Increase by &l" + CxTokens.currency + "100"));
+        ihMeta.setDisplayName(
+            Utils.formatText("&2Increase by &l" + CxTokens.currency + "100")
+        );
         increaseHundred.setItemMeta(ihMeta);
         inv.setItem(INCREASE_HUNDRED, increaseHundred);
 
-        ItemStack increaseFiveHundred = new ItemStack(Material.LIME_STAINED_GLASS, 1);
+        ItemStack increaseFiveHundred = new ItemStack(
+            Material.LIME_STAINED_GLASS,
+            1
+        );
         ItemMeta ifhMeta = increaseFiveHundred.getItemMeta();
-        ifhMeta.setDisplayName(Utils.formatText("&aIncrease by &l" + CxTokens.currency + "500"));
+        ifhMeta.setDisplayName(
+            Utils.formatText("&aIncrease by &l" + CxTokens.currency + "500")
+        );
         increaseFiveHundred.setItemMeta(ifhMeta);
         inv.setItem(INCREASE_FIVE_HUNDRED, increaseFiveHundred);
 
         ItemStack maxOut = new ItemStack(Material.YELLOW_STAINED_GLASS, 1);
         ItemMeta maxMeta = maxOut.getItemMeta();
-        maxMeta.setDisplayName(Utils.formatText(
-                "&eSet to &e&l" + CxTokens.currency + "" + TokenPlayer.getTokenPlayer(tokens, player).getTokens()));
+        maxMeta.setDisplayName(
+            Utils.formatText(
+                "&eSet to &e&l" +
+                    CxTokens.currency +
+                    "" +
+                    TokenPlayer.getTokenPlayer(tokens, player).getTokens()
+            )
+        );
         maxOut.setItemMeta(maxMeta);
         inv.setItem(SET_TO_MAX, maxOut);
 
@@ -227,9 +275,10 @@ public class SendGUIHandler implements Listener {
         }
 
         SendTransfer newSendTransfer = new SendTransfer(
-                TokenPlayer.getTokenPlayer(this.tokens, player),
-                null,
-                0);
+            TokenPlayer.getTokenPlayer(this.tokens, player),
+            null,
+            0
+        );
         transfers.put(player.getUniqueId(), newSendTransfer);
     }
 
@@ -267,9 +316,10 @@ public class SendGUIHandler implements Listener {
             return;
         }
 
-        Player[] onlinePlayers = Bukkit.getOnlinePlayers().toArray(new Player[0]);
-        this.tokens.getLogger().info(String.valueOf(clickedSlot));
-        int selectedPlayerIndex = (page * 45) + clickedSlot;
+        Player[] onlinePlayers = Bukkit.getOnlinePlayers().toArray(
+            new Player[0]
+        );
+        int selectedPlayerIndex = page * 45 + clickedSlot;
         Player selectedPlayer = onlinePlayers[selectedPlayerIndex];
         if (selectedPlayer == null) {
             this.transfers.remove(player.getUniqueId());
@@ -277,8 +327,8 @@ public class SendGUIHandler implements Listener {
             return;
         }
 
-        this.transfers.get(player.getUniqueId()).transferTarget = TokenPlayer.getTokenPlayer(this.tokens,
-                selectedPlayer);
+        this.transfers.get(player.getUniqueId()).transferTarget =
+            TokenPlayer.getTokenPlayer(this.tokens, selectedPlayer);
         openTransferAmountSelection(player);
     }
 
@@ -288,7 +338,12 @@ public class SendGUIHandler implements Listener {
             return;
         }
 
-        if (!event.getView().getTitle().contains(Utils.formatText("&a&lSelect Transfer Amount"))) {
+        if (
+            !event
+                .getView()
+                .getTitle()
+                .contains(Utils.formatText("&a&lSelect Transfer Amount"))
+        ) {
             return;
         } else {
             event.setCancelled(true);
@@ -304,10 +359,17 @@ public class SendGUIHandler implements Listener {
 
         event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
-        TokenPlayer tokenPlayer = TokenPlayer.getTokenPlayer(this.tokens, player);
+        TokenPlayer tokenPlayer = TokenPlayer.getTokenPlayer(
+            this.tokens,
+            player
+        );
         SendTransfer transfer = transfers.get(player.getUniqueId());
         int clickedSlot = event.getSlot();
-        if (clickedSlot == Utils.SMALL_EXIT_PREVIOUS_SLOT || transfer == null || transfer.transferTarget == null) {
+        if (
+            clickedSlot == Utils.SMALL_EXIT_PREVIOUS_SLOT ||
+            transfer == null ||
+            transfer.transferTarget == null
+        ) {
             this.transfers.remove(player.getUniqueId());
             player.closeInventory();
             this.openTransferTargetSelection(player);
@@ -344,7 +406,10 @@ public class SendGUIHandler implements Listener {
         }
 
         if (clickedSlot == SEND) {
-            transfer.transferTarget.transferToPlayer(tokenPlayer, transfer.amount);
+            transfer.transferTarget.transferToPlayer(
+                tokenPlayer,
+                transfer.amount
+            );
             this.transfers.remove(player.getUniqueId());
             player.closeInventory();
             return;
