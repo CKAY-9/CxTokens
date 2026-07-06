@@ -297,11 +297,6 @@ public class Storage {
                         0.35
                     ),
                     new Item(new ItemStack(Material.CAKE, 1), 80, 0.5),
-                    new Item(
-                        new ItemStack(Material.COOKED_PORKCHOP, 16),
-                        150,
-                        0.35
-                    ),
                     new Item(new ItemStack(Material.MELON, 16), 120, 0.25),
                     new Item(new ItemStack(Material.BREAD, 16), 130, 0.35),
                     new Item(
