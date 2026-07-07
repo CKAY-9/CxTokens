@@ -1,11 +1,14 @@
 package ca.cxtokens;
 
+import ca.cxtokens.Accounts.AccountRegistry;
 import ca.cxtokens.Commands.AboutCommand;
+import ca.cxtokens.Commands.AccountCommand;
 import ca.cxtokens.Commands.AdminCommand;
 import ca.cxtokens.Commands.AuctionCommand;
 import ca.cxtokens.Commands.BalTopCommand;
 import ca.cxtokens.Commands.BalanceCommand;
 import ca.cxtokens.Commands.BountyCommand;
+import ca.cxtokens.Commands.Completers.AccountCompleter;
 import ca.cxtokens.Commands.Completers.AdminCompleter;
 import ca.cxtokens.Commands.Completers.AuctionCompleter;
 import ca.cxtokens.Commands.Completers.BountyCompleter;
@@ -40,6 +43,7 @@ public final class CxTokens extends JavaPlugin {
     public AuctionHouse auctionHouse;
     public HashMap<UUID, TokenPlayer> tokenPlayers;
     public Vaults vaults;
+    public AccountRegistry accountRegistry;
     public static String currency = "T$";
     public static boolean LOGGING = false;
 
@@ -66,6 +70,11 @@ public final class CxTokens extends JavaPlugin {
             this.getServer()
                 .getPluginManager()
                 .registerEvents(new StaticInteractionHandle(this), this);
+        }
+
+        if (Storage.config.getBoolean("accounts.enabled", true)) {
+            this.accountRegistry = new AccountRegistry(this);
+            this.accountRegistry.loadAccounts();
         }
 
         CxTokens.LOGGING = Storage.config.getBoolean("config.logging", false);
@@ -101,6 +110,7 @@ public final class CxTokens extends JavaPlugin {
         this.getCommand("tadmin").setExecutor(new AdminCommand(this));
         this.getCommand("tsell").setExecutor(new SellCommand(this));
         this.getCommand("tvault").setExecutor(new VaultCommand(this));
+        this.getCommand("taccount").setExecutor(new AccountCommand(this));
 
         // Completers
         this.getCommand("tadmin").setTabCompleter(new AdminCompleter());
@@ -108,6 +118,7 @@ public final class CxTokens extends JavaPlugin {
         this.getCommand("tsend").setTabCompleter(new SendCompleter());
         this.getCommand("tbounty").setTabCompleter(new BountyCompleter());
         this.getCommand("tsell").setTabCompleter(new SellCompleter());
+        this.getCommand("taccount").setTabCompleter(new AccountCompleter());
 
         // this is used if the plugin is reset and setup values for every player
         for (Player p : Bukkit.getOnlinePlayers()) {

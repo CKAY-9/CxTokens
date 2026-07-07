@@ -20,6 +20,7 @@ CxTokens is a token (money) system for Spigot/Paper Minecraft servers.
 - Local data storing (no need for a database)
 - Highly configurable
 - Vaults
+- Sharable Accounts
 
 ### Commands
 - cxtokens/tabout: Information about CxTokens
@@ -34,6 +35,7 @@ CxTokens is a token (money) system for Spigot/Paper Minecraft servers.
 - treset: Reset your token profile
 - tlottery: Join the token lottery if its happening
 - tvault: Create vaults
+- taccount: Create, access, and manage Token Accounts
 
 <div align="center">
     <img src="./assets/2024-03-23_16.07.07-min.png" height=auto width=auto>

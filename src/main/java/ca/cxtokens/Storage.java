@@ -105,6 +105,15 @@ public class Storage {
                 config.set("vaults.alert_on_break", true);
             }
 
+            // Accounts
+            if (!config.isSet("accounts.enabled")) {
+                config.set("accounts.enabled", true);
+            }
+
+            if (!config.isSet("accounts.maxAccountsPerPlayer")) {
+                config.set("accounts.maxAccountsPerPlayer", 3);
+            }
+
             // Auction House
             if (!config.isSet("auction.enabled")) {
                 config.set("auction.enabled", true);

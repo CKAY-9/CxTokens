@@ -1,9 +1,9 @@
-name: CxTokens 
-version: '${project.version}'
+name: CxTokens
+version: "${project.version}"
 main: ca.cxtokens.CxTokens
 api-version: 1.19
-authors: [ CKAY9 ]
-description: '${project.description}'
+authors: [CKAY9]
+description: "${project.description}"
 commands:
   cxtokens:
     description: Information about CxTokens
@@ -31,3 +31,5 @@ commands:
     description: Sell a container at once
   tvault:
     description: Create token vaults
+  taccount:
+    description: Create, view, and manage Token Accounts
