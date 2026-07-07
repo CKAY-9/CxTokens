@@ -12,7 +12,7 @@ CxTokens is a token (money) system for Spigot/Paper Minecraft servers.
 5. Reload/restart your server to update config
 
 ## Features
-CxTokens is packed full of features to guarenteee a well-rounded, and enjoyable playing experience.
+CxTokens is packed full of features to guarantee a well-rounded, and enjoyable playing experience.
 
 ### Lottery event
 After a configurable amount of time, a new lottery will start where players are able to join for a set fee. Once the join period has ended, a lottery winner is randomly selected, giving the entire prize pool to the winning player
