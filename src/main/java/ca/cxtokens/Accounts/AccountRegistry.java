@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 
 public class AccountRegistry {
 
@@ -70,11 +71,60 @@ public class AccountRegistry {
         }
     }
 
+    public void listPersonalAccounts(TokenPlayer tokenPlayer) {
+        Player player = tokenPlayer.ply;
+        StringBuilder builder = new StringBuilder();
+
+        int count = 0;
+        for (Account account : this.accounts.values()) {
+            if (!account.creator.equals(tokenPlayer.ply.getUniqueId())) {
+                continue;
+            }
+
+            count++;
+            builder.append(
+                Utils.formatText(
+                    "&a  - " +
+                        account.accountName +
+                        ", Account Number: " +
+                        account.accountNumber +
+                        "\n"
+                )
+            );
+        }
+
+        builder.insert(
+            0,
+            Utils.formatText(
+                "&aPersonal Token Accounts - Total: &a&l" + count + "\n"
+            )
+        );
+
+        player.sendMessage(builder.toString());
+    }
+
     public Account createAccount(
         TokenPlayer tokenPlayer,
         String accountName,
         int pinCode
     ) {
+        // check if over limit
+        int maxAccountsPerPlayer = Storage.config.getInt(
+            "accounts.maxAccountsPerPlayer",
+            3
+        );
+
+        int ownedCount = 0;
+        for (Account account : this.accounts.values()) {
+            if (account.creator.equals(tokenPlayer.ply.getUniqueId())) {
+                ownedCount++;
+            }
+
+            if (ownedCount >= maxAccountsPerPlayer) {
+                return null;
+            }
+        }
+
         Long maxAccountNumber = 10_000_000_000L;
         Random random = new Random();
         long newAccountNumber = random.nextLong(1L, maxAccountNumber);

@@ -42,6 +42,15 @@ public class AccountCommand implements CommandExecutor {
             return false;
         }
 
+        if (args.length <= 0) {
+            sender.sendMessage(
+                Utils.formatText(
+                    "&cProper usage: /taccount [create/list/ACCOUNT_NUMBER] [arguments]"
+                )
+            );
+            return false;
+        }
+
         try {
             TokenPlayer tPlayer = TokenPlayer.getTokenPlayer(
                 this.tokens,
@@ -51,7 +60,6 @@ public class AccountCommand implements CommandExecutor {
             String firstArg = args[0].strip().toLowerCase();
             if (firstArg.equalsIgnoreCase("create")) {
                 // create a new account
-
                 String accountName = args[1].strip();
                 int pinCode = 0;
                 try {
@@ -76,15 +84,25 @@ public class AccountCommand implements CommandExecutor {
                     accountName,
                     pinCode
                 );
-                account.save();
+                if (account == null) {
+                    sender.sendMessage(
+                        Utils.formatText(
+                            "&cFailed to create new Token Account. You may have too many existing accounts."
+                        )
+                    );
+                    return false;
+                }
 
+                account.save();
                 sender.sendMessage(
                     Utils.formatText(
                         "&aCreated a new Token Account &7(Copy the details below)"
                     )
                 );
                 account.printDetails(tPlayer);
-
+                return false;
+            } else if (firstArg.equalsIgnoreCase("list")) {
+                this.registry.listPersonalAccounts(tPlayer);
                 return false;
             }
 

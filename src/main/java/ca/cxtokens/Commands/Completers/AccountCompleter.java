@@ -20,6 +20,7 @@ public class AccountCompleter implements TabCompleter {
             case 0:
             case 1:
                 completion.add("create");
+                completion.add("list");
                 completion.add("account_number");
                 break;
             case 2:
