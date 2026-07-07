@@ -7,6 +7,7 @@ import ca.cxtokens.Utils;
 import java.util.ArrayList;
 import java.util.Random;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class Lottery implements Runnable {
@@ -143,6 +144,12 @@ public class Lottery implements Runnable {
                                 Utils.formatText(
                                     "&a&l--------- LOTTERY ---------"
                                 )
+                            );
+                            p.playSound(
+                                p.getLocation(),
+                                Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST,
+                                1,
+                                1
                             );
                             p.sendMessage(
                                 Utils.formatText(

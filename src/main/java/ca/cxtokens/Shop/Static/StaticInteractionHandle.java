@@ -1,9 +1,14 @@
 package ca.cxtokens.Shop.Static;
 
+import ca.cxtokens.CxTokens;
+import ca.cxtokens.Shop.GlobalShop;
+import ca.cxtokens.Storage;
+import ca.cxtokens.TokenPlayer;
+import ca.cxtokens.Utils;
 import java.util.ArrayList;
 import java.util.Set;
-
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,13 +18,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import ca.cxtokens.CxTokens;
-import ca.cxtokens.Storage;
-import ca.cxtokens.TokenPlayer;
-import ca.cxtokens.Utils;
-import ca.cxtokens.Shop.GlobalShop;
-
 public class StaticInteractionHandle implements Listener {
+
     private CxTokens tokens;
 
     public StaticInteractionHandle(CxTokens tokens) {
@@ -37,25 +37,54 @@ public class StaticInteractionHandle implements Listener {
                 if (temp_stack.getType() != item.stack.getType()) continue;
 
                 // Check if adding will go above max size
-                if (item.stack.getAmount() + temp_stack.getAmount() <= item.stack.getMaxStackSize()) {
+                if (
+                    item.stack.getAmount() + temp_stack.getAmount() <=
+                    item.stack.getMaxStackSize()
+                ) {
                     flag = true;
                     break;
                 }
             }
 
             if (!flag) {
-                player.sendMessage(Utils.formatText("&cYou need to have free inventory space to purchase an item"));
+                player.playSound(
+                    player.getLocation(),
+                    Sound.ENTITY_CAT_HURT,
+                    1F,
+                    0.7F
+                );
+                player.sendMessage(
+                    Utils.formatText(
+                        "&cYou need to have free inventory space to purchase an item"
+                    )
+                );
                 return;
             }
         }
 
-        TokenPlayer tokenPlayer = TokenPlayer.getTokenPlayer(this.tokens, player);
+        TokenPlayer tokenPlayer = TokenPlayer.getTokenPlayer(
+            this.tokens,
+            player
+        );
         if (tokenPlayer.getTokens() < item.price) {
-            player.sendMessage(Utils.formatText("&cYou don't have enough tokens to purchase this item!"));
+            player.playSound(
+                player.getLocation(),
+                Sound.ENTITY_CAT_HURT,
+                1F,
+                0.7F
+            );
+            player.sendMessage(
+                Utils.formatText(
+                    "&cYou don't have enough tokens to purchase this item!"
+                )
+            );
             return;
         }
 
-        ItemStack itemStackToGive = new ItemStack(item.stack.getType(), item.stack.getAmount());
+        ItemStack itemStackToGive = new ItemStack(
+            item.stack.getType(),
+            item.stack.getAmount()
+        );
         if (Storage.storeItems.isSet("items." + key + ".enchants")) {
             itemStackToGive = item.addEnchantments(key, itemStackToGive);
         }
@@ -63,6 +92,12 @@ public class StaticInteractionHandle implements Listener {
             itemStackToGive = item.setCustomName(key, itemStackToGive);
         }
 
+        player.playSound(
+            player.getLocation(),
+            Sound.BLOCK_NOTE_BLOCK_HARP,
+            1F,
+            1.2F
+        );
         tokenPlayer.subtractTokens(item.price, false);
         player_inventory.addItem(itemStackToGive);
     }
@@ -76,11 +111,15 @@ public class StaticInteractionHandle implements Listener {
         int i = 0;
 
         for (ItemStack it : player.getInventory()) {
-            if (it != null && Utils.generateHashFromItemStack(item.stack).equals(Utils.generateHashFromItemStack(it))) {
+            if (
+                it != null &&
+                Utils.generateHashFromItemStack(item.stack).equals(
+                    Utils.generateHashFromItemStack(it)
+                )
+            ) {
                 foundIndexes.add(i);
                 currentStackAmount += it.getAmount();
-                if (currentStackAmount >= itemNum)
-                    break;
+                if (currentStackAmount >= itemNum) break;
             }
             i++;
         }
@@ -90,7 +129,10 @@ public class StaticInteractionHandle implements Listener {
                 int index = foundIndexes.get(j);
                 itemNum -= player.getInventory().getItem(index).getAmount();
                 if (itemNum <= 0) {
-                    player.getInventory().getItem(index).setAmount(Math.abs(itemNum));
+                    player
+                        .getInventory()
+                        .getItem(index)
+                        .setAmount(Math.abs(itemNum));
                 } else {
                     player.getInventory().getItem(index).setAmount(0);
                 }
@@ -102,17 +144,46 @@ public class StaticInteractionHandle implements Listener {
     }
 
     private void sellItem(Item item, Player player) {
-        TokenPlayer tokenPlayer = TokenPlayer.getTokenPlayer(this.tokens, player);
+        TokenPlayer tokenPlayer = TokenPlayer.getTokenPlayer(
+            this.tokens,
+            player
+        );
         if (!player.getInventory().contains(item.stack.getType())) {
-            player.sendMessage(Utils.formatText("&cYou have to have this item in your inventory to sell!"));
+            player.playSound(
+                player.getLocation(),
+                Sound.ENTITY_CAT_HURT,
+                1F,
+                0.7F
+            );
+            player.sendMessage(
+                Utils.formatText(
+                    "&cYou have to have this item in your inventory to sell!"
+                )
+            );
             return;
         }
 
         if (!canRemoveItemsOnSell(player, item)) {
-            player.sendMessage(Utils.formatText("&cYou don't have enough of this item to sell it!"));
+            player.playSound(
+                player.getLocation(),
+                Sound.ENTITY_CAT_HURT,
+                1F,
+                0.7F
+            );
+            player.sendMessage(
+                Utils.formatText(
+                    "&cYou don't have enough of this item to sell it!"
+                )
+            );
             return;
         }
 
+        player.playSound(
+            player.getLocation(),
+            Sound.BLOCK_NOTE_BLOCK_HARP,
+            1F,
+            1.2F
+        );
         long sellPrice = Math.round(item.price * item.sellMultiplier);
         tokenPlayer.addTokens(sellPrice, false);
     }
@@ -137,7 +208,8 @@ public class StaticInteractionHandle implements Listener {
             return;
         }
 
-        int currentPage = Integer.parseInt(e.getView().getTitle().split(" ")[3]) - 1;
+        int currentPage =
+            Integer.parseInt(e.getView().getTitle().split(" ")[3]) - 1;
         int clicked = e.getSlot();
         e.setCancelled(true);
 
@@ -149,31 +221,76 @@ public class StaticInteractionHandle implements Listener {
                 return;
             }
 
+            Player player = (Player) e.getWhoClicked();
+            player.playSound(
+                player.getLocation(),
+                Sound.ITEM_BOOK_PAGE_TURN,
+                1F,
+                1.5F
+            );
             // Go Back
-            Store.openStaticStorePage(TokenPlayer.getTokenPlayer(this.tokens, (Player) e.getWhoClicked()),
-                    (currentPage - 1));
+            Store.openStaticStorePage(
+                TokenPlayer.getTokenPlayer(this.tokens, player),
+                currentPage - 1
+            );
             return;
         }
 
-        if (clicked == Utils.LARGE_NEXT_PAGE_SLOT && currentPage < Math.round(Storage.storeItems.getConfigurationSection("items").getKeys(false).size() / GlobalShop.MAX_ITEMS_PER_PAGE)) {
+        if (
+            clicked == Utils.LARGE_NEXT_PAGE_SLOT &&
+            currentPage <
+                Math.round(
+                    Storage.storeItems
+                        .getConfigurationSection("items")
+                        .getKeys(false)
+                        .size() / GlobalShop.MAX_ITEMS_PER_PAGE
+                )
+        ) {
             e.getView().close();
-            Store.openStaticStorePage(TokenPlayer.getTokenPlayer(this.tokens, (Player) e.getWhoClicked()),
-                    (currentPage + 1));
+            Player player = (Player) e.getWhoClicked();
+
+            player.playSound(
+                player.getLocation(),
+                Sound.ITEM_BOOK_PAGE_TURN,
+                1F,
+                1.5F
+            );
+            Store.openStaticStorePage(
+                TokenPlayer.getTokenPlayer(
+                    this.tokens,
+                    (Player) e.getWhoClicked()
+                ),
+                currentPage + 1
+            );
             return;
         }
 
-        Set<String> storeItemKeys = Storage.storeItems.getConfigurationSection("items").getKeys(false);
-        int index = clicked + (GlobalShop.MAX_ITEMS_PER_PAGE * currentPage);
+        Set<String> storeItemKeys = Storage.storeItems
+            .getConfigurationSection("items")
+            .getKeys(false);
+        int index = clicked + GlobalShop.MAX_ITEMS_PER_PAGE * currentPage;
 
-        if (clicked >= GlobalShop.MAX_ITEMS_PER_PAGE || clicked > (storeItemKeys.size() - (GlobalShop.MAX_ITEMS_PER_PAGE * currentPage) - 1)) {
+        if (
+            clicked >= GlobalShop.MAX_ITEMS_PER_PAGE ||
+            clicked >
+                storeItemKeys.size() -
+                    GlobalShop.MAX_ITEMS_PER_PAGE * currentPage -
+                    1
+        ) {
             return;
         }
 
         String key = (String) storeItemKeys.toArray()[index];
         Item item = new Item(
             new ItemStack(
-                Material.matchMaterial(Storage.storeItems.getString("items." + key + ".material", "air")),
-                Storage.storeItems.getInt("items." + key + ".amount", 0)),
+                Material.matchMaterial(
+                    Storage.storeItems.getString(
+                        "items." + key + ".material",
+                        "air"
+                    )
+                ),
+                Storage.storeItems.getInt("items." + key + ".amount", 0)
+            ),
             Storage.storeItems.getLong("items." + key + ".price", 0),
             Storage.storeItems.getDouble("items." + key + ".sellMultiplier", 0)
         );

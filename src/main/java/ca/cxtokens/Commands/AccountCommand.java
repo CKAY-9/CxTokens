@@ -6,6 +6,7 @@ import ca.cxtokens.CxTokens;
 import ca.cxtokens.Storage;
 import ca.cxtokens.TokenPlayer;
 import ca.cxtokens.Utils;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -52,9 +53,10 @@ public class AccountCommand implements CommandExecutor {
         }
 
         try {
+            Player player = (Player) sender;
             TokenPlayer tPlayer = TokenPlayer.getTokenPlayer(
                 this.tokens,
-                (Player) sender
+                player
             );
 
             String firstArg = args[0].strip().toLowerCase();
@@ -100,6 +102,13 @@ public class AccountCommand implements CommandExecutor {
                     )
                 );
                 account.printDetails(tPlayer);
+
+                player.playSound(
+                    player.getLocation(),
+                    Sound.BLOCK_NOTE_BLOCK_HARP,
+                    1F,
+                    1.2F
+                );
                 return false;
             } else if (firstArg.equalsIgnoreCase("list")) {
                 this.registry.listPersonalAccounts(tPlayer);

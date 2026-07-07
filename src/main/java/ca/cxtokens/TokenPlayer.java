@@ -3,6 +3,7 @@ package ca.cxtokens;
 import java.io.IOException;
 import java.util.regex.Pattern;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class TokenPlayer {
@@ -74,6 +75,12 @@ public class TokenPlayer {
         this.addTokens(amount, true);
         sender.subtractTokens(amount, true);
 
+        this.ply.playSound(
+            this.ply.getLocation(),
+            Sound.BLOCK_NOTE_BLOCK_HARP,
+            1F,
+            1.2F
+        );
         this.ply.sendMessage(
             Utils.formatText(
                 "&aYou have recieved &a&l" +
@@ -82,6 +89,12 @@ public class TokenPlayer {
                     "&r&a from &a&l" +
                     sender.ply.getName()
             )
+        );
+        sender.ply.playSound(
+            sender.ply.getLocation(),
+            Sound.BLOCK_NOTE_BLOCK_HARP,
+            1F,
+            1.2F
         );
         sender.ply.sendMessage(
             Utils.formatText(

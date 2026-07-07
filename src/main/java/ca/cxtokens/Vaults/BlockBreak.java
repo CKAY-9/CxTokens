@@ -1,8 +1,12 @@
 package ca.cxtokens.Vaults;
 
+import ca.cxtokens.CxTokens;
+import ca.cxtokens.Storage;
+import ca.cxtokens.TokenPlayer;
+import ca.cxtokens.Utils;
 import java.io.IOException;
-
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,12 +14,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-import ca.cxtokens.CxTokens;
-import ca.cxtokens.Storage;
-import ca.cxtokens.TokenPlayer;
-import ca.cxtokens.Utils;
-
 public class BlockBreak implements Listener {
+
     private CxTokens tokens;
     private Vaults vaults;
 
@@ -31,7 +31,10 @@ public class BlockBreak implements Listener {
             return;
         }
 
-        TokenPlayer token_player = TokenPlayer.getTokenPlayer(this.tokens, player);
+        TokenPlayer token_player = TokenPlayer.getTokenPlayer(
+            this.tokens,
+            player
+        );
         Block block = event.getBlock();
 
         VaultBlock vault = VaultBlock.vaultBlockFromBlock(block, this.vaults);
@@ -43,8 +46,21 @@ public class BlockBreak implements Listener {
         vault.value = 0;
 
         Player owner = Bukkit.getPlayer(vault.owner);
-        if (owner != null && Storage.config.getBoolean("vaults.alert_on_break", true)) {
-            owner.sendMessage(Utils.formatText("&cOne of your &c&lvaults&r&c has been &c&ldestroyed"));
+        if (
+            owner != null &&
+            Storage.config.getBoolean("vaults.alert_on_break", true)
+        ) {
+            player.playSound(
+                player.getLocation(),
+                Sound.ENTITY_WITHER_DEATH,
+                0.5F,
+                1F
+            );
+            owner.sendMessage(
+                Utils.formatText(
+                    "&cOne of your &c&lvaults&r&c has been &c&ldestroyed"
+                )
+            );
         }
 
         for (int i = 0; i < this.vaults.player_vaults.size(); i++) {

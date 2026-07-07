@@ -1,6 +1,11 @@
 package ca.cxtokens.Vaults;
 
+import ca.cxtokens.CxTokens;
+import ca.cxtokens.Storage;
+import ca.cxtokens.TokenPlayer;
+import ca.cxtokens.Utils;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,12 +16,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-import ca.cxtokens.CxTokens;
-import ca.cxtokens.Storage;
-import ca.cxtokens.TokenPlayer;
-import ca.cxtokens.Utils;
-
 public class InteractionHandle implements Listener {
+
     private Vaults vaults;
     private CxTokens tokens;
 
@@ -53,14 +54,36 @@ public class InteractionHandle implements Listener {
 
         event.setCancelled(true);
         Action action = event.getAction();
-        TokenPlayer token_player = TokenPlayer.getTokenPlayer(this.tokens, player);
+        TokenPlayer token_player = TokenPlayer.getTokenPlayer(
+            this.tokens,
+            player
+        );
         long min_deposit = Storage.config.getLong("vaults.minimum_deposit", 1);
-        long max_deposit = Storage.config.getLong("vaults.maximum_deposit", 2500);
-        long max_value = Storage.config.getLong("vaults.max_value", Long.MAX_VALUE);
+        long max_deposit = Storage.config.getLong(
+            "vaults.maximum_deposit",
+            2500
+        );
+        long max_value = Storage.config.getLong(
+            "vaults.max_value",
+            Long.MAX_VALUE
+        );
         if (action == Action.RIGHT_CLICK_BLOCK) {
             if (min_deposit > 0 && token_player.getTokens() < min_deposit) {
-                player.sendMessage(Utils
-                        .formatText("&cYou need at least " + CxTokens.currency + "" + min_deposit + " to deposit"));
+                player.playSound(
+                    player.getLocation(),
+                    Sound.ENTITY_CAT_HURT,
+                    1F,
+                    0.7F
+                );
+                player.sendMessage(
+                    Utils.formatText(
+                        "&cYou need at least " +
+                            CxTokens.currency +
+                            "" +
+                            min_deposit +
+                            " to deposit"
+                    )
+                );
                 return;
             }
 
@@ -74,15 +97,35 @@ public class InteractionHandle implements Listener {
             if (deposit_amount + vault.value >= max_value) {
                 deposit_amount = max_value - vault.value;
                 if (deposit_amount == 0) {
-                    player.sendMessage(Utils
-                        .formatText("&cMaximum value for this vault has been reached"));
+                    player.playSound(
+                        player.getLocation(),
+                        Sound.ENTITY_CAT_HURT,
+                        1F,
+                        0.7F
+                    );
+                    player.sendMessage(
+                        Utils.formatText(
+                            "&cMaximum value for this vault has been reached"
+                        )
+                    );
                     return;
                 }
             }
 
             token_player.subtractTokens(deposit_amount, true);
             vault.value += deposit_amount;
-            player.sendMessage(Utils.formatText("&cDeposited &c&l" + CxTokens.currency + "" + deposit_amount));
+
+            player.playSound(
+                player.getLocation(),
+                Sound.BLOCK_NOTE_BLOCK_HARP,
+                1F,
+                1.2F
+            );
+            player.sendMessage(
+                Utils.formatText(
+                    "&cDeposited &c&l" + CxTokens.currency + "" + deposit_amount
+                )
+            );
         } else if (action == Action.LEFT_CLICK_BLOCK) {
             long withdraw_amount = 0;
             if (vault.value < max_deposit) {
@@ -93,7 +136,17 @@ public class InteractionHandle implements Listener {
 
             token_player.addTokens(withdraw_amount, true);
             vault.value -= withdraw_amount;
-            player.sendMessage(Utils.formatText("&aWithdrew &a&l" + CxTokens.currency + "" + withdraw_amount));
+            player.playSound(
+                player.getLocation(),
+                Sound.BLOCK_NOTE_BLOCK_HARP,
+                1F,
+                1.2F
+            );
+            player.sendMessage(
+                Utils.formatText(
+                    "&aWithdrew &a&l" + CxTokens.currency + "" + withdraw_amount
+                )
+            );
         }
 
         vault.updateArmorStandUI();
