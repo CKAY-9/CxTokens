@@ -55,16 +55,13 @@ public class AuctionInteractionHandle implements Listener {
             return;
         }
 
-        if (
-            tokenPlayer.getTokens() <
-            Math.round(
-                item.currentBid *
-                    Storage.config.getDouble(
-                        "auction.bidIncreaseMultiplier",
-                        1.25
-                    )
-            )
-        ) {
+        double bidMultiplier = Storage.config.getDouble(
+            "auction.bidIncreaseMultiplier",
+            1.25
+        );
+        long requiredBid = (long) Math.round(item.currentBid * bidMultiplier);
+
+        if (tokenPlayer.getTokens() < requiredBid) {
             player.playSound(
                 player.getLocation(),
                 Sound.ENTITY_CAT_HURT,
@@ -75,13 +72,7 @@ public class AuctionInteractionHandle implements Listener {
                 Utils.formatText(
                     "&cYou need to have at least &c&l" +
                         CxTokens.currency +
-                        Math.round(
-                            item.currentBid *
-                                Storage.config.getDouble(
-                                    "auction.bidIncreaseMultiplier",
-                                    1.25
-                                )
-                        ) +
+                        requiredBid +
                         "&r&c to place a bid!"
                 )
             );
@@ -110,8 +101,7 @@ public class AuctionInteractionHandle implements Listener {
         // set new bidder
         item.bidder = player;
         item.currentBid = (long) Math.round(
-            item.currentBid *
-                Storage.config.getDouble("auction.bidIncreaseMultiplier", 1.25)
+            item.currentBid * bidMultiplier
         );
         player.sendMessage(
             Utils.formatText(

@@ -42,7 +42,8 @@ public class AuctionHouse {
                                 .info("Running Auction House sweep...");
                         }
 
-                        for (int i = 0; i < auctionItems.size(); i++) {
+                        int size = auctionItems.size();
+                        for (int i = 0; i < size; i++) {
                             Item item = auctionItems.get(i);
                             item.sweepsUntilComplete--;
 
