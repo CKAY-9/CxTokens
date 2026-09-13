@@ -23,6 +23,7 @@ import ca.cxtokens.Commands.VaultCommand;
 import ca.cxtokens.Events.MiscEvents;
 import ca.cxtokens.Listeners.Achievements;
 import ca.cxtokens.Listeners.EntityKill;
+import ca.cxtokens.Listeners.LevelUp;
 import ca.cxtokens.Listeners.PlayerDeath;
 import ca.cxtokens.Listeners.PlayerJoin;
 import ca.cxtokens.Listeners.PlayerLeave;
@@ -95,6 +96,9 @@ public final class CxTokens extends JavaPlugin {
         this.getServer()
             .getPluginManager()
             .registerEvents(new Achievements(this), this);
+        this.getServer()
+            .getPluginManager()
+            .registerEvents(new LevelUp(this), this);
 
         // Commands
         this.getCommand("tlottery").setExecutor(new LotteryCommand(this));

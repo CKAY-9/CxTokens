@@ -3,6 +3,8 @@ package ca.cxtokens;
 import ca.cxtokens.Shop.Static.Item;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -168,6 +170,13 @@ public class Storage {
 
             if (!config.isSet("player_death.steal_token_percentage")) {
                 config.set("player_death.steal_token_percentage", 33);
+            }
+
+            if (!config.isSet("level_up.enabled")) {
+                config.set("level_up.enabled", true);
+                config.set("level_up.flat_rate", 50);
+                config.set("level_up.multiplier", 5);
+                config.setInlineComments("level_up.multiplier", Collections.singletonList("Reward formula: (new_level * level_diff * multiplier) + flat_rate"));
             }
 
             config.save(configFile);
